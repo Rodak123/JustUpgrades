@@ -8,6 +8,7 @@ namespace Rodak.UpgradeSystem.Editor
     public static class EditorUtils
     {
         public const string UnityScriptPropertyName = "m_Script";
+        public const string UnityContentContainerName = "unity-content";
 
         public static void AppendOtherProperties(this SerializedObject serializedObject, VisualElement root, IEnumerable<string> ignoredPropertiesList = null)
         {
