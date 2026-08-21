@@ -391,7 +391,10 @@ MonoBehaviour:
   upgradeSO: {fileID: 11400000, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
   coolValue:
     scaler:
-      rid: 3358812794393985142
+      rid: 3358812794393985143
+  coolerValue:
+    scaler:
+      rid: 3358812794393985148
   references:
     version: 2
     RefIds:
@@ -401,7 +404,7 @@ MonoBehaviour:
         baseAmount:
           mantissa: 6
           exponent: 0
-        exposedReference: {fileID: 11400000, guid: e2f4088975c90e2499a0e4828c562308, type: 2}
+        exposedReference: {fileID: 11400000, guid: d1960d0d43f0ed448842394c3cc74f1f, type: 2}
     - rid: 3358812794393985136
       type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
@@ -409,18 +412,66 @@ MonoBehaviour:
           mantissa: 0
           exponent: 0
         exposedReference: {fileID: 0}
-    - rid: 3358812794393985142
-      type: {class: ExponentialValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+    - rid: 3358812794393985143
+      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
         baseValue:
-          mantissa: 1
-          exponent: 0
-        multiplier:
-          mantissa: 1.15
-          exponent: 0
-        multiplierGrow:
+          rid: 3358812794393985144
+        increment:
+          rid: 3358812794393985145
+        incrementGrow:
+          rid: 3358812794393985146
+    - rid: 3358812794393985144
+      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseAmount:
           mantissa: 0
           exponent: 0
+        exposedReference: {fileID: 0}
+    - rid: 3358812794393985145
+      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseAmount:
+          mantissa: 1
+          exponent: 0
+        exposedReference: {fileID: 0}
+    - rid: 3358812794393985146
+      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseAmount:
+          mantissa: 0
+          exponent: 0
+        exposedReference: {fileID: 0}
+    - rid: 3358812794393985148
+      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          rid: 3358812794393985149
+        increment:
+          rid: 3358812794393985150
+        incrementGrow:
+          rid: 3358812794393985151
+    - rid: 3358812794393985149
+      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseAmount:
+          mantissa: 0
+          exponent: 0
+        exposedReference: {fileID: 0}
+    - rid: 3358812794393985150
+      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseAmount:
+          mantissa: 1
+          exponent: 0
+        exposedReference: {fileID: 0}
+    - rid: 3358812794393985151
+      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseAmount:
+          mantissa: 0
+          exponent: 0
+        exposedReference: {fileID: 0}
 --- !u!1001 &8758360653607607177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -480,11 +531,11 @@ PrefabInstance:
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: e2f4088975c90e2499a0e4828c562308, type: 2}
+      objectReference: {fileID: 11400000, guid: d1960d0d43f0ed448842394c3cc74f1f, type: 2}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[1]'
       value: 
-      objectReference: {fileID: -5084548251081534737, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
+      objectReference: {fileID: 5039205671148833928, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -13,6 +13,14 @@ namespace Rodak.UpgradeSystem.Utils
 
         public FloatDynamicValueReferenceSO ExposedReference => exposedReference;
 
+        public FloatDynamicValue()
+        { }
+
+        public FloatDynamicValue(BigDouble baseAmount)
+        {
+            this.baseAmount = baseAmount;
+        }
+
         public void RemoveReference()
         {
             if (exposedReference == null) return;

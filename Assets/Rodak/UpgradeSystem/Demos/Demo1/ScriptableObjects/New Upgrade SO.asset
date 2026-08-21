@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5084548251081534737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
-  m_Name: TestFloatValue_upgrade:30744677b5c3a3642ae01630f94714ba
-  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
-  uniqueId: 30744677b5c3a3642ae01630f94714ba
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40,7 +27,7 @@ MonoBehaviour:
         baseAmount:
           mantissa: 3.56
           exponent: 0
-        exposedReference: {fileID: -5084548251081534737}
+        exposedReference: {fileID: 5039205671148833928}
     - rid: 3358812794393985140
       type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
@@ -48,3 +35,16 @@ MonoBehaviour:
           mantissa: 0
           exponent: 0
         exposedReference: {fileID: 0}
+--- !u!114 &5039205671148833928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
+  m_Name: TestFloatValue_testFloatValue_upgrade:30744677b5c3a3642ae01630f94714ba
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
+  uniqueId: 

@@ -22,6 +22,7 @@ namespace Rodak.UpgradeSystem.Demos.Demo1
 
         [Space]
         [SerializeField] private ScaledValue coolValue;
+        [SerializeField] private ScaledValue coolerValue;
 
         private void Start()
         {

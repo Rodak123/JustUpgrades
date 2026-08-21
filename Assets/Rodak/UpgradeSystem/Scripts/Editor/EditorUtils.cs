@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Rodak.UpgradeSystem.Editor
@@ -29,6 +30,14 @@ namespace Rodak.UpgradeSystem.Editor
                 root.Add(field);
             }
             while (iterator.NextVisible(false));
+        }
+
+        public static string GetFullDisplayPath(this SerializedProperty property)
+        {
+            if (property == null)
+                return string.Empty;
+
+            return property.propertyPath;
         }
     }
 }

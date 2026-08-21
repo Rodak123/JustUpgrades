@@ -117,19 +117,21 @@ namespace Rodak.UpgradeSystem.Editor
                 FloatDynamicValueReferenceSO floatValueChanger = FloatDynamicValue.AddReference();
                 if (floatValueChanger == null) return;
 
-                floatValueChanger.name = dynamicValueAttribute.ValueName;
+                floatValueChanger.name = $"{dynamicValueAttribute.ValueName}_{property.GetFullDisplayPath()}";
 
                 Object targetObject = property.serializedObject.targetObject;
 
+                Debug.Log(property.GetFullDisplayPath());
+
                 if (targetObject is UpgradeSO parentUpgrade)
                 {
-                    floatValueChanger.name = $"{dynamicValueAttribute.ValueName}_{parentUpgrade.GetChangingValueSuffix()}";
+                    floatValueChanger.name = $"{floatValueChanger.name}_{parentUpgrade.GetChangingValueSuffix()}";
 
                     AssetDatabase.AddObjectToAsset(floatValueChanger, parentUpgrade);
                 }
                 else if (targetObject is ScriptableObject scriptableObject)
                 {
-                    floatValueChanger.name = $"{dynamicValueAttribute.ValueName}_{scriptableObject.name}";
+                    floatValueChanger.name = $"{floatValueChanger.name}_{scriptableObject.name}";
 
                     AssetDatabase.AddObjectToAsset(floatValueChanger, scriptableObject);
                 }
