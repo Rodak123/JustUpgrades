@@ -385,9 +385,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.Demo1.Demo1Scene
   testFloatValue:
-    rid: 3358812794393985135
+    baseAmount:
+      mantissa: 0
+      exponent: 0
+    exposedReference: {fileID: 0}
   fixedValue:
-    rid: 3358812794393985136
+    baseAmount:
+      mantissa: 0
+      exponent: 0
+    exposedReference: {fileID: 0}
   upgradeSO: {fileID: 11400000, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
   coolValue:
     scaler:
@@ -398,80 +404,55 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3358812794393985135
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 6
-          exponent: 0
-        exposedReference: {fileID: 11400000, guid: d1960d0d43f0ed448842394c3cc74f1f, type: 2}
-    - rid: 3358812794393985136
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 0
-          exponent: 0
-        exposedReference: {fileID: 0}
     - rid: 3358812794393985143
       type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
         baseValue:
-          rid: 3358812794393985144
+          baseAmount:
+            mantissa: 0
+            exponent: 0
+          exposedReference: {fileID: 0}
         increment:
-          rid: 3358812794393985145
+          baseAmount:
+            mantissa: 1
+            exponent: 0
+          exposedReference: {fileID: 0}
         incrementGrow:
-          rid: 3358812794393985146
-    - rid: 3358812794393985144
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 0
-          exponent: 0
-        exposedReference: {fileID: 0}
-    - rid: 3358812794393985145
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 1
-          exponent: 0
-        exposedReference: {fileID: 0}
-    - rid: 3358812794393985146
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 0
-          exponent: 0
-        exposedReference: {fileID: 0}
+          baseAmount:
+            mantissa: 0
+            exponent: 0
+          exposedReference: {fileID: 0}
     - rid: 3358812794393985148
       type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
         baseValue:
-          rid: 3358812794393985149
+          baseAmount:
+            mantissa: 0
+            exponent: 0
+          exposedReference: {fileID: 0}
         increment:
-          rid: 3358812794393985150
+          baseAmount:
+            mantissa: 1
+            exponent: 0
+          exposedReference: {fileID: 0}
         incrementGrow:
-          rid: 3358812794393985151
-    - rid: 3358812794393985149
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 0
-          exponent: 0
-        exposedReference: {fileID: 0}
-    - rid: 3358812794393985150
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 1
-          exponent: 0
-        exposedReference: {fileID: 0}
-    - rid: 3358812794393985151
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 0
-          exponent: 0
-        exposedReference: {fileID: 0}
+          baseAmount:
+            mantissa: 0
+            exponent: 0
+          exposedReference: {fileID: 0}
+--- !u!114 &5039205671148833928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
+  m_Name: TestFloatValue_testFloatValue_upgrade:30744677b5c3a3642ae01630f94714ba
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
+  uniqueId: 30744677b5c3a3642ae01630f94714ba
 --- !u!1001 &8758360653607607177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -531,11 +512,11 @@ PrefabInstance:
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: d1960d0d43f0ed448842394c3cc74f1f, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[1]'
       value: 
-      objectReference: {fileID: 5039205671148833928, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
+      objectReference: {fileID: 5039205671148833928}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

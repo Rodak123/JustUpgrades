@@ -7,9 +7,9 @@ namespace Rodak.UpgradeSystem.Utils
     [Serializable]
     public class LinearValueScaler : IValueScaler
     {
-        [SerializeReference, MarkDynamicValue(ValueName = "BaseValue")] private FloatDynamicValue baseValue = new(0);
-        [SerializeReference, MarkDynamicValue(ValueName = "Increment")] private FloatDynamicValue increment = new(1);
-        [SerializeReference, MarkDynamicValue(ValueName = "IncrementGrow")] private FloatDynamicValue incrementGrow = new(0);
+        [SerializeField] private FloatDynamicValue baseValue = new(0);
+        [SerializeField] private FloatDynamicValue increment = new(1);
+        [SerializeField] private FloatDynamicValue incrementGrow = new(0);
 
         public BigDouble GetValue(int level, int maxLevel)
         {

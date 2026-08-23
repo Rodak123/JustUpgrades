@@ -33,7 +33,7 @@ namespace Rodak.UpgradeSystem.Editor
             row.style.flexDirection = FlexDirection.Row;
             root.Add(row);
 
-            AttachExposeButton(row, property);
+            AttachExposeButton(row, property, exposedReferenceProperty);
             AttachBaseAmountField(row, baseAmountProperty, property);
 
             AttachExposedReferenceField(root, exposedReferenceProperty, property);
@@ -45,7 +45,7 @@ namespace Rodak.UpgradeSystem.Editor
         {
             PropertyField baseAmountField = new(baseAmountProperty)
             {
-                label = property.displayName
+                label = EditorUtils.GetPreferredDisplayLabel(this, property)
             };
             baseAmountField.style.flexGrow = 1;
             root.Add(baseAmountField);
@@ -100,12 +100,23 @@ namespace Rodak.UpgradeSystem.Editor
             return Background.FromTexture2D(texture);
         }
 
-        private void AttachExposeButton(VisualElement root, SerializedProperty property)
+        private string GetReferenceName(SerializedProperty property)
         {
-            MarkDynamicValueAttribute dynamicValueAttribute = fieldInfo.GetCustomAttribute<MarkDynamicValueAttribute>();
-            if (dynamicValueAttribute == null) return;
+            string[] elements = property.GetFullDisplayPath().Split('.');
 
-            FloatDynamicValue FloatDynamicValue = (FloatDynamicValue)property.managedReferenceValue;
+            string name = "";
+            for (int i = elements.Length - 1; i >= 0; i--)
+            {
+                name += elements[i];
+                if (i > 0) name += '_';
+            }
+
+            return name;
+        }
+
+        private void AttachExposeButton(VisualElement root, SerializedProperty property, SerializedProperty exposedReferenceProperty)
+        {
+            // FloatDynamicValue FloatDynamicValue = (FloatDynamicValue)property.managedReferenceValue;
 
             Button button = new(ManageExposedValue);
             button.clicked += () => UpdateUI();
@@ -113,67 +124,69 @@ namespace Rodak.UpgradeSystem.Editor
 
             UpdateUI();
 
+            FloatDynamicValueReferenceSO GetExposedReference()
+            {
+                return (FloatDynamicValueReferenceSO)exposedReferenceProperty.objectReferenceValue;
+            }
+
             void UpdateUI()
             {
-                bool isExposed = FloatDynamicValue.ExposedReference != null;
+                bool isExposed = GetExposedReference() != null;
                 button.text = "";
                 button.iconImage = GetExposeButtonIcon(isExposed);
             }
 
             void ManageExposedValue()
             {
-                bool isExposed = FloatDynamicValue.ExposedReference != null;
+                bool isExposed = GetExposedReference() != null;
                 if (isExposed) UnExposeValue();
                 else ExposeValue();
             }
 
             void UnExposeValue()
             {
-                if (FloatDynamicValue.ExposedReference == null) return;
+                FloatDynamicValueReferenceSO reference = (FloatDynamicValueReferenceSO)exposedReferenceProperty.objectReferenceValue;
+                if (reference == null) return;
 
-                FloatDynamicValue.RemoveReference();
+                exposedReferenceProperty.serializedObject.Update();
+                exposedReferenceProperty.objectReferenceValue = null;
+                exposedReferenceProperty.serializedObject.ApplyModifiedProperties();
             }
 
             void ExposeValue()
             {
-                FloatDynamicValueReferenceSO floatValueChanger = FloatDynamicValue.AddReference();
-                if (floatValueChanger == null) return;
+                FloatDynamicValueReferenceSO oldReference = (FloatDynamicValueReferenceSO)exposedReferenceProperty.objectReferenceValue;
+                if (oldReference != null) return;
 
-                floatValueChanger.name = $"{dynamicValueAttribute.ValueName}_{property.GetFullDisplayPath()}";
+                FloatDynamicValueReferenceSO reference = ScriptableObject.CreateInstance<FloatDynamicValueReferenceSO>();
+
+                reference.name = GetReferenceName(property);
 
                 Object targetObject = property.serializedObject.targetObject;
 
                 if (targetObject is UpgradeSO parentUpgrade)
                 {
-                    floatValueChanger.name = $"{floatValueChanger.name}_{parentUpgrade.GetChangingValueSuffix()}";
+                    reference.name = $"{reference.name}_{parentUpgrade.GetChangingValueSuffix()}";
 
-                    AssetDatabase.AddObjectToAsset(floatValueChanger, parentUpgrade);
+                    AssetDatabase.AddObjectToAsset(reference, parentUpgrade);
                 }
                 else if (targetObject is ScriptableObject scriptableObject)
                 {
-                    floatValueChanger.name = $"{floatValueChanger.name}_{scriptableObject.name}";
+                    reference.name = $"{reference.name}_{scriptableObject.name}";
 
-                    AssetDatabase.AddObjectToAsset(floatValueChanger, scriptableObject);
+                    AssetDatabase.AddObjectToAsset(reference, scriptableObject);
                 }
                 else
                 {
-                    AssetDatabase.CreateAsset(floatValueChanger, $"Assets/{floatValueChanger.name}_{targetObject.name}.asset");
+                    AssetDatabase.CreateAsset(reference, $"Assets/{reference.name}_{targetObject.name}.asset");
                 }
 
                 AssetDatabase.SaveAssets();
-            }
-        }
 
-        private bool TryGetParentUpgrade(SerializedProperty property, out UpgradeSO upgrade)
-        {
-            if (property.serializedObject.targetObject is UpgradeSO parentUpgrade)
-            {
-                upgrade = parentUpgrade;
-                return true;
+                exposedReferenceProperty.serializedObject.Update();
+                exposedReferenceProperty.objectReferenceValue = reference;
+                exposedReferenceProperty.serializedObject.ApplyModifiedProperties();
             }
-
-            upgrade = default;
-            return false;
         }
     }
 }

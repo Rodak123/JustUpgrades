@@ -39,5 +39,10 @@ namespace Rodak.UpgradeSystem.Editor
 
             return property.propertyPath;
         }
+
+        public static string GetPreferredDisplayLabel(PropertyDrawer propertyDrawer, SerializedProperty property)
+        {
+            return !string.IsNullOrEmpty(propertyDrawer.preferredLabel) ? propertyDrawer.preferredLabel : property.displayName;
+        }
     }
 }

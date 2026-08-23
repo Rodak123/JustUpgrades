@@ -12,39 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68848b71a01fef48a2744ed0bc45486, type: 3}
   m_Name: New Upgrade SO
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Core.UpgradeSO
-  uniqueId: 30744677b5c3a3642ae01630f94714ba
-  upgradeName: BOMBO
+  uniqueId: 899c2d05dd1d8794dac9725ace02339b
+  upgradeName: Test
   testFloatValue:
-    rid: 3358812794393985139
+    baseAmount:
+      mantissa: 0
+      exponent: 0
+    exposedReference: {fileID: 0}
   fixedValue:
-    rid: 3358812794393985140
-  references:
-    version: 2
-    RefIds:
-    - rid: 3358812794393985139
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 3.56
-          exponent: 0
-        exposedReference: {fileID: 1724226363647283100}
-    - rid: 3358812794393985140
-      type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseAmount:
-          mantissa: 0
-          exponent: 0
-        exposedReference: {fileID: 0}
---- !u!114 &1724226363647283100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
-  m_Name: TestFloatValue_testFloatValue_upgrade:30744677b5c3a3642ae01630f94714ba
-  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
-  uniqueId: 
+    baseAmount:
+      mantissa: 0
+      exponent: 0
+    exposedReference: {fileID: 0}
