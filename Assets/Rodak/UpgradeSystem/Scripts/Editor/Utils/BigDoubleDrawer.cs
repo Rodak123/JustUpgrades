@@ -28,7 +28,9 @@ namespace Rodak.UpgradeSystem.Editor
             VisualElement root = new();
             root.style.flexDirection = FlexDirection.Row;
 
-            Label label = new(property.displayName);
+            string displayLabel = !string.IsNullOrEmpty(preferredLabel) ? preferredLabel : property.displayName;
+
+            Label label = new(displayLabel);
             label.AddToClassList(PropertyField.labelUssClassName);
             label.style.minWidth = 120;
             root.Add(label);

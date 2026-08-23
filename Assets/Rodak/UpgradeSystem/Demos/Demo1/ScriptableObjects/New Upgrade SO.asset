@@ -27,7 +27,7 @@ MonoBehaviour:
         baseAmount:
           mantissa: 3.56
           exponent: 0
-        exposedReference: {fileID: 5039205671148833928}
+        exposedReference: {fileID: 1724226363647283100}
     - rid: 3358812794393985140
       type: {class: FloatDynamicValue, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
@@ -35,7 +35,7 @@ MonoBehaviour:
           mantissa: 0
           exponent: 0
         exposedReference: {fileID: 0}
---- !u!114 &5039205671148833928
+--- !u!114 &1724226363647283100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

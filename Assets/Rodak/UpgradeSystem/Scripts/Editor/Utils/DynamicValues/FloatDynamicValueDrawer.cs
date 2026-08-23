@@ -11,6 +11,9 @@ namespace Rodak.UpgradeSystem.Editor
     [CustomPropertyDrawer(typeof(FloatDynamicValue))]
     public class FloatDynamicValueDrawer : PropertyDrawer
     {
+        private const string ExposedIconName = "animationvisibilitytoggleon";
+        private const string HiddenIconName = "animationvisibilitytoggleoff";
+
         public const string BaseAmountPropertyName = "baseAmount";
         public const string ExposedReferencePropertyName = "exposedReference";
 
@@ -26,26 +29,36 @@ namespace Rodak.UpgradeSystem.Editor
                 return root;
             }
 
-            Foldout foldout = new()
+            VisualElement row = new();
+            row.style.flexDirection = FlexDirection.Row;
+            root.Add(row);
+
+            AttachExposeButton(row, property);
+            AttachBaseAmountField(row, baseAmountProperty, property);
+
+            AttachExposedReferenceField(root, exposedReferenceProperty, property);
+
+            return root;
+        }
+
+        private void AttachBaseAmountField(VisualElement root, SerializedProperty baseAmountProperty, SerializedProperty property)
+        {
+            PropertyField baseAmountField = new(baseAmountProperty)
             {
-                text = property.displayName,
+                label = property.displayName
             };
-            foldout.BindProperty(property);
+            baseAmountField.style.flexGrow = 1;
+            root.Add(baseAmountField);
+        }
 
-            root.Add(foldout);
-
-            VisualElement contentContainer = foldout.Q<VisualElement>(EditorUtils.UnityContentContainerName);
-
-            PropertyField baseAmountField = new(baseAmountProperty);
-            contentContainer.Add(baseAmountField);
-
-            AttachExposeButton(contentContainer, property);
-
+        private void AttachExposedReferenceField(VisualElement root, SerializedProperty exposedReferenceProperty, SerializedProperty property)
+        {
             PropertyField exposedReferenceField = new(exposedReferenceProperty)
             {
                 enabledSelf = false
             };
-            contentContainer.Add(exposedReferenceField);
+            exposedReferenceField.style.display = DisplayStyle.None;
+            root.Add(exposedReferenceField);
 
             // this stores the previous value to the userData cache so that it can remove it from assets when its cleared.
             exposedReferenceField.RegisterValueChangeCallback((SerializedPropertyChangeEvent evt) =>
@@ -55,8 +68,11 @@ namespace Rodak.UpgradeSystem.Editor
                 if (newSO != null)
                 {
                     exposedReferenceField.userData = newSO;
+                    exposedReferenceField.style.display = DisplayStyle.Flex;
                     return;
                 }
+
+                exposedReferenceField.style.display = DisplayStyle.None;
 
                 FloatDynamicValueReferenceSO oldSO = exposedReferenceField.userData as FloatDynamicValueReferenceSO;
 
@@ -75,8 +91,13 @@ namespace Rodak.UpgradeSystem.Editor
 
                 AssetDatabase.SaveAssets();
             });
+        }
 
-            return root;
+        private Background GetExposeButtonIcon(bool isExposed)
+        {
+            string iconName = isExposed ? ExposedIconName : HiddenIconName;
+            Texture2D texture = EditorGUIUtility.IconContent(iconName).image as Texture2D;
+            return Background.FromTexture2D(texture);
         }
 
         private void AttachExposeButton(VisualElement root, SerializedProperty property)
@@ -95,7 +116,8 @@ namespace Rodak.UpgradeSystem.Editor
             void UpdateUI()
             {
                 bool isExposed = FloatDynamicValue.ExposedReference != null;
-                button.text = isExposed ? "Hide" : "Expose";
+                button.text = "";
+                button.iconImage = GetExposeButtonIcon(isExposed);
             }
 
             void ManageExposedValue()
@@ -120,8 +142,6 @@ namespace Rodak.UpgradeSystem.Editor
                 floatValueChanger.name = $"{dynamicValueAttribute.ValueName}_{property.GetFullDisplayPath()}";
 
                 Object targetObject = property.serializedObject.targetObject;
-
-                Debug.Log(property.GetFullDisplayPath());
 
                 if (targetObject is UpgradeSO parentUpgrade)
                 {
