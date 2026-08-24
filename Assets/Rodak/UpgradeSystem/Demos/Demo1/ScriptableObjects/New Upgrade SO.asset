@@ -15,12 +15,16 @@ MonoBehaviour:
   uniqueId: 899c2d05dd1d8794dac9725ace02339b
   upgradeName: Test
   testFloatValue:
-    baseAmount:
+    exposedReference: {fileID: 0}
+    baseValue:
       mantissa: 0
       exponent: 0
-    exposedReference: {fileID: 0}
-  fixedValue:
-    baseAmount:
-      mantissa: 0
-      exponent: 0
-    exposedReference: {fileID: 0}
+  level:
+    MaxLevel:
+      exposedReference: {fileID: 0}
+      baseValue:
+        mantissa: 0
+        exponent: 0
+    IsInfinite:
+      exposedReference: {fileID: 0}
+      baseValue: 0

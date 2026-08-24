@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
-namespace Rodak.UpgradeSystem.Core
+namespace Rodak.UpgradeSystem.Utils
 {
-    public class DynamicValuesManager : MonoBehaviour
+    public class DynamicValuesModifiers : MonoBehaviour
     {
         [SerializeField] private List<ADynamicValueReferenceSO> dynamicValueReferences = new();
 
@@ -15,20 +14,6 @@ namespace Rodak.UpgradeSystem.Core
             foreach (ADynamicValueReferenceSO valueReference in dynamicValueReferences)
             {
                 valueModifiersMap.Add(valueReference, new());
-            }
-        }
-
-        private void Query(DynamicValueQuery query, ADynamicValueReferenceSO valueReference)
-        {
-            if (!valueModifiersMap.TryGetValue(valueReference, out List<IDynamicValueModifier> valueModifiers))
-            {
-                Debug.LogError($"Value '{valueReference}' is not managed.");
-                return;
-            }
-
-            foreach (IDynamicValueModifier modifier in valueModifiers)
-            {
-                modifier.Query(query);
             }
         }
 
@@ -54,19 +39,19 @@ namespace Rodak.UpgradeSystem.Core
             valueModifiers.Remove(valueModifier);
         }
 
-        public BigDouble QueryFloat(FloatDynamicValue floatDynamicValue)
+        public void QueryModifiersFor(DynamicValueQuery query, ADynamicValueReferenceSO valueReference)
         {
-            DynamicValueQuery query = new()
+            if (!valueModifiersMap.TryGetValue(valueReference, out List<IDynamicValueModifier> valueModifiers))
             {
-                Value = floatDynamicValue.GetBaseAmount(),
-            };
-
-            if (floatDynamicValue.IsExposed)
-            {
-                Query(query, floatDynamicValue.ExposedReference);
+                Debug.LogError($"Value '{valueReference}' is not managed.");
+                return;
             }
 
-            return query.Value;
+            foreach (IDynamicValueModifier modifier in valueModifiers)
+            {
+                modifier.Query(query);
+            }
         }
+
     }
 }

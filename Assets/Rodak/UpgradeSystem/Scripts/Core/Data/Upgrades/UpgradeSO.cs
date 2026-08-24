@@ -9,7 +9,6 @@ namespace Rodak.UpgradeSystem.Core
         [SerializeField] private string upgradeName = "Upgrade Name";
 
         [SerializeField] private FloatDynamicValue testFloatValue = new();
-        [SerializeField] private FloatDynamicValue fixedValue = new();
 
         [SerializeField] private UpgradeLevel level;
         // [SerializeField] private UpgradeCost[] costs;
@@ -19,8 +18,6 @@ namespace Rodak.UpgradeSystem.Core
         // public UpgradeLevel Level => level;
         // public UpgradeCost[] Costs => costs;
         // public UpgradeRequirement[] Requirements => requirements;
-
-        public FloatDynamicValue TestFloatValue => testFloatValue;
 
         private void Reset()
         {

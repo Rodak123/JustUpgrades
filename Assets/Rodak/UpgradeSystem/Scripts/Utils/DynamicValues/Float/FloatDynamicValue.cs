@@ -4,25 +4,26 @@ using System;
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class FloatDynamicValue : ADynamicValue
+    public class FloatDynamicValue : ADynamicValue<FloatDynamicValueReferenceSO>
     {
-        [SerializeField] private BigDouble baseAmount;
-        [SerializeField] private FloatDynamicValueReferenceSO exposedReference;
+        [SerializeField] private BigDouble baseValue;
 
-        public bool IsExposed => exposedReference != null;
-        public FloatDynamicValueReferenceSO ExposedReference => exposedReference;
-
-        public FloatDynamicValue()
+        public FloatDynamicValue() : this(0)
         { }
 
-        public FloatDynamicValue(BigDouble baseAmount)
+        public FloatDynamicValue(BigDouble baseValue)
         {
-            this.baseAmount = baseAmount;
+            this.baseValue = baseValue;
         }
 
-        public override BigDouble GetBaseAmount()
+        public override BigDouble GetBaseValue()
         {
-            return baseAmount;
+            return baseValue;
+        }
+
+        public BigDouble GetFloatValue(DynamicValuesModifiers dynamicValuesModifiers)
+        {
+            return GetValue(dynamicValuesModifiers);
         }
     }
 }

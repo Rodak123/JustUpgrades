@@ -13,9 +13,9 @@ namespace Rodak.UpgradeSystem.Utils
 
         public BigDouble GetValue(int level, int maxLevel)
         {
-            BigDouble baseValueValue = UpgradeSystemContext.Instance.DynamicValuesManager.QueryFloat(baseValue);
-            BigDouble incrementValue = UpgradeSystemContext.Instance.DynamicValuesManager.QueryFloat(increment);
-            BigDouble incrementGrowValue = UpgradeSystemContext.Instance.DynamicValuesManager.QueryFloat(incrementGrow);
+            BigDouble baseValueValue = baseValue.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+            BigDouble incrementValue = increment.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+            BigDouble incrementGrowValue = incrementGrow.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
 
             return baseValueValue + (incrementValue + (incrementGrowValue * level)) * level;
         }

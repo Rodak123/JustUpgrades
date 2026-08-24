@@ -1,13 +1,13 @@
 using System;
-using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
+using Rodak.UpgradeSystem.Utils;
 
 namespace Rodak.UpgradeSystem.Core
 {
     [Serializable]
     public struct UpgradeLevel
     {
-        // [SerializeField] public IntChangingValue MaxLevel;
-        // [SerializeField] public BoolChangingValue IsInfinite;
+        [SerializeField] public IntDynamicValue MaxLevel;
+        [SerializeField] public BoolDynamicValue IsInfinite;
     }
 }
