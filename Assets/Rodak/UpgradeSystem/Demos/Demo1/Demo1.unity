@@ -385,15 +385,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.Demo1.Demo1Scene
   testFloatValue:
-    baseAmount:
+    exposedReference: {fileID: 0}
+    baseValue:
       mantissa: 0
       exponent: 0
-    exposedReference: {fileID: 0}
   fixedValue:
-    baseAmount:
+    exposedReference: {fileID: 0}
+    baseValue:
       mantissa: 0
       exponent: 0
-    exposedReference: {fileID: 0}
   upgradeSO: {fileID: 11400000, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
   coolValue:
     scaler:
@@ -408,38 +408,38 @@ MonoBehaviour:
       type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
         baseValue:
-          baseAmount:
+          exposedReference: {fileID: 0}
+          baseValue:
             mantissa: 0
             exponent: 0
-          exposedReference: {fileID: 0}
         increment:
-          baseAmount:
+          exposedReference: {fileID: 0}
+          baseValue:
             mantissa: 1
             exponent: 0
-          exposedReference: {fileID: 0}
         incrementGrow:
-          baseAmount:
+          exposedReference: {fileID: 0}
+          baseValue:
             mantissa: 0
             exponent: 0
-          exposedReference: {fileID: 0}
     - rid: 3358812794393985148
       type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
         baseValue:
-          baseAmount:
+          exposedReference: {fileID: 0}
+          baseValue:
             mantissa: 0
             exponent: 0
-          exposedReference: {fileID: 0}
         increment:
-          baseAmount:
+          exposedReference: {fileID: 0}
+          baseValue:
             mantissa: 1
             exponent: 0
-          exposedReference: {fileID: 0}
         incrementGrow:
-          baseAmount:
+          exposedReference: {fileID: 0}
+          baseValue:
             mantissa: 0
             exponent: 0
-          exposedReference: {fileID: 0}
 --- !u!114 &5039205671148833928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,12 +506,12 @@ PrefabInstance:
       value: Upgrade System Context
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
-      propertyPath: dynamicValueReferences.Array.size
-      value: 2
+      propertyPath: m_EditorClassIdentifier
+      value: Assembly-CSharp::Rodak.UpgradeSystem.Utils.DynamicValuesModifiers
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
-      propertyPath: 'dynamicValueReferences.Array.data[0]'
-      value: 
+      propertyPath: dynamicValueReferences.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[1]'

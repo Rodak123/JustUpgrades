@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6166929193986484550}
   - component: {fileID: 6154804244984862860}
   m_Layer: 0
-  m_Name: Dynamic Value Manager
+  m_Name: Dynamic Values Modifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,4 +138,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Core.UpgradeSystemContext
   currencyWallet: {fileID: 8632978063163956791}
-  dynamicValuesManager: {fileID: 6154804244984862860}
+  dynamicValuesModifiers: {fileID: 6154804244984862860}

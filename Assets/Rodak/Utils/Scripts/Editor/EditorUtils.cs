@@ -4,7 +4,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Rodak.UpgradeSystem.Editor
+namespace Rodak.Utils.Editor
 {
     public static class EditorUtils
     {
@@ -43,6 +43,12 @@ namespace Rodak.UpgradeSystem.Editor
         public static string GetPreferredDisplayLabel(PropertyDrawer propertyDrawer, SerializedProperty property)
         {
             return !string.IsNullOrEmpty(propertyDrawer.preferredLabel) ? propertyDrawer.preferredLabel : property.displayName;
+        }
+
+        public static Background CreateEditorIcon(string iconName)
+        {
+            Texture2D texture = EditorGUIUtility.IconContent(iconName).image as Texture2D;
+            return Background.FromTexture2D(texture);
         }
     }
 }

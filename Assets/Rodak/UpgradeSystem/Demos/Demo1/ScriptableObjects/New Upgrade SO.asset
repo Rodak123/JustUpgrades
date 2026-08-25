@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68848b71a01fef48a2744ed0bc45486, type: 3}
   m_Name: New Upgrade SO
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Core.UpgradeSO
-  uniqueId: 899c2d05dd1d8794dac9725ace02339b
-  upgradeName: Test
-  testFloatValue:
-    exposedReference: {fileID: 0}
-    baseValue:
-      mantissa: 0
-      exponent: 0
+  uniqueId: a1658c1583b5aa74594def38d5f6fe3f
+  upgradeName: test
   level:
     MaxLevel:
       exposedReference: {fileID: 0}
@@ -28,3 +23,8 @@ MonoBehaviour:
     IsInfinite:
       exposedReference: {fileID: 0}
       baseValue: 0
+  costs: []
+  requirements: []
+  references:
+    version: 2
+    RefIds: []

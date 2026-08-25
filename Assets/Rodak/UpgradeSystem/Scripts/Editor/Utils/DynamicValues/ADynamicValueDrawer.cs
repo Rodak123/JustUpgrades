@@ -1,5 +1,6 @@
 using Rodak.UpgradeSystem.Core;
 using Rodak.UpgradeSystem.Utils;
+using Rodak.Utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Rodak.UpgradeSystem.Editor
     {
         private const string ExposedIconName = "animationvisibilitytoggleon";
         private const string HiddenIconName = "animationvisibilitytoggleoff";
+        private const string RenameReferenceIconName = "CustomTool";
 
         public const string ExposedReferencePropertyName = "exposedReference";
 
@@ -20,22 +22,22 @@ namespace Rodak.UpgradeSystem.Editor
             {
                 enabledSelf = false
             };
-            exposedReferenceField.style.display = DisplayStyle.None;
+            root.style.display = DisplayStyle.None;
             root.Add(exposedReferenceField);
 
             // this stores the previous value to the userData cache so that it can remove it from assets when its cleared.
-            exposedReferenceField.RegisterValueChangeCallback((SerializedPropertyChangeEvent evt) =>
+            exposedReferenceField.RegisterValueChangeCallback(evt =>
             {
                 R newSO = evt.changedProperty.objectReferenceValue as R;
 
                 if (newSO != null)
                 {
                     exposedReferenceField.userData = newSO;
-                    exposedReferenceField.style.display = DisplayStyle.Flex;
+                    root.style.display = DisplayStyle.Flex;
                     return;
                 }
 
-                exposedReferenceField.style.display = DisplayStyle.None;
+                root.style.display = DisplayStyle.None;
 
                 R oldSO = exposedReferenceField.userData as R;
 
@@ -55,12 +57,10 @@ namespace Rodak.UpgradeSystem.Editor
                 AssetDatabase.SaveAssets();
             });
         }
-
         private Background GetExposeButtonIcon(bool isExposed)
         {
             string iconName = isExposed ? ExposedIconName : HiddenIconName;
-            Texture2D texture = EditorGUIUtility.IconContent(iconName).image as Texture2D;
-            return Background.FromTexture2D(texture);
+            return EditorUtils.CreateEditorIcon(iconName);
         }
 
         private string GetReferenceName(SerializedProperty property)
@@ -85,68 +85,104 @@ namespace Rodak.UpgradeSystem.Editor
 
             UpdateUI();
 
-            R GetExposedReference()
-            {
-                return (R)exposedReferenceProperty.objectReferenceValue;
-            }
-
             void UpdateUI()
             {
-                bool isExposed = GetExposedReference() != null;
+                R exposedReference = (R)exposedReferenceProperty.objectReferenceValue;
+
+                bool isExposed = exposedReference != null;
+
                 button.text = "";
+                button.tooltip = isExposed
+                    ? $"Delete reference: {exposedReference}"
+                    : "Expose reference for modifiers";
                 button.iconImage = GetExposeButtonIcon(isExposed);
             }
 
             void ManageExposedValue()
             {
-                bool isExposed = GetExposedReference() != null;
-                if (isExposed) UnExposeValue();
-                else ExposeValue();
+                R exposedReference = (R)exposedReferenceProperty.objectReferenceValue;
+
+                if (exposedReference != null) UnExposeValue(exposedReferenceProperty);
+                else ExposeValue(property, exposedReferenceProperty);
+            }
+        }
+
+
+        private void UnExposeValue(SerializedProperty exposedReferenceProperty)
+        {
+            R reference = (R)exposedReferenceProperty.objectReferenceValue;
+            if (reference == null) return;
+
+            exposedReferenceProperty.serializedObject.Update();
+            exposedReferenceProperty.objectReferenceValue = null;
+            exposedReferenceProperty.serializedObject.ApplyModifiedProperties();
+        }
+
+        private void ExposeValue(SerializedProperty property, SerializedProperty exposedReferenceProperty)
+        {
+            R oldReference = (R)exposedReferenceProperty.objectReferenceValue;
+            if (oldReference != null) return;
+
+            R reference = ScriptableObject.CreateInstance<R>();
+
+            reference.name = GetReferenceName(property);
+
+            Object targetObject = property.serializedObject.targetObject;
+
+            if (targetObject is UpgradeSO parentUpgrade)
+            {
+                reference.name = $"{reference.name}_{parentUpgrade.GetChangingValueSuffix()}";
+
+                AssetDatabase.AddObjectToAsset(reference, parentUpgrade);
+            }
+            else if (targetObject is ScriptableObject scriptableObject)
+            {
+                reference.name = $"{reference.name}_{scriptableObject.name}";
+
+                AssetDatabase.AddObjectToAsset(reference, scriptableObject);
+            }
+            else
+            {
+                AssetDatabase.CreateAsset(reference, $"Assets/{reference.name}_{targetObject.name}.asset");
             }
 
-            void UnExposeValue()
+            AssetDatabase.SaveAssets();
+
+            exposedReferenceProperty.serializedObject.Update();
+            exposedReferenceProperty.objectReferenceValue = reference;
+            exposedReferenceProperty.serializedObject.ApplyModifiedProperties();
+        }
+
+        private void AttachRenameReferenceButton(VisualElement root, SerializedProperty property, SerializedProperty exposedReferenceProperty)
+        {
+            Button button = new(RenameReference)
             {
-                R reference = (R)exposedReferenceProperty.objectReferenceValue;
-                if (reference == null) return;
+                text = "",
+                tooltip = $"Rename reference",
+                iconImage = EditorUtils.CreateEditorIcon(RenameReferenceIconName),
+            };
+            root.Add(button);
 
-                exposedReferenceProperty.serializedObject.Update();
-                exposedReferenceProperty.objectReferenceValue = null;
-                exposedReferenceProperty.serializedObject.ApplyModifiedProperties();
-            }
 
-            void ExposeValue()
+            void RenameReference()
             {
-                R oldReference = (R)exposedReferenceProperty.objectReferenceValue;
-                if (oldReference != null) return;
+                R exposedReference = (R)exposedReferenceProperty.objectReferenceValue;
 
-                R reference = ScriptableObject.CreateInstance<R>();
-
-                reference.name = GetReferenceName(property);
-
-                Object targetObject = property.serializedObject.targetObject;
-
-                if (targetObject is UpgradeSO parentUpgrade)
-                {
-                    reference.name = $"{reference.name}_{parentUpgrade.GetChangingValueSuffix()}";
-
-                    AssetDatabase.AddObjectToAsset(reference, parentUpgrade);
-                }
-                else if (targetObject is ScriptableObject scriptableObject)
-                {
-                    reference.name = $"{reference.name}_{scriptableObject.name}";
-
-                    AssetDatabase.AddObjectToAsset(reference, scriptableObject);
-                }
-                else
-                {
-                    AssetDatabase.CreateAsset(reference, $"Assets/{reference.name}_{targetObject.name}.asset");
-                }
-
-                AssetDatabase.SaveAssets();
-
-                exposedReferenceProperty.serializedObject.Update();
-                exposedReferenceProperty.objectReferenceValue = reference;
-                exposedReferenceProperty.serializedObject.ApplyModifiedProperties();
+                TextPromptWindow.ShowPrompt(
+                    "Pick a new name:",
+                    (value) =>
+                    {
+                        if (value.Length == 0)
+                        {
+                            Debug.Log($"Name is empty, ignoring.");
+                            return;
+                        }
+                        exposedReference.name = value;
+                        AssetDatabase.SaveAssets();
+                    },
+                    null,
+                    exposedReference.name
+                );
             }
         }
 
@@ -163,11 +199,11 @@ namespace Rodak.UpgradeSystem.Editor
                 return root;
             }
 
-            VisualElement row = new();
-            row.style.flexDirection = FlexDirection.Row;
-            root.Add(row);
+            VisualElement toggleAndValueRow = new();
+            toggleAndValueRow.style.flexDirection = FlexDirection.Row;
+            root.Add(toggleAndValueRow);
 
-            AttachExposeButton(row, property, exposedReferenceProperty);
+            AttachExposeButton(toggleAndValueRow, property, exposedReferenceProperty);
 
             VisualElement valueGUI = CreateValueGUI(property);
             if (valueGUI == null)
@@ -176,9 +212,14 @@ namespace Rodak.UpgradeSystem.Editor
             }
 
             valueGUI.style.flexGrow = 1;
-            row.Add(valueGUI);
+            toggleAndValueRow.Add(valueGUI);
 
-            AttachExposedReferenceField(root, exposedReferenceProperty, property);
+            VisualElement referenceRow = new();
+            referenceRow.style.flexDirection = FlexDirection.Row;
+            root.Add(referenceRow);
+
+            AttachRenameReferenceButton(referenceRow, property, exposedReferenceProperty);
+            AttachExposedReferenceField(referenceRow, exposedReferenceProperty, property);
 
             return root;
         }
