@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.UI;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 namespace Rodak.UpgradeSystem.Core
 {
     [Serializable, CreateUpgradeParameterMenu(Order = 100)]
-    public class ADynamicValueUpgradeParameter : AUpgradeParameter
+    public class ADynamicValueUpgradeParameter : AUpgradeParameter, IHasDynamicValues
     {
         private class Modifier : IDynamicValueModifier
         {
@@ -76,6 +77,11 @@ namespace Rodak.UpgradeSystem.Core
 
             BigDouble value = DynamicValueModifier.GetValue(level, MaxLevel);
             return DynamicValuePresenter.GetFormattedDynamicValue(value);
+        }
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            return dynamicValueModifier.GetDynamicValueReferences();
         }
     }
 }

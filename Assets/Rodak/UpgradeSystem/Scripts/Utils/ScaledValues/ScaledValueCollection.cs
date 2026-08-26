@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class ScaledValueCollection : IEnumerable<ScaledValue>
+    public class ScaledValueCollection : IEnumerable<ScaledValue>, IHasDynamicValues
     {
         [SerializeField] private ScaledValue[] scaledValues;
 
@@ -31,6 +31,17 @@ namespace Rodak.UpgradeSystem.Utils
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            foreach (ScaledValue scaledValue in scaledValues)
+            {
+                foreach (ADynamicValueReferenceSO reference in scaledValue.GetDynamicValueReferences())
+                {
+                    yield return reference;
+                }
+            }
         }
     }
 }

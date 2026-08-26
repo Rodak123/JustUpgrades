@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class GraphValueScaler : IValueScaler
+    public class GraphValueScaler : IValueScaler, IHasDynamicValues
     {
         [SerializeField] private FloatDynamicValue startValue = new(0);
         [SerializeField] private FloatDynamicValue endValue = new(10);
@@ -21,5 +22,11 @@ namespace Rodak.UpgradeSystem.Utils
         }
 
         public string Hint() => "x = start + graph[level] * (end - start)";
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            yield return startValue.ExposedReference;
+            yield return endValue.ExposedReference;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
@@ -35,6 +36,18 @@ namespace Rodak.UpgradeSystem.Core
                         continue;
                     }
                     upgrades.Add(upgradeSO, new(context, upgradeSO));
+                }
+            }
+
+            // register dynamic values
+            foreach (Upgrade upgrade in upgrades.Values)
+            {
+                List<ADynamicValueReferenceSO> references = new(upgrade.UpgradeSO.GetDynamicValueReferences());
+                Debug.Log($"{upgrade} has {references.Count} references");
+                foreach (ADynamicValueReferenceSO reference in references)
+                {
+                    if (reference == null) continue;
+                    context.DynamicValuesModifiers.AddDynamicValueReference(reference);
                 }
             }
 

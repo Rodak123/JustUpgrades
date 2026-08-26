@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class ListValueScaler : IValueScaler
+    public class ListValueScaler : IValueScaler, IHasDynamicValues
     {
         [SerializeField] private List<FloatDynamicValue> values;
 
@@ -36,5 +36,13 @@ namespace Rodak.UpgradeSystem.Utils
         }
 
         public string Hint() => "x = list[level - 1]";
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            foreach (FloatDynamicValue value in values)
+            {
+                yield return value.ExposedReference;
+            }
+        }
     }
 }

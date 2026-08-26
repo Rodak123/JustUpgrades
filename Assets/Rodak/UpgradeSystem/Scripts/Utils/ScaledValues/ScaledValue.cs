@@ -1,10 +1,11 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class ScaledValue
+    public class ScaledValue : IHasDynamicValues
     {
         [SerializeReference] private IValueScaler scaler = null;
 
@@ -21,6 +22,17 @@ namespace Rodak.UpgradeSystem.Utils
             if (level < 0) level = 0;
             if (maxLevel < 0) maxLevel = 0;
             return scaler.GetValue(level, maxLevel);
+        }
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            if (scaler is IHasDynamicValues hasDynamicValues)
+            {
+                foreach (ADynamicValueReferenceSO reference in hasDynamicValues.GetDynamicValueReferences())
+                {
+                    yield return reference;
+                }
+            }
         }
 
     }

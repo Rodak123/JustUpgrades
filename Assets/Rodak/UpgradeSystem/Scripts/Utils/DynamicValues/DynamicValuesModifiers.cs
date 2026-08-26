@@ -17,6 +17,16 @@ namespace Rodak.UpgradeSystem.Utils
             }
         }
 
+        public void AddDynamicValueReference(ADynamicValueReferenceSO dynamicValueReferenceSO)
+        {
+            if (dynamicValueReferenceSO == null || valueModifiersMap.ContainsKey(dynamicValueReferenceSO))
+            {
+                return;
+            }
+            Debug.Log($"New reference: {dynamicValueReferenceSO}");
+            valueModifiersMap.Add(dynamicValueReferenceSO, new());
+        }
+
         public void AttachModifier(ADynamicValueReferenceSO valueReference, IDynamicValueModifier valueModifier)
         {
             if (!valueModifiersMap.TryGetValue(valueReference, out List<IDynamicValueModifier> valueModifiers))

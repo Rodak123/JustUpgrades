@@ -20,6 +20,7 @@ namespace Rodak.UpgradeSystem.Core
 
             currencyWallet.Init();
             dynamicValuesModifiers.Init();
+
             upgradeRegistry.Init(this);
         }
     }

@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class ConstantValueScaler : IValueScaler
+    public class ConstantValueScaler : IValueScaler, IHasDynamicValues
     {
         [SerializeField] private FloatDynamicValue value = new(1);
 
@@ -22,5 +23,11 @@ namespace Rodak.UpgradeSystem.Utils
         }
 
         public string Hint() => "x = value";
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            yield return value.ExposedReference;
+            yield return ignoredAtZero.ExposedReference;
+        }
     }
 }

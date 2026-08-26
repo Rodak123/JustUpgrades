@@ -17,6 +17,10 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         [SerializeField] private UTUpgradeSO upgradeSO;
 
+        [Space]
+        [SerializeField] private FloatDynamicValue someSystemValue;
+        [SerializeField] private ScaledValue someScaledSystemValue;
+
         private Upgrade upgrade;
 
         private void Start()

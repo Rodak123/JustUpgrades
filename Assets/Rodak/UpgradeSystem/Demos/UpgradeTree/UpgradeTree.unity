@@ -384,7 +384,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73f96a557e93304b96839b105d806f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.Demo1.Demo1Scene
-  upgradeSO: {fileID: 0}
+  upgradeSO: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
+  someSystemValue:
+    exposedReference: {fileID: 0}
+    baseValue:
+      mantissa: 0
+      exponent: 0
+  someScaledSystemValue:
+    scaler:
+      rid: 3358812908659408969
+  references:
+    version: 2
+    RefIds:
+    - rid: 3358812908659408969
+      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        increment:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1
+            exponent: 0
+        incrementGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
 --- !u!1001 &8758360653607607177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -448,7 +477,7 @@ PrefabInstance:
     - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'upgradeGroups.Array.data[0].upgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
     - target: {fileID: 1998401094603803526, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: m_Name
       value: Upgrade System Context
@@ -459,7 +488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: dynamicValueReferences.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[0]'

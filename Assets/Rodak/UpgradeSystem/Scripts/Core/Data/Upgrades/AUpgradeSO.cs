@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    public abstract class AUpgradeSO : UniqueScriptableObject<AUpgradeSO>
+    public abstract class AUpgradeSO : UniqueScriptableObject<AUpgradeSO>, IHasDynamicValues
     {
         [SerializeField] private string upgradeName = "Upgrade Name";
         [SerializeField] private UpgradeLevel level;
@@ -37,6 +38,37 @@ namespace Rodak.UpgradeSystem.Core
             foreach (AUpgradeParameter parameter in parameters)
             {
                 parameter.Update();
+            }
+        }
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            foreach (ADynamicValueReferenceSO reference in level.GetDynamicValueReferences())
+            {
+                yield return reference;
+            }
+            foreach (UpgradeCost cost in costs)
+            {
+                foreach (ADynamicValueReferenceSO reference in cost.GetDynamicValueReferences())
+                {
+                    yield return reference;
+                }
+            }
+            foreach (UpgradeRequirement requirement in requirements)
+            {
+                foreach (ADynamicValueReferenceSO reference in requirement.GetDynamicValueReferences())
+                {
+                    yield return reference;
+                }
+            }
+            foreach (AUpgradeParameter parameter in parameters)
+            {
+                if (parameter is not IHasDynamicValues hasDynamicValues) continue;
+                foreach (ADynamicValueReferenceSO reference in hasDynamicValues.GetDynamicValueReferences())
+                {
+                    Debug.Log(reference);
+                    yield return reference;
+                }
             }
         }
 

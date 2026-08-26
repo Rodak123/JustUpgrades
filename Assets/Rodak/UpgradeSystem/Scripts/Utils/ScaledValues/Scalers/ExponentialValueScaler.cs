@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public class ExponentialValueScaler : IValueScaler
+    public class ExponentialValueScaler : IValueScaler, IHasDynamicValues
     {
         [SerializeField] private FloatDynamicValue baseValue = new(1);
         [SerializeField] private FloatDynamicValue multiplier = new(1.15);
@@ -21,5 +22,12 @@ namespace Rodak.UpgradeSystem.Utils
         }
 
         public string Hint() => "x = base * (multiplier + (grow * level)) ^ level";
+
+        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        {
+            yield return baseValue.ExposedReference;
+            yield return multiplier.ExposedReference;
+            yield return multiplierGrow.ExposedReference;
+        }
     }
 }
