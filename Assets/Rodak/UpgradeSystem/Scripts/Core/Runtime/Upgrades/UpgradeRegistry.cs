@@ -43,7 +43,6 @@ namespace Rodak.UpgradeSystem.Core
             foreach (Upgrade upgrade in upgrades.Values)
             {
                 List<ADynamicValueReferenceSO> references = new(upgrade.UpgradeSO.GetDynamicValueReferences());
-                Debug.Log($"{upgrade} has {references.Count} references");
                 foreach (ADynamicValueReferenceSO reference in references)
                 {
                     if (reference == null) continue;

@@ -8,7 +8,7 @@ namespace Rodak.UpgradeSystem.UI
     public class CurrencyUI : MonoBehaviour
     {
         // public UpgradeSystemContext UpgradeContext;
-        // public CurrencySO TargetCurrency;
+        // public ACurrencySO TargetCurrency;
 
         // [Header("UI")]
         // [SerializeField] private TMP_Text nameText;

@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    [Serializable, CreateUpgradeParameterMenu(Order = 100)]
-    public class ADynamicValueUpgradeParameter : AUpgradeParameter, IHasDynamicValues
+    [Serializable, CreateUpgradeParameterMenu(Order = 100, MenuName = "Dynamic Value Modifier")]
+    public class DynamicValueModifierUpgradeParameter : AUpgradeParameter, IHasDynamicValues
     {
         private class Modifier : IDynamicValueModifier
         {
-            private readonly ADynamicValueUpgradeParameter upgradeParameter;
+            private readonly DynamicValueModifierUpgradeParameter upgradeParameter;
 
             private BigDouble value;
 
-            public Modifier(ADynamicValueUpgradeParameter upgradeParameter)
+            public Modifier(DynamicValueModifierUpgradeParameter upgradeParameter)
             {
                 this.upgradeParameter = upgradeParameter;
             }

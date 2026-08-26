@@ -66,7 +66,6 @@ namespace Rodak.UpgradeSystem.Core
                 if (parameter is not IHasDynamicValues hasDynamicValues) continue;
                 foreach (ADynamicValueReferenceSO reference in hasDynamicValues.GetDynamicValueReferences())
                 {
-                    Debug.Log(reference);
                     yield return reference;
                 }
             }

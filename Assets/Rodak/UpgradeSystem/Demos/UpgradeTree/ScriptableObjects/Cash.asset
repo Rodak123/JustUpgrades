@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc24933644b174459b9f07003ce1ab6, type: 3}
+  m_Name: Cash
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencySO
+  uniqueId: e270cfe36f61a1846a1731c6408fe59d
+  currencyName: Cash
+  currencyColor: {r: 0.13581096, g: 0.6415094, b: 0.009077947, a: 1}
+  baseValue:
+    mantissa: 2
+    exponent: 1

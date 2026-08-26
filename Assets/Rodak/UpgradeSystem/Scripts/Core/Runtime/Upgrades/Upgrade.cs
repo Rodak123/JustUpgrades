@@ -35,7 +35,7 @@ namespace Rodak.UpgradeSystem.Core
             if (!CanBeUpgraded())
                 return false;
 
-            Dictionary<CurrencySO, BigDouble> costs = GetCosts();
+            Dictionary<ACurrencySO, BigDouble> costs = GetCosts();
             if (!context.CurrencyWallet.TryPurchase(costs))
                 return false;
 
@@ -83,16 +83,16 @@ namespace Rodak.UpgradeSystem.Core
 
         public bool CanAfford()
         {
-            Dictionary<CurrencySO, BigDouble> costs = GetCosts();
+            Dictionary<ACurrencySO, BigDouble> costs = GetCosts();
             return context.CurrencyWallet.CanAfford(costs);
         }
 
-        public Dictionary<CurrencySO, BigDouble> GetCosts()
+        public Dictionary<ACurrencySO, BigDouble> GetCosts()
         {
-            Dictionary<CurrencySO, BigDouble> costDict = new();
+            Dictionary<ACurrencySO, BigDouble> costDict = new();
             foreach (UpgradeCost cost in UpgradeSO.Costs)
             {
-                CurrencySO currency = cost.TargetCurrency;
+                ACurrencySO currency = cost.TargetCurrency;
 
                 if (currency == null) continue;
                 BigDouble costValue = cost.GetCostValue(currentLevel, MaxLevel);

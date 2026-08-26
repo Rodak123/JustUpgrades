@@ -23,7 +23,6 @@ namespace Rodak.UpgradeSystem.Utils
             {
                 return;
             }
-            Debug.Log($"New reference: {dynamicValueReferenceSO}");
             valueModifiersMap.Add(dynamicValueReferenceSO, new());
         }
 

@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    [CreateAssetMenu(menuName = "UpgradeSystem/Core/Currency", order = 100)]
-    public class CurrencySO : UniqueScriptableObject<CurrencySO>
+    public abstract class ACurrencySO : UniqueScriptableObject<ACurrencySO>
     {
         [SerializeField] private string currencyName;
         [SerializeField] private Color currencyColor = Color.white;
