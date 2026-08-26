@@ -1,76 +1,221 @@
+using System;
 using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using Rodak.Utils.Editor;
+using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Rodak.UpgradeSystem.Editor
 {
-    [CustomEditor(typeof(UpgradeSO), true)]
+    [CustomEditor(typeof(AUpgradeSO), true)]
     public class UpgradeSOEditor : UnityEditor.Editor
     {
+        private const string NameShortcodeFormat = "{NAME}";
+
+        public const string UpgradeNamePropertyName = "upgradeName";
+        public const string LevelPropertyName = "level";
+        public const string CostsArrayPropertyName = "costs";
+        public const string RequirementsArrayPropertyName = "requirements";
+        public const string ParametersPropertyName = "parameters";
+
+        private SerializedProperty upgradeNameProperty;
+        private SerializedProperty levelProperty;
+        private SerializedProperty costsProperty;
+        private SerializedProperty requirementsProperty;
+        private SerializedProperty parametersProperty;
+
+        private VisualElement CreateParametersList()
+        {
+            ListView parametersList = new()
+            {
+                bindingPath = parametersProperty.propertyPath,
+                makeItem = () => new PropertyField(),
+                bindItem = (element, index) =>
+                {
+                    PropertyField field = (PropertyField)element;
+                    field.BindProperty(parametersProperty.GetArrayElementAtIndex(index));
+                },
+                reorderable = true,
+                reorderMode = ListViewReorderMode.Animated,
+                showAddRemoveFooter = true,
+                showFoldoutHeader = true,
+                showBorder = true,
+                headerTitle = "Parameters",
+                virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
+                showBoundCollectionSize = false
+            };
+
+            parametersList.schedule.Execute(() =>
+            {
+                Button builtInAddButton = parametersList.Q<Button>(EditorUtils.UnityListViewAddButtonName);
+
+                if (builtInAddButton != null)
+                {
+                    builtInAddButton.clickable.activators.Clear();
+
+                    builtInAddButton.RegisterCallback<MouseDownEvent>(evt =>
+                    {
+                        if (evt.button != 0) return;
+
+                        GenericMenu menu = GenerateTypeSelectionMenu(GetParameterTypes());
+                        menu.ShowAsContext();
+                    });
+                }
+            });
+
+            return parametersList;
+        }
+
+        private struct TypeMenuItem
+        {
+            public Type Type;
+            public int Order;
+            public string Name;
+        }
+
+        private GenericMenu GenerateTypeSelectionMenu(IEnumerable<Type> types)
+        {
+            List<TypeMenuItem> items = new();
+            foreach (Type type in types)
+            {
+                CreateUpgradeParameterMenuAttribute attribute = type.GetAttribute<CreateUpgradeParameterMenuAttribute>();
+                if (attribute == null || !attribute.ShowParameter)
+                {
+                    continue;
+                }
+
+                string typeName = GetName(type);
+
+                string name = attribute.MenuName?.Length > 0 ? attribute.MenuName : typeName;
+                name = name.Replace(NameShortcodeFormat, typeName);
+
+                items.Add(new()
+                {
+                    Type = type,
+                    Name = name,
+                    Order = attribute.Order,
+                });
+            }
+
+            items.Sort((a, b) => a.Order.CompareTo(b.Order));
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                TypeMenuItem itemA = items[i];
+                bool isUnique = true;
+
+                for (int j = 0; j < items.Count; j++)
+                {
+                    if (i == j) continue;
+                    TypeMenuItem itemB = items[j];
+
+                    if (itemA.Name == itemB.Name)
+                    {
+                        isUnique = false;
+
+                        itemB.Name += $"/{itemB.Type.FullName}";
+                        items[j] = itemB;
+                    }
+                }
+
+                if (!isUnique)
+                {
+                    itemA.Name += $"/{itemA.Type.FullName}";
+                    items[i] = itemA;
+                }
+            }
+
+            GenericMenu menu = new();
+
+            foreach (TypeMenuItem item in items)
+            {
+                menu.AddItem(new GUIContent(item.Name), false, OnAddParameter, item.Type);
+            }
+
+            return menu;
+        }
+
+        private IEnumerable<Type> GetParameterTypes()
+        {
+            TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<AUpgradeParameter>();
+
+            foreach (Type type in types)
+            {
+                if (type.IsAbstract || !type.IsClass || !type.IsSerializable)
+                {
+                    continue;
+                }
+
+                yield return type;
+            }
+        }
+
+        private string GetName(Type type)
+        {
+            return ObjectNames.NicifyVariableName(type.Name);
+        }
+
+        private void OnAddParameter(object targetType)
+        {
+            Type type = (Type)targetType;
+            int index = parametersProperty.arraySize;
+            parametersProperty.arraySize++;
+
+            SerializedProperty element = parametersProperty.GetArrayElementAtIndex(index);
+
+            element.managedReferenceValue = Activator.CreateInstance(type);
+
+            serializedObject.ApplyModifiedProperties();
+        }
+
         protected virtual IEnumerable<string> GetIgnoredProperties()
         {
-            yield return "";
+            yield return UpgradeNamePropertyName;
+            yield return LevelPropertyName;
+            yield return CostsArrayPropertyName;
+            yield return RequirementsArrayPropertyName;
+            yield return ParametersPropertyName;
         }
 
         protected virtual VisualElement CreateRootGUI()
         {
             VisualElement root = new();
-            // VisualTreeAsset document = UpgradeSystemEditorSettingsSO.Instance?.AUpgradeDocument;
 
-            // upgradeNameProperty = serializedObject.FindProperty(UpgradeNamePropertyName);
-            // hasMaxLevelProperty = serializedObject.FindProperty(HasMaxLevelPropertyName);
-            // maxLevelProperty = serializedObject.FindProperty(MaxLevelPropertyName);
-            // costsProperty = serializedObject.FindProperty(CostsPropertyName);
-            // requirementsProperty = serializedObject.FindProperty(RequirementsPropertyName);
+            upgradeNameProperty = serializedObject.FindProperty(UpgradeNamePropertyName);
+            levelProperty = serializedObject.FindProperty(LevelPropertyName);
+            costsProperty = serializedObject.FindProperty(CostsArrayPropertyName);
+            requirementsProperty = serializedObject.FindProperty(RequirementsArrayPropertyName);
+            parametersProperty = serializedObject.FindProperty(ParametersPropertyName);
 
-            // if (document == null
-            //     || upgradeNameProperty == null
-            //     || hasMaxLevelProperty == null
-            //     || maxLevelProperty == null
-            //     || costsProperty == null
-            //     || requirementsProperty == null
-            // )
-            // {
-            //     return root;
-            // }
+            if (
+                upgradeNameProperty == null
+                || levelProperty == null
+                || costsProperty == null
+                || requirementsProperty == null
+                || parametersProperty == null
+            )
+            {
+                Debug.LogWarning("No all properties found.");
+                return root;
+            }
 
-            // document.CloneTree(root);
+            PropertyField upgradeNameField = new(upgradeNameProperty);
+            root.Add(upgradeNameField);
 
-            // TextField upgradeNameField = root.Q<TextField>(UpgradeNameFieldName);
-            // upgradeNameField.bindingPath = upgradeNameProperty.propertyPath;
+            PropertyField levelField = new(levelProperty);
+            root.Add(levelField);
 
-            // Toggle hasMaxLevelToggle = root.Q<Toggle>(HasMaxLevelToggleName);
-            // hasMaxLevelToggle.bindingPath = hasMaxLevelProperty.propertyPath;
+            PropertyField costsField = new(costsProperty);
+            root.Add(costsField);
 
-            // IntegerField maxLevelField = root.Q<IntegerField>(MaxLevelFieldName);
-            // maxLevelField.bindingPath = maxLevelProperty.propertyPath;
+            PropertyField requirementsField = new(requirementsProperty);
+            root.Add(requirementsField);
 
-            // ListView costsList = root.Q<ListView>(CostsListName);
-            // costsList.bindingPath = costsProperty.propertyPath;
-
-            // ListView requirementsList = root.Q<ListView>(RequirementsListName);
-            // requirementsList.bindingPath = requirementsProperty.propertyPath;
-
-            // void UpdateUI()
-            // {
-            //     if (maxLevelProperty.intValue < 1)
-            //     {
-            //         maxLevelProperty.intValue = 1;
-            //         serializedObject.ApplyModifiedProperties();
-            //     }
-
-            //     maxLevelField.SetEnabled(hasMaxLevelProperty.boolValue);
-            // }
-
-            // UpdateUI();
-
-            // root.TrackPropertyValue(upgradeNameProperty, (_) => UpdateUI());
-            // root.TrackPropertyValue(hasMaxLevelProperty, (_) => UpdateUI());
-            // root.TrackPropertyValue(maxLevelProperty, (_) => UpdateUI());
-            // root.TrackPropertyValue(costsProperty, (_) => UpdateUI());
-            // root.TrackPropertyValue(requirementsProperty, (_) => UpdateUI());
+            VisualElement parametersList = CreateParametersList();
+            root.Add(parametersList);
 
             return root;
         }

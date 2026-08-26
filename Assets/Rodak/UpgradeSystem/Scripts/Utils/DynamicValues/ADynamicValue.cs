@@ -18,9 +18,11 @@ namespace Rodak.UpgradeSystem.Utils
 
         public BigDouble GetValue(DynamicValuesModifiers dynamicValuesModifiers)
         {
+            BigDouble baseValue = GetBaseValue();
+
             DynamicValueQuery query = new()
             {
-                Value = GetBaseValue(),
+                Value = baseValue,
             };
 
             if (IsExposed)

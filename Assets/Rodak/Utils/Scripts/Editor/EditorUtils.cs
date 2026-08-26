@@ -10,6 +10,7 @@ namespace Rodak.Utils.Editor
     {
         public const string UnityScriptPropertyName = "m_Script";
         public const string UnityContentContainerName = "unity-content";
+        public const string UnityListViewAddButtonName = "unity-list-view__add-button";
 
         public static void AppendOtherProperties(this SerializedObject serializedObject, VisualElement root, IEnumerable<string> ignoredPropertiesList = null)
         {

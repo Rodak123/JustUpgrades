@@ -74,7 +74,7 @@ namespace Rodak.UpgradeSystem.Editor
 
                 if (mode == 1)
                 {
-                    BigDouble val = new BigDouble(mantissaProp.doubleValue, exponentProp.longValue);
+                    BigDouble val = new(mantissaProp.doubleValue, exponentProp.longValue);
                     simpleField.SetValueWithoutNotify(val.ToDouble());
                 }
             };

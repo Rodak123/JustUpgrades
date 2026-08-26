@@ -8,9 +8,11 @@ namespace Rodak.UpgradeSystem.Core
     {
         [SerializeField] private CurrencyWallet currencyWallet;
         [SerializeField] private DynamicValuesModifiers dynamicValuesModifiers;
+        [SerializeField] private UpgradeRegistry upgradeRegistry;
 
         public CurrencyWallet CurrencyWallet => currencyWallet;
         public DynamicValuesModifiers DynamicValuesModifiers => dynamicValuesModifiers;
+        public UpgradeRegistry UpgradeRegistry => upgradeRegistry;
 
         protected override void Awake()
         {
@@ -18,6 +20,7 @@ namespace Rodak.UpgradeSystem.Core
 
             currencyWallet.Init();
             dynamicValuesModifiers.Init();
+            upgradeRegistry.Init(this);
         }
     }
 }

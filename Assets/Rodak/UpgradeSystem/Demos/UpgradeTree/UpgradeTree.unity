@@ -384,75 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73f96a557e93304b96839b105d806f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.Demo1.Demo1Scene
-  testFloatValue:
-    exposedReference: {fileID: 0}
-    baseValue:
-      mantissa: 0
-      exponent: 0
-  fixedValue:
-    exposedReference: {fileID: 0}
-    baseValue:
-      mantissa: 0
-      exponent: 0
-  upgradeSO: {fileID: 11400000, guid: 30744677b5c3a3642ae01630f94714ba, type: 2}
-  coolValue:
-    scaler:
-      rid: 3358812794393985143
-  coolerValue:
-    scaler:
-      rid: 3358812794393985148
-  references:
-    version: 2
-    RefIds:
-    - rid: 3358812794393985143
-      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseValue:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 0
-            exponent: 0
-        increment:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 1
-            exponent: 0
-        incrementGrow:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 0
-            exponent: 0
-    - rid: 3358812794393985148
-      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseValue:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 0
-            exponent: 0
-        increment:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 1
-            exponent: 0
-        incrementGrow:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 0
-            exponent: 0
---- !u!114 &5039205671148833928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
-  m_Name: TestFloatValue_testFloatValue_upgrade:30744677b5c3a3642ae01630f94714ba
-  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
-  uniqueId: 30744677b5c3a3642ae01630f94714ba
+  upgradeSO: {fileID: 0}
 --- !u!1001 &8758360653607607177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,6 +433,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
+      propertyPath: upgradeGroups.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
+      propertyPath: upgradeGroups.Array.data[0].groupName
+      value: a
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
+      propertyPath: upgradeGroups.Array.data[0].upgrades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
+      propertyPath: 'upgradeGroups.Array.data[0].upgrades.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1998401094603803526, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: m_Name
       value: Upgrade System Context
@@ -511,12 +459,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: dynamicValueReferences.Array.size
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
+      propertyPath: 'dynamicValueReferences.Array.data[0]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6154804244984862860, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'dynamicValueReferences.Array.data[1]'
       value: 
-      objectReference: {fileID: 5039205671148833928}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

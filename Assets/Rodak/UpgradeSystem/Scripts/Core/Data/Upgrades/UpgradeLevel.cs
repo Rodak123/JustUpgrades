@@ -5,9 +5,9 @@ using Rodak.UpgradeSystem.Utils;
 namespace Rodak.UpgradeSystem.Core
 {
     [Serializable]
-    public struct UpgradeLevel
+    public class UpgradeLevel
     {
-        [SerializeField] public IntDynamicValue MaxLevel;
-        [SerializeField] public BoolDynamicValue IsInfinite;
+        [SerializeField] public IntDynamicValue MaxLevel = new(1, 1);
+        [SerializeField] public BoolDynamicValue IsInfinite = new(false);
     }
 }

@@ -6,24 +6,38 @@ namespace Rodak.UpgradeSystem.Utils
     [Serializable]
     public class IntDynamicValue : ADynamicValue<IntDynamicValueReferenceSO>
     {
-        [SerializeField] private BigDouble baseValue;
+        [SerializeField] private int baseValue;
+
+        private int? minValue;
+        private int? maxValue;
 
         public IntDynamicValue() : this(0)
         { }
 
-        public IntDynamicValue(BigDouble baseValue)
+        public IntDynamicValue(int baseValue, int? minValue = null, int? maxValue = null)
         {
             this.baseValue = baseValue;
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+        }
+
+        private int Clamp(int value)
+        {
+            if (minValue.HasValue && value < minValue.Value) value = minValue.Value;
+            if (maxValue.HasValue && value > maxValue.Value) value = maxValue.Value;
+            return value;
         }
 
         public override BigDouble GetBaseValue()
         {
-            return baseValue.Round();
+            return Clamp(baseValue);
         }
 
-        public BigDouble GetIntValue(DynamicValuesModifiers dynamicValuesModifiers)
+        public int GetIntValue(DynamicValuesModifiers dynamicValuesModifiers)
         {
-            return GetValue(dynamicValuesModifiers).Round();
+            int value = GetValue(dynamicValuesModifiers).FloorToInt();
+            value = Clamp(value);
+            return value;
         }
     }
 }

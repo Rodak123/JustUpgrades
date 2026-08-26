@@ -9,22 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68848b71a01fef48a2744ed0bc45486, type: 3}
-  m_Name: New Upgrade SO
-  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Core.UpgradeSO
-  uniqueId: a1658c1583b5aa74594def38d5f6fe3f
-  upgradeName: test
+  m_Script: {fileID: 11500000, guid: 39fbf7e032f9ae342a1f366150c00f6c, type: 3}
+  m_Name: New UT Upgrade SO
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
+  uniqueId: d4e76a22a42c83e48ada9182a2c36747
+  upgradeName: Upgrade Name
   level:
     MaxLevel:
       exposedReference: {fileID: 0}
-      baseValue:
-        mantissa: 0
-        exponent: 0
+      baseValue: 1
     IsInfinite:
       exposedReference: {fileID: 0}
       baseValue: 0
   costs: []
   requirements: []
+  parameters: []
+  visual:
+    upgradeDescription: Description
   references:
     version: 2
     RefIds: []
