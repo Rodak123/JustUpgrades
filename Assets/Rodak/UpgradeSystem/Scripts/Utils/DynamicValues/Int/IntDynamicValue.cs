@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Rodak.UpgradeSystem.Core;
 
 namespace Rodak.UpgradeSystem.Utils
 {
@@ -39,5 +40,7 @@ namespace Rodak.UpgradeSystem.Utils
             value = Clamp(value);
             return value;
         }
+
+        public int GetIntValue() => GetIntValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
     }
 }

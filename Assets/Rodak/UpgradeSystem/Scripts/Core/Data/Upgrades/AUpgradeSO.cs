@@ -7,15 +7,19 @@ namespace Rodak.UpgradeSystem.Core
     public abstract class AUpgradeSO : UniqueScriptableObject<AUpgradeSO>, IHasDynamicValues
     {
         [SerializeField] private string upgradeName = "Upgrade Name";
+
+        [Space]
         [SerializeField] private UpgradeLevel level;
         [SerializeField] private UpgradeCost[] costs;
         [SerializeField] private UpgradeRequirement[] requirements;
         [SerializeReference] private AUpgradeParameter[] parameters;
 
         public string UpgradeName => upgradeName;
+
         public UpgradeLevel Level => level;
         public UpgradeCost[] Costs => costs;
         public UpgradeRequirement[] Requirements => requirements;
+        public AUpgradeParameter[] Parameters => parameters;
 
         public void Init(UpgradeSystemContext upgradeContext)
         {

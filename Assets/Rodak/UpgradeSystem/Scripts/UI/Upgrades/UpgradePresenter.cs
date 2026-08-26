@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using Rodak.UpgradeSystem.Core;
+using Rodak.UpgradeSystem.Utils;
+using UnityEditor;
+using UnityEngine;
+
+namespace Rodak.UpgradeSystem.UI
+{
+    public static class UpgradePresenter
+    {
+        private static string ReplaceShortcodes(string text, Upgrade upgrade)
+        {
+            TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<IUpgradeValueShortcode>();
+
+            foreach (Type type in types)
+            {
+                if (type.IsAbstract || !type.IsClass)
+                {
+                    continue;
+                }
+
+                IUpgradeValueShortcode valueShortcode = (IUpgradeValueShortcode)Activator.CreateInstance(type);
+                text = valueShortcode.ReplaceShortcodes(text, upgrade);
+            }
+
+            return text;
+        }
+
+        public static string GetFormattedCost(UpgradeCost upgradeCost, int currentLevel, int maxLevel, bool includeName = true, Color? costNumberColor = null)
+        {
+            if (upgradeCost == null) return string.Empty;
+
+            BigDouble costValue = upgradeCost.GetCostValue(currentLevel, maxLevel);
+            return CurrencyPresenter.GetFormattedCurrency(upgradeCost.TargetCurrency, costValue, includeName, costNumberColor);
+        }
+
+        public static string GetFormattedRequirement(UpgradeRequirement upgradeRequirement)
+        {
+            if (upgradeRequirement == null) return string.Empty;
+
+            if (upgradeRequirement.TargetUpgrade == null)
+            {
+                return $"Target Upgrade not set";
+            }
+            else
+            {
+                bool useMaxLevel = upgradeRequirement.UseMaxLevel.GetBoolValue();
+                bool isInfinite = upgradeRequirement.TargetUpgrade.Level.IsInfinite.GetBoolValue();
+                int targetLevel = upgradeRequirement.TargetLevel.GetIntValue();
+
+                string targetLevelString = (useMaxLevel && !isInfinite) ? "Max" : targetLevel.ToString();
+                return $"lv. {targetLevelString} {GetFormattedName(upgradeRequirement.TargetUpgrade)}";
+            }
+        }
+
+        public static string GetFormattedName(AUpgradeSO upgradeSO)
+        {
+            if (upgradeSO == null) return "None";
+            return upgradeSO.UpgradeName;
+        }
+
+        public static string GetFormattedLevel(Upgrade upgrade)
+        {
+            if (upgrade == null) return string.Empty;
+
+            int current = upgrade.CurrentLevel;
+
+            bool isInfinite = upgrade.UpgradeSO.Level.IsInfinite.GetBoolValue();
+            if (isInfinite) return current.ToString();
+
+            int maxLevel = upgrade.UpgradeSO.Level.MaxLevel.GetIntValue();
+            return $"{current} / {maxLevel}";
+        }
+
+        public static string GetFormattedCosts(Upgrade upgrade, bool includeName = true, Color? costNumberColor = null)
+        {
+            if (upgrade == null || !upgrade.CanImprove()) return string.Empty;
+
+            if (upgrade.UpgradeSO.Costs.Length == 0)
+            {
+                return "Free";
+            }
+
+            int maxLevel = upgrade.UpgradeSO.Level.MaxLevel.GetIntValue();
+
+            List<string> costsList = new();
+            foreach (UpgradeCost cost in upgrade.UpgradeSO.Costs)
+            {
+                costsList.Add(GetFormattedCost(cost, upgrade.CurrentLevel, maxLevel, includeName));
+            }
+
+            return string.Join("\n", costsList);
+        }
+    }
+}

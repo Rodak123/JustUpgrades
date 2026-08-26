@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Rodak.UpgradeSystem.Core;
 
 namespace Rodak.UpgradeSystem.Utils
 {
@@ -25,5 +26,7 @@ namespace Rodak.UpgradeSystem.Utils
         {
             return GetValue(dynamicValuesModifiers) > 0;
         }
+
+        public bool GetBoolValue() => GetBoolValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
     }
 }
