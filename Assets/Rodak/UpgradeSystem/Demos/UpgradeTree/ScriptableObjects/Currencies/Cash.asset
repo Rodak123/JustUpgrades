@@ -16,5 +16,8 @@ MonoBehaviour:
   currencyName: Cash
   currencyColor: {r: 0.13581096, g: 0.6415094, b: 0.009077947, a: 1}
   baseValue:
-    mantissa: 2
-    exponent: 1
+    mantissa: 0
+    exponent: 0
+  baseGain:
+    mantissa: 1
+    exponent: 0

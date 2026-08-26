@@ -6,8 +6,10 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
     [CreateAssetMenu(menuName = "UpgradeSystem/Demo UT/Upgrade", order = 110)]
     public class UTUpgradeSO : AUpgradeSO
     {
-        [SerializeField] private UTUpgradeVisual visual;
+        [SerializeField] private int upgradeNumber;
+        [SerializeField] private UTUpgradeVisual upgradeVisual;
 
-        public UTUpgradeVisual Visual => visual;
+        public int UpgradeNumber => upgradeNumber;
+        public UTUpgradeVisual UpgradeVisual => upgradeVisual;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,15 +6,34 @@ namespace Rodak.UpgradeSystem.Utils
 {
     public class DynamicValuesModifiers : MonoBehaviour
     {
-        [SerializeField] private List<ADynamicValueReferenceSO> dynamicValueReferences = new();
+        [Serializable]
+        private struct DynamicValueReferenceGroup
+        {
+            public string groupName;
+            public List<ADynamicValueReferenceSO> dynamicValueReferences;
+        }
+
+        [Header("Note: Dynamic values under registered upgrades are registered automatically")]
+        [Header("Grouping only to organize")]
+        [SerializeField] private List<DynamicValueReferenceGroup> dynamicValueReferenceGroups = new();
 
         private readonly Dictionary<ADynamicValueReferenceSO, List<IDynamicValueModifier>> valueModifiersMap = new();
 
         public void Init()
         {
-            foreach (ADynamicValueReferenceSO valueReference in dynamicValueReferences)
+            for (int i = 0; i < dynamicValueReferenceGroups.Count; i++)
             {
-                valueModifiersMap.Add(valueReference, new());
+                List<ADynamicValueReferenceSO> groupUpgrades = dynamicValueReferenceGroups[i].dynamicValueReferences;
+                for (int j = 0; j < groupUpgrades.Count; j++)
+                {
+                    ADynamicValueReferenceSO valueReference = groupUpgrades[j];
+                    if (valueReference == null)
+                    {
+                        Debug.LogWarning($"Null value reference at [{j}] in group: '{dynamicValueReferenceGroups[i].groupName}'");
+                        continue;
+                    }
+                    valueModifiersMap.Add(valueReference, new());
+                }
             }
         }
 
