@@ -35,8 +35,20 @@ namespace Rodak.UpgradeSystem.Editor
                 makeItem = () => new PropertyField(),
                 bindItem = (element, index) =>
                 {
+                    SerializedProperty indexProperty = parametersProperty.GetArrayElementAtIndex(index);
                     PropertyField field = (PropertyField)element;
-                    field.BindProperty(parametersProperty.GetArrayElementAtIndex(index));
+                    field.BindProperty(indexProperty);
+
+                    string label = $"{indexProperty.displayName} ( {indexProperty.managedReferenceValue} )";
+                    field.label = label;
+
+                    field.schedule.Execute(() =>
+                    {
+                        field.label = label;
+                        Foldout foldout = field.Q<Foldout>();
+                        if (foldout == null) return;
+                        foldout.text = label;
+                    });
                 },
                 reorderable = true,
                 reorderMode = ListViewReorderMode.Animated,

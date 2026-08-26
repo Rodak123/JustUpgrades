@@ -83,5 +83,10 @@ namespace Rodak.UpgradeSystem.Core
         {
             return dynamicValueModifier.GetDynamicValueReferences();
         }
+
+        public override string ToString()
+        {
+            return $"Modifies '{targetDynamicValue}'";
+        }
     }
 }
