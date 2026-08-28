@@ -27,7 +27,7 @@ namespace Rodak.UpgradeSystem.Core
 
             public void Update()
             {
-                value = upgradeParameter.DynamicValueModifier.GetValue(upgradeParameter.CurrentLevel, upgradeParameter.MaxLevel); ;
+                value = upgradeParameter.DynamicValueModifier.GetValue(upgradeParameter.CurrentLevel, upgradeParameter.MaxLevel);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Rodak.UpgradeSystem.Core
             modifier = new Modifier(this);
 
             context.UpgradeRegistry.TryGetUpgrade(upgradeSO, out upgrade);
-            context.DynamicValuesModifiers.AttachModifier(targetDynamicValue, modifier);
+            context.DynamicValueRegistry.AttachModifier(targetDynamicValue, modifier);
 
             if (upgrade == null)
             {
@@ -61,27 +61,36 @@ namespace Rodak.UpgradeSystem.Core
             }
         }
 
-        public override void ApplyParameterUpgrade(int level, UpgradeSystemContext context) { }
-
         public override void Update()
         {
+            if (modifier == null)
+            {
+                Debug.LogWarning($"Parameter '{this}' not initialized.");
+                return;
+            }
+
             modifier.Update();
         }
 
-        public override string GetInfoText(int level)
+        public override string GetInfoText()
         {
-            if (!DynamicValueModifier.HasValue || !showInfoText)
+            if (modifier == null)
+            {
+                return "|Uninitialized|";
+            }
+
+            if (!showInfoText)
             {
                 return string.Empty;
             }
 
-            BigDouble value = DynamicValueModifier.GetValue(level, MaxLevel);
+            BigDouble value = DynamicValueModifier.GetValue(upgrade.CurrentLevel, MaxLevel);
             return DynamicValuePresenter.GetFormattedDynamicValue(value);
         }
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            return dynamicValueModifier.GetDynamicValueReferences();
+            return dynamicValueModifier.GetDynamicValues();
         }
 
         public override string ToString()

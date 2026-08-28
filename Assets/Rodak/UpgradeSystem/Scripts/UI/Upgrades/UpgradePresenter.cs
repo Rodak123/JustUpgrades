@@ -1,32 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using Rodak.UpgradeSystem.Utils;
-using UnityEditor;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.UI
 {
     public static class UpgradePresenter
     {
-        private static string ReplaceShortcodes(string text, Upgrade upgrade)
-        {
-            TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<IUpgradeValueShortcode>();
-
-            foreach (Type type in types)
-            {
-                if (type.IsAbstract || !type.IsClass)
-                {
-                    continue;
-                }
-
-                IUpgradeValueShortcode valueShortcode = (IUpgradeValueShortcode)Activator.CreateInstance(type);
-                text = valueShortcode.ReplaceShortcodes(text, upgrade);
-            }
-
-            return text;
-        }
-
         public static string GetFormattedCost(UpgradeCost upgradeCost, int currentLevel, int maxLevel, bool includeName = true, Color? costNumberColor = null)
         {
             if (upgradeCost == null) return string.Empty;

@@ -24,13 +24,13 @@ namespace Rodak.UpgradeSystem.Utils
             return scaler.GetValue(level, maxLevel);
         }
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
             if (scaler is IHasDynamicValues hasDynamicValues)
             {
-                foreach (ADynamicValueReferenceSO reference in hasDynamicValues.GetDynamicValueReferences())
+                foreach (IDynamicValue dynamicValue in hasDynamicValues.GetDynamicValues())
                 {
-                    yield return reference;
+                    yield return dynamicValue;
                 }
             }
         }

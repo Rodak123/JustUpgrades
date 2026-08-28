@@ -29,14 +29,6 @@ namespace Rodak.UpgradeSystem.Core
             }
         }
 
-        public void ApplyUpgrade(int level, UpgradeSystemContext context)
-        {
-            foreach (AUpgradeParameter parameter in parameters)
-            {
-                parameter.ApplyParameterUpgrade(level, context);
-            }
-        }
-
         public void Update()
         {
             foreach (AUpgradeParameter parameter in parameters)
@@ -45,32 +37,32 @@ namespace Rodak.UpgradeSystem.Core
             }
         }
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            foreach (ADynamicValueReferenceSO reference in level.GetDynamicValueReferences())
+            foreach (IDynamicValue dynamicValue in level.GetDynamicValues())
             {
-                yield return reference;
+                yield return dynamicValue;
             }
             foreach (UpgradeCost cost in costs)
             {
-                foreach (ADynamicValueReferenceSO reference in cost.GetDynamicValueReferences())
+                foreach (IDynamicValue dynamicValue in cost.GetDynamicValues())
                 {
-                    yield return reference;
+                    yield return dynamicValue;
                 }
             }
             foreach (UpgradeRequirement requirement in requirements)
             {
-                foreach (ADynamicValueReferenceSO reference in requirement.GetDynamicValueReferences())
+                foreach (IDynamicValue dynamicValue in requirement.GetDynamicValues())
                 {
-                    yield return reference;
+                    yield return dynamicValue;
                 }
             }
             foreach (AUpgradeParameter parameter in parameters)
             {
                 if (parameter is not IHasDynamicValues hasDynamicValues) continue;
-                foreach (ADynamicValueReferenceSO reference in hasDynamicValues.GetDynamicValueReferences())
+                foreach (IDynamicValue dynamicValue in hasDynamicValues.GetDynamicValues())
                 {
-                    yield return reference;
+                    yield return dynamicValue;
                 }
             }
         }

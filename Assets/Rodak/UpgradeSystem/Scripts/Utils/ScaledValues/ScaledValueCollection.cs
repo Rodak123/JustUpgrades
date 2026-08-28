@@ -33,13 +33,13 @@ namespace Rodak.UpgradeSystem.Utils
             return GetEnumerator();
         }
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
             foreach (ScaledValue scaledValue in scaledValues)
             {
-                foreach (ADynamicValueReferenceSO reference in scaledValue.GetDynamicValueReferences())
+                foreach (IDynamicValue dynamicValue in scaledValue.GetDynamicValues())
                 {
-                    yield return reference;
+                    yield return dynamicValue;
                 }
             }
         }

@@ -11,10 +11,10 @@ namespace Rodak.UpgradeSystem.Core
         [SerializeField] public IntDynamicValue MaxLevel = new(1, 1);
         [SerializeField] public BoolDynamicValue IsInfinite = new(false);
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            yield return MaxLevel.ExposedReference;
-            yield return IsInfinite.ExposedReference;
+            yield return MaxLevel;
+            yield return IsInfinite;
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Rodak.UpgradeSystem.Editor
 
                 button.text = "";
                 button.tooltip = isExposed
-                    ? $"Delete reference: {exposedReference}"
+                    ? $"Delete reference"
                     : "Expose reference for modifiers";
                 button.iconImage = GetExposeButtonIcon(isExposed);
             }

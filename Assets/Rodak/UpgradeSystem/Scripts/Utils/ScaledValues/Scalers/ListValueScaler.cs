@@ -18,18 +18,18 @@ namespace Rodak.UpgradeSystem.Utils
             if (level == 0 || values.Count == 0) return 0;
             int index = Math.Clamp(level - 1, 0, values.Count - 1);
 
-            bool additiveValue = additive.GetBoolValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+            bool additiveValue = additive.GetBoolValue();
 
             if (!additiveValue)
             {
-                BigDouble value = values[index].GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+                BigDouble value = values[index].GetFloatValue();
                 return value;
             }
 
             BigDouble sum = 0;
             for (int i = 0; i <= index; i++)
             {
-                BigDouble value = values[i].GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+                BigDouble value = values[i].GetFloatValue();
                 sum += value;
             }
             return sum;
@@ -37,11 +37,11 @@ namespace Rodak.UpgradeSystem.Utils
 
         public string Hint() => "x = list[level - 1]";
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
             foreach (FloatDynamicValue value in values)
             {
-                yield return value.ExposedReference;
+                yield return value;
             }
         }
     }

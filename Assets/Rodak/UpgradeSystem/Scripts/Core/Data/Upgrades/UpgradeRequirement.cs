@@ -16,10 +16,10 @@ namespace Rodak.UpgradeSystem.Core
         public BoolDynamicValue UseMaxLevel => useMaxLevel;
         public IntDynamicValue TargetLevel => targetLevel;
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            yield return useMaxLevel.ExposedReference;
-            yield return targetLevel.ExposedReference;
+            yield return useMaxLevel;
+            yield return targetLevel;
         }
     }
 }

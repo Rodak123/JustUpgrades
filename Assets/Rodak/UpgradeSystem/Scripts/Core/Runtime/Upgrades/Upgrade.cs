@@ -13,8 +13,8 @@ namespace Rodak.UpgradeSystem.Core
         public readonly AUpgradeSO UpgradeSO;
 
         public int CurrentLevel => currentLevel;
-        public bool IsInfinite => UpgradeSO.Level.IsInfinite.GetBoolValue(context.DynamicValuesModifiers);
-        public int MaxLevel => IsInfinite ? currentLevel + 1 : UpgradeSO.Level.MaxLevel.GetIntValue(context.DynamicValuesModifiers);
+        public bool IsInfinite => UpgradeSO.Level.IsInfinite.GetBoolValue();
+        public int MaxLevel => IsInfinite ? currentLevel + 1 : UpgradeSO.Level.MaxLevel.GetIntValue();
         public int NextLevel => Mathf.Min(currentLevel + 1, MaxLevel);
 
         public event Action<Upgrade> OnLevelIncreased;
@@ -40,7 +40,6 @@ namespace Rodak.UpgradeSystem.Core
                 return false;
 
             currentLevel++;
-            UpgradeSO.ApplyUpgrade(currentLevel, context);
             OnLevelIncreased?.Invoke(this);
             return true;
         }
@@ -71,9 +70,9 @@ namespace Rodak.UpgradeSystem.Core
                 if (!context.UpgradeRegistry.TryGetUpgrade(requirement.TargetUpgrade, out Upgrade requiredUpgrade))
                     return false;
 
-                int targetLevel = requirement.UseMaxLevel.GetBoolValue(context.DynamicValuesModifiers)
-                    ? requiredUpgrade.UpgradeSO.Level.MaxLevel.GetIntValue(context.DynamicValuesModifiers)
-                    : requirement.TargetLevel.GetIntValue(context.DynamicValuesModifiers);
+                int targetLevel = requirement.UseMaxLevel.GetBoolValue()
+                    ? requiredUpgrade.UpgradeSO.Level.MaxLevel.GetIntValue()
+                    : requirement.TargetLevel.GetIntValue();
 
                 if (requiredUpgrade.CurrentLevel < targetLevel)
                     return false;

@@ -8,6 +8,7 @@ namespace Rodak.UpgradeSystem.Utils
     [Serializable]
     public class ConstantValueScaler : IValueScaler, IHasDynamicValues
     {
+
         [SerializeField] private FloatDynamicValue value = new(1);
 
         [Tooltip("When true, the level 0 value is 0")]
@@ -15,8 +16,8 @@ namespace Rodak.UpgradeSystem.Utils
 
         public BigDouble GetValue(int level, int maxLevel)
         {
-            BigDouble valueValue = value.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
-            bool ignoredAtZeroValue = ignoredAtZero.GetBoolValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+            BigDouble valueValue = value.GetFloatValue();
+            bool ignoredAtZeroValue = ignoredAtZero.GetBoolValue();
 
             if (ignoredAtZeroValue && level == 0) return 0;
             return valueValue;
@@ -24,10 +25,10 @@ namespace Rodak.UpgradeSystem.Utils
 
         public string Hint() => "x = value";
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            yield return value.ExposedReference;
-            yield return ignoredAtZero.ExposedReference;
+            yield return value;
+            yield return ignoredAtZero;
         }
     }
 }

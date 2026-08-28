@@ -16,9 +16,9 @@ namespace Rodak.UpgradeSystem.Core
         public BigDouble GetCostValue(int currentLevel, int maxLevel) => new(costScaling.GetValue(currentLevel, maxLevel));
 
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            return costScaling.GetDynamicValueReferences();
+            return costScaling.GetDynamicValues();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using Rodak.UpgradeSystem.UI;
 using Rodak.UpgradeSystem.Utils;
@@ -9,7 +10,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
     /**
         Uses the linear and exponential upgradable values to increment the target currency.
     */
-    public class UTCurrencyGenerator : MonoBehaviour
+    public class UTCurrencyGenerator : MonoBehaviour, IHasDynamicValues
     {
         [Serializable]
         public struct CurrencyBoost
@@ -52,12 +53,12 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         private void Update()
         {
-            LastUnlockedStatus = targetUnlockedStatus.GetBoolValue(upgradeContext.DynamicValuesModifiers);
+            LastUnlockedStatus = targetUnlockedStatus.GetBoolValue();
 
             if (LastUnlockedStatus == false) return;
 
             // Single
-            BigDouble totalSingleUseGain = targetSingleUseGain.GetFloatValue(upgradeContext.DynamicValuesModifiers);
+            BigDouble totalSingleUseGain = targetSingleUseGain.GetFloatValue();
             BigDouble singleUseGain = totalSingleUseGain - LastTotalSingleUseGain;
             LastTotalSingleUseGain = totalSingleUseGain;
             upgradeContext.CurrencyWallet.AddCurrency(targetCurrency, singleUseGain);
@@ -76,12 +77,12 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         private BigDouble CalculateLinearGain()
         {
-            BigDouble linearGain = targetLinearGain.GetFloatValue(upgradeContext.DynamicValuesModifiers);
+            BigDouble linearGain = targetLinearGain.GetFloatValue();
 
             foreach (CurrencyBoost currencyBoost in linearCurrencyBoosts)
             {
                 BigDouble currencyValue = upgradeContext.CurrencyWallet.GetCurrencyAmount(currencyBoost.TargetCurrency);
-                BigDouble boost = currencyBoost.TargetBoost.GetFloatValue(upgradeContext.DynamicValuesModifiers);
+                BigDouble boost = currencyBoost.TargetBoost.GetFloatValue();
                 linearGain += currencyValue * boost;
             }
 
@@ -90,16 +91,34 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         private BigDouble CalculateExponentialGain()
         {
-            BigDouble exponentialGain = targetExponentialGain.GetFloatValue(upgradeContext.DynamicValuesModifiers);
+            BigDouble exponentialGain = targetExponentialGain.GetFloatValue();
 
             foreach (CurrencyBoost currencyBoost in exponentialCurrencyBoosts)
             {
                 BigDouble currencyValue = upgradeContext.CurrencyWallet.GetCurrencyAmount(currencyBoost.TargetCurrency);
-                BigDouble boost = currencyBoost.TargetBoost.GetFloatValue(upgradeContext.DynamicValuesModifiers);
+                BigDouble boost = currencyBoost.TargetBoost.GetFloatValue();
                 exponentialGain += currencyValue * boost;
             }
 
             return exponentialGain;
+        }
+
+        public IEnumerable<IDynamicValue> GetDynamicValues()
+        {
+            yield return targetUnlockedStatus;
+            yield return targetSingleUseGain;
+            yield return targetLinearGain;
+            yield return targetExponentialGain;
+
+            foreach (CurrencyBoost currencyBoost in linearCurrencyBoosts)
+            {
+                yield return currencyBoost.TargetBoost;
+            }
+
+            foreach (CurrencyBoost currencyBoost in exponentialCurrencyBoosts)
+            {
+                yield return currencyBoost.TargetBoost;
+            }
         }
 
         public override string ToString()

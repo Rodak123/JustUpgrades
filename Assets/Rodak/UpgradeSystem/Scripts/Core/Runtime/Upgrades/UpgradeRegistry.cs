@@ -42,12 +42,7 @@ namespace Rodak.UpgradeSystem.Core
             // register dynamic values
             foreach (Upgrade upgrade in upgrades.Values)
             {
-                List<ADynamicValueReferenceSO> references = new(upgrade.UpgradeSO.GetDynamicValueReferences());
-                foreach (ADynamicValueReferenceSO reference in references)
-                {
-                    if (reference == null) continue;
-                    context.DynamicValuesModifiers.AddDynamicValueReference(reference);
-                }
+                context.DynamicValueRegistry.RegisterDynamicValuesFrom(upgrade.UpgradeSO);
             }
 
             // init all upgrades

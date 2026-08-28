@@ -14,20 +14,20 @@ namespace Rodak.UpgradeSystem.Utils
 
         public BigDouble GetValue(int level, int maxLevel)
         {
-            BigDouble baseValueValue = baseValue.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
-            BigDouble multiplierValue = multiplier.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
-            BigDouble multiplierGrowValue = multiplierGrow.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+            BigDouble baseValueValue = baseValue.GetFloatValue();
+            BigDouble multiplierValue = multiplier.GetFloatValue();
+            BigDouble multiplierGrowValue = multiplierGrow.GetFloatValue();
 
             return baseValueValue * BigDouble.Pow(multiplierValue + multiplierGrowValue * level, level);
         }
 
         public string Hint() => "x = base * (multiplier + (grow * level)) ^ level";
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            yield return baseValue.ExposedReference;
-            yield return multiplier.ExposedReference;
-            yield return multiplierGrow.ExposedReference;
+            yield return baseValue;
+            yield return multiplier;
+            yield return multiplierGrow;
         }
     }
 }

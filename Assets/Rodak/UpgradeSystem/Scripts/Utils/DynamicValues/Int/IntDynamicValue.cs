@@ -1,46 +1,31 @@
 using UnityEngine;
 using System;
-using Rodak.UpgradeSystem.Core;
 
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
     public class IntDynamicValue : ADynamicValue<IntDynamicValueReferenceSO>
     {
-        [SerializeField] private int baseValue;
+        public static int GetIntValueFrom(BigDouble value)
+        {
+            return value.FloorToInt();
+        }
 
-        private int? minValue;
-        private int? maxValue;
+        [SerializeField] private int baseValue;
 
         public IntDynamicValue() : this(0)
         { }
 
-        public IntDynamicValue(int baseValue, int? minValue = null, int? maxValue = null)
+        public IntDynamicValue(int baseValue, int? minValue = null, int? maxValue = null) : base(minValue, maxValue)
         {
             this.baseValue = baseValue;
-            this.minValue = minValue;
-            this.maxValue = maxValue;
         }
 
-        private int Clamp(int value)
+        protected override BigDouble GetBaseValue()
         {
-            if (minValue.HasValue && value < minValue.Value) value = minValue.Value;
-            if (maxValue.HasValue && value > maxValue.Value) value = maxValue.Value;
-            return value;
+            return baseValue;
         }
 
-        public override BigDouble GetBaseValue()
-        {
-            return Clamp(baseValue);
-        }
-
-        public int GetIntValue(DynamicValuesModifiers dynamicValuesModifiers)
-        {
-            int value = GetValue(dynamicValuesModifiers).FloorToInt();
-            value = Clamp(value);
-            return value;
-        }
-
-        public int GetIntValue() => GetIntValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+        public int GetIntValue() => GetIntValueFrom(GetValue());
     }
 }

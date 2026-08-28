@@ -4,33 +4,56 @@ using UnityEngine;
 namespace Rodak.UpgradeSystem.Utils
 {
     [Serializable]
-    public abstract class ADynamicValue<R> where R : ADynamicValueReferenceSO
+    public abstract class ADynamicValue<R> : IDynamicValue where R : ADynamicValueReferenceSO
     {
+        private class BaseModifier : IDynamicValueModifier
+        {
+            private ADynamicValue<R> dynamicValue;
+
+            public BaseModifier(ADynamicValue<R> dynamicValue)
+            {
+                this.dynamicValue = dynamicValue;
+            }
+
+            public void Query(DynamicValueQuery query)
+            {
+                query.Value += dynamicValue.GetBaseValue();
+            }
+        }
+
         [SerializeField] private R exposedReference;
 
         public bool IsExposed => exposedReference != null;
-        public R ExposedReference => exposedReference;
+        public R ExposedReferenceTyped => exposedReference;
+        public ADynamicValueReferenceSO ExposedReference => exposedReference;
 
-        public ADynamicValue()
-        { }
+        private BigDouble? minValue;
+        private BigDouble? maxValue;
 
-        public abstract BigDouble GetBaseValue();
-
-        public BigDouble GetValue(DynamicValuesModifiers dynamicValuesModifiers)
+        public ADynamicValue(BigDouble? minValue, BigDouble? maxValue)
         {
-            BigDouble baseValue = GetBaseValue();
+            this.minValue = minValue;
+            this.maxValue = maxValue;
+        }
 
-            DynamicValueQuery query = new()
-            {
-                Value = baseValue,
-            };
+        protected abstract BigDouble GetBaseValue();
 
-            if (IsExposed)
-            {
-                dynamicValuesModifiers.QueryModifiersFor(query, ExposedReference);
-            }
+        public BigDouble ProcessValue(BigDouble value)
+        {
+            if (minValue.HasValue && value < minValue.Value) value = minValue.Value;
+            if (maxValue.HasValue && value > maxValue.Value) value = maxValue.Value;
+            return value;
+        }
 
-            return query.Value;
+        public IDynamicValueModifier GetBaseModifier()
+        {
+            return new BaseModifier(this);
+        }
+
+        public BigDouble GetValue()
+        {
+            if (IsExposed) return exposedReference.GetValue();
+            return GetBaseValue();
         }
     }
 }

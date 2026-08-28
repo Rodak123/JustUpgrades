@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39fbf7e032f9ae342a1f366150c00f6c, type: 3}
-  m_Name: 1 - First Upgrade
+  m_Name: 1 - Simple Beginning
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
   uniqueId: d4e76a22a42c83e48ada9182a2c36747
-  upgradeName: First Upgrade
+  upgradeName: Simple Begining
   level:
     MaxLevel:
       exposedReference: {fileID: 0}
@@ -26,8 +26,12 @@ MonoBehaviour:
   parameters:
   - rid: 3358812908659408979
   upgradeNumber: 1
-  upgradeVisual:
-    upgradeDescription: Start generating Cash. KA-CHING!
+  visual:
+    upgradeDescription: Start generating {C0}. Ka-Ching!
+    mentionedCurrencies:
+    - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+    mentionedUpgrades: []
+    mentionedDynamicValues: []
   references:
     version: 2
     RefIds:

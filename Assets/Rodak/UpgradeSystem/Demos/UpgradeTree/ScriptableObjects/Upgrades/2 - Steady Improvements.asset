@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1339495461267389656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f396409c24400b44bd441a296ca2503, type: 3}
+  m_Name: MaxLevel_level_upgrade:b51920eed6609c74599aee3ce2e63e10
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.IntDynamicValueReferenceSO
+  uniqueId: b51920eed6609c74599aee3ce2e63e10
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fbf7e032f9ae342a1f366150c00f6c, type: 3}
+  m_Name: 2 - Steady Improvements
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
+  uniqueId: b51920eed6609c74599aee3ce2e63e10
+  upgradeName: Steady Improvements
+  level:
+    MaxLevel:
+      exposedReference: {fileID: -1339495461267389656}
+      baseValue: 5
+    IsInfinite:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  costs:
+  - targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+    costScaling:
+      scaledValues:
+      - scaler:
+          rid: 3358812953326125056
+  requirements:
+  - targetUpgrade: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
+    useMaxLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 1
+    targetLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  parameters:
+  - rid: 3358812931200647238
+  upgradeNumber: 2
+  visual:
+    upgradeDescription: Increase {C0} gain by {V0}x per level.
+    mentionedCurrencies:
+    - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+    mentionedUpgrades: []
+    mentionedDynamicValues:
+    - {fileID: 6436686239251782839}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3358812931200647238
+      type: {class: DynamicValueModifierUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetDynamicValue: {fileID: 11400000, guid: 851cd9bfa46087d41beabcae298378ed, type: 2}
+        dynamicValueModifier:
+          scaler:
+            rid: 3358812931200647239
+        showInfoText: 1
+    - rid: 3358812931200647239
+      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        increment:
+          exposedReference: {fileID: 6436686239251782839}
+          baseValue:
+            mantissa: 5
+            exponent: -1
+        incrementGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+    - rid: 3358812953326125056
+      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1
+            exponent: 0
+        increment:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1
+            exponent: 0
+        incrementGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+--- !u!114 &6436686239251782839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
+  m_Name: increment_scaler_dynamicValueModifier_data[0]_Array_parameters_upgrade:b51920eed6609c74599aee3ce2e63e10
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
+  uniqueId: b51920eed6609c74599aee3ce2e63e10

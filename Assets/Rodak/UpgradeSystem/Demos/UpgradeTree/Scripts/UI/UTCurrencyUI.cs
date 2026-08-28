@@ -42,11 +42,11 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             nameText.text = $"{CurrencyPresenter.GetFormattedCurrency(TargetGenerator.TargetCurrency)}:";
             amountText.text = CurrencyPresenter.WrapInCurrencyColor(amount.ToString(), TargetGenerator.TargetCurrency);
 
-            linearGainText.text = $"{TargetGenerator.LastLinearGain:e3}x";
-            exponentialGainText.text = $"^{TargetGenerator.LastExponentialGain:e3}";
+            linearGainText.text = $"{TargetGenerator.LastLinearGain}x";
+            exponentialGainText.text = $"^{TargetGenerator.LastExponentialGain}";
 
             string gainSign = TargetGenerator.LastGain > 0 ? "+" : (TargetGenerator.LastGain < 0 ? "-" : "");
-            gainText.text = $"({gainSign}{TargetGenerator.LastGain:e2}/s)";
+            gainText.text = $"({gainSign}{TargetGenerator.LastGain}/s)";
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         [Header("Components")]
         [SerializeField] private Image border;
+        [SerializeField] private GameObject lockedContainer;
         [SerializeField] private GameObject purchasableOutline;
         [SerializeField] private Button button;
         [SerializeField] private TMP_Text numberText;
@@ -54,12 +55,14 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         private void UpdateUI()
         {
+            lockedContainer.SetActive(!upgrade.CanFitRequirements());
+
             button.interactable = upgrade.CanBeUpgraded();
             purchasableOutline.SetActive(upgrade.CanBeUpgraded());
 
             numberText.text = $"#{TargetUpgrade.UpgradeNumber}";
             nameText.text = $"{UpgradePresenter.GetFormattedName(upgrade.UpgradeSO)}";
-            descriptionText.text = TargetUpgrade.UpgradeVisual.UpgradeDescription;
+            descriptionText.text = TargetUpgrade.UpgradeDescription;
             levelText.text = $"Level\n{UpgradePresenter.GetFormattedLevel(upgrade)}";
             costText.text = $"Cost: {UpgradePresenter.GetFormattedCosts(upgrade)}";
 
@@ -81,7 +84,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
             foreach (AUpgradeParameter parameter in TargetUpgrade.Parameters)
             {
-                info += $"{parameter.GetInfoText(upgrade.CurrentLevel)} ";
+                info += $"{parameter.GetInfoText()} ";
             }
 
             return info.Trim();

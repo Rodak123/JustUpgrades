@@ -4,6 +4,6 @@ namespace Rodak.UpgradeSystem.Utils
 {
     public interface IHasDynamicValues
     {
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences();
+        public IEnumerable<IDynamicValue> GetDynamicValues();
     }
 }

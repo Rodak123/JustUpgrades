@@ -7,11 +7,11 @@ namespace Rodak.UpgradeSystem.Core
     public class UpgradeSystemContext : SingletonMonoBehaviour<UpgradeSystemContext>
     {
         [SerializeField] private CurrencyWallet currencyWallet;
-        [SerializeField] private DynamicValuesModifiers dynamicValuesModifiers;
+        [SerializeField] private DynamicValueRegistry dynamicValueRegistry;
         [SerializeField] private UpgradeRegistry upgradeRegistry;
 
         public CurrencyWallet CurrencyWallet => currencyWallet;
-        public DynamicValuesModifiers DynamicValuesModifiers => dynamicValuesModifiers;
+        public DynamicValueRegistry DynamicValueRegistry => dynamicValueRegistry;
         public UpgradeRegistry UpgradeRegistry => upgradeRegistry;
 
         protected override void Awake()
@@ -19,7 +19,7 @@ namespace Rodak.UpgradeSystem.Core
             base.Awake();
 
             currencyWallet.Init();
-            dynamicValuesModifiers.Init();
+            dynamicValueRegistry.Init();
 
             upgradeRegistry.Init(this);
         }

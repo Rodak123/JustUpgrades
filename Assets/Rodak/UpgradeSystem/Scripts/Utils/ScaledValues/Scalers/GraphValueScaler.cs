@@ -14,8 +14,8 @@ namespace Rodak.UpgradeSystem.Utils
 
         public BigDouble GetValue(int level, int maxLevel)
         {
-            BigDouble startValueValue = startValue.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
-            BigDouble endValueValue = endValue.GetFloatValue(UpgradeSystemContext.Instance.DynamicValuesModifiers);
+            BigDouble startValueValue = startValue.GetFloatValue();
+            BigDouble endValueValue = endValue.GetFloatValue();
 
             double graphValue = graph.Evaluate(Mathf.InverseLerp(level, 0, maxLevel));
             return startValueValue + graphValue * (endValueValue - startValueValue);
@@ -23,10 +23,10 @@ namespace Rodak.UpgradeSystem.Utils
 
         public string Hint() => "x = start + graph[level] * (end - start)";
 
-        public IEnumerable<ADynamicValueReferenceSO> GetDynamicValueReferences()
+        public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            yield return startValue.ExposedReference;
-            yield return endValue.ExposedReference;
+            yield return startValue;
+            yield return endValue;
         }
     }
 }
