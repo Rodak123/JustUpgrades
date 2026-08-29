@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Rodak.UpgradeSystem.Utils;
-using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {

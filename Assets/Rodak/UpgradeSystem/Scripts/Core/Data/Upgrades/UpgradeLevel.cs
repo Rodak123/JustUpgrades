@@ -8,13 +8,16 @@ namespace Rodak.UpgradeSystem.Core
     [Serializable]
     public class UpgradeLevel : IHasDynamicValues
     {
-        [SerializeField] public IntDynamicValue MaxLevel = new(1, 1);
-        [SerializeField] public BoolDynamicValue IsInfinite = new(false);
+        [SerializeField] private IntDynamicValue maxLevel = new(1, 1);
+        [SerializeField] private BoolDynamicValue isInfinite = new(false);
+
+        public IntDynamicValue MaxLevel => maxLevel;
+        public BoolDynamicValue IsInfinite => isInfinite;
 
         public IEnumerable<IDynamicValue> GetDynamicValues()
         {
-            yield return MaxLevel;
-            yield return IsInfinite;
+            yield return maxLevel;
+            yield return isInfinite;
         }
     }
 }

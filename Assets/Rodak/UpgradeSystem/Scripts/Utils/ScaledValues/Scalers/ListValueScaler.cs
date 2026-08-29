@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Rodak.UpgradeSystem.Core;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Utils
@@ -9,14 +8,18 @@ namespace Rodak.UpgradeSystem.Utils
     public class ListValueScaler : IValueScaler, IHasDynamicValues
     {
         [SerializeField] private List<FloatDynamicValue> values;
-
         [Tooltip("When true, the sum of all previous values is added")]
         [SerializeField] private BoolDynamicValue additive;
+        [SerializeField] private IntDynamicValue ignoredBeforeLevel = new(1, 0);
 
         public BigDouble GetValue(int level, int maxLevel)
         {
-            if (level == 0 || values.Count == 0) return 0;
-            int index = Math.Clamp(level - 1, 0, values.Count - 1);
+            if (values.Count == 0) return 0;
+
+            int ignoredBeforeLevelValue = ignoredBeforeLevel.GetIntValue();
+            if (level < ignoredBeforeLevelValue) return 0;
+
+            int index = Math.Clamp(level - ignoredBeforeLevelValue, 0, values.Count - 1);
 
             bool additiveValue = additive.GetBoolValue();
 
@@ -35,7 +38,7 @@ namespace Rodak.UpgradeSystem.Utils
             return sum;
         }
 
-        public string Hint() => "x = list[level - 1]";
+        public string Hint() => "x = list[level - ignoredBeforeLevel]";
 
         public IEnumerable<IDynamicValue> GetDynamicValues()
         {
@@ -43,6 +46,7 @@ namespace Rodak.UpgradeSystem.Utils
             {
                 yield return value;
             }
+            yield return ignoredBeforeLevel;
         }
     }
 }

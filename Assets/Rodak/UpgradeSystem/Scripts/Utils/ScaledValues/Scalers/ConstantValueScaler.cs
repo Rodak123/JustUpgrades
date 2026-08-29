@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Rodak.UpgradeSystem.Core;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Utils
@@ -10,16 +9,14 @@ namespace Rodak.UpgradeSystem.Utils
     {
 
         [SerializeField] private FloatDynamicValue value = new(1);
-
-        [Tooltip("When true, the level 0 value is 0")]
-        [SerializeField] private BoolDynamicValue ignoredAtZero = new(false);
+        [SerializeField] private IntDynamicValue ignoredBeforeLevel = new(0, 0);
 
         public BigDouble GetValue(int level, int maxLevel)
         {
             BigDouble valueValue = value.GetFloatValue();
-            bool ignoredAtZeroValue = ignoredAtZero.GetBoolValue();
+            int ignoredBeforeLevelValue = ignoredBeforeLevel.GetIntValue();
 
-            if (ignoredAtZeroValue && level == 0) return 0;
+            if (level < ignoredBeforeLevelValue) return 0;
             return valueValue;
         }
 
@@ -28,7 +25,7 @@ namespace Rodak.UpgradeSystem.Utils
         public IEnumerable<IDynamicValue> GetDynamicValues()
         {
             yield return value;
-            yield return ignoredAtZero;
+            yield return ignoredBeforeLevel;
         }
     }
 }

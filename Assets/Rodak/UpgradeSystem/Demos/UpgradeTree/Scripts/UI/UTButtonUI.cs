@@ -1,7 +1,9 @@
 using Rodak.UpgradeSystem.Core;
+using Rodak.UpgradeSystem.Demos.Shared;
 using Rodak.UpgradeSystem.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Rodak.UpgradeSystem.Demos.UpgradeTree
@@ -17,10 +19,10 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
         [SerializeField] private Color notUpgradedColor = Color.red;
 
         [Header("Components")]
+        [SerializeField] private CustomButton button;
         [SerializeField] private Image border;
         [SerializeField] private GameObject lockedContainer;
         [SerializeField] private GameObject purchasableOutline;
-        [SerializeField] private Button button;
         [SerializeField] private TMP_Text numberText;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text levelText;
@@ -44,7 +46,8 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
                 return;
             }
 
-            button.onClick.AddListener(OnClick);
+            button.OnClick += CustomButton_OnClick;
+            button.OnHold += CustomButton_OnHold;
             UpdateUI();
         }
 
@@ -57,14 +60,14 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
         {
             lockedContainer.SetActive(!upgrade.CanFitRequirements());
 
-            button.interactable = upgrade.CanBeUpgraded();
+            button.Intractable = upgrade.CanBeUpgraded();
             purchasableOutline.SetActive(upgrade.CanBeUpgraded());
 
             numberText.text = $"#{TargetUpgrade.UpgradeNumber}";
             nameText.text = $"{UpgradePresenter.GetFormattedName(upgrade.UpgradeSO)}";
             descriptionText.text = TargetUpgrade.UpgradeDescription;
             levelText.text = $"Level\n{UpgradePresenter.GetFormattedLevel(upgrade)}";
-            costText.text = $"Cost: {UpgradePresenter.GetFormattedCosts(upgrade)}";
+            costText.text = $"{UpgradePresenter.GetFormattedCosts(upgrade)}";
 
             bool canImprove = upgrade.CanImprove();
             costContainer.SetActive(canImprove);
@@ -99,7 +102,12 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             return upgrade.CurrentLevel > 0 ? upgradedColor : notUpgradedColor;
         }
 
-        private void OnClick()
+        private void CustomButton_OnClick(CustomButton customButton, PointerEventData.InputButton button)
+        {
+            upgrade.TryUpgrade();
+        }
+
+        private void CustomButton_OnHold(CustomButton customButton, PointerEventData.InputButton button)
         {
             upgrade.TryUpgrade();
         }

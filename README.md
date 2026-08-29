@@ -5,7 +5,7 @@ My goals:
 - allow easily adding new features / custom behaviour
 - ascension/resets support
 - saving/loading support
-- WebGL, Linux, Windows support
+- WebGL, Linux, Windows
 
 ## Disclaimer
 
@@ -19,12 +19,14 @@ Currencies are stored in a "currency wallet" where they can be read, spent or ga
 
 Each currency can be locked. Locked status is used in currency generators or UI. 
 
-## Resolved Value
+## Dynamic Value
 
-Each resolved value [TYPE value, OPTIONS] has:
+Each dynamic value [TYPE value, OPTIONS] has:
 - Unique Id [string]
 - Type [bool/float/int]
 - Base amount
+- Min amount
+- Max amount
 
 The values are stored/managed by the central "value manager". This manager allows modifiers to subscribe to the mediator of each value. This is so that no value is fixed, rather they are queried.
 
@@ -41,7 +43,7 @@ These values are defined in:
   - gun damage (maybe this game is built around shooting)
   - etc.
 
-Resolved value is implemented to only store a float number, other types are extracted:
+Dynamic value is implemented to only store a float number, other types are extracted:
 - float = value
 - boolean = value > 0
 - int = floor(value)
@@ -67,7 +69,7 @@ Each scaler can expose
 - Id - unique upgrade id
 - Name - title of the upgrade
 - Custom - some custom properties, for example:
-  - Upgrade Visual - used for UI
+  - Upgrade Visual - used for UI, like description
 
 ### Exposable Properties
 
@@ -108,7 +110,7 @@ If referenced upgrade has the needed level.
 
 If max level is false, target level is used, otherwise target level is ignored.
 
-### Currency Dependency
+### Currency Dependency [not implemented]
 
 If referenced currency is unlocked.
 
@@ -119,23 +121,9 @@ If referenced currency is unlocked.
 Each upgrade has some modifiers. These make the upgrade "do" stuff. 
 Usually it's modifying a value (hence the name modifiers).
 
-### Currency Unlock
+### Dynamic Value Modifier
 
-Unlocks a currency after a level.
-
-- Target Level [int value, 1+] 
-- Currency [currency reference]
-
-### Currency Add
-
-One time currency gain per level.
-
-- Currency [currency reference]
-- Gain [float value]
-
-### Resolved Value Modifier
-
-Modifies some resolved value.
+Modifies some dynamic value.
 
 - Target Value [value reference]
 - Value Change - an array of scaled values
@@ -148,4 +136,22 @@ For example:
 - Exponential - +^N
 - Improve Upgrade - increase other upgrades properties (+2/s -> +3/s or max level 5 -> 10)
 
-This can modify any resolved value, even itself. 
+This can modify any dynamic value, even itself. 
+
+### Currency Unlock [not implemented]
+
+Can be also done with dynamic value modifier. 
+
+Unlocks a currency after a level.
+
+- Target Level [int value, 1+] 
+- Currency [currency reference]
+
+### Currency Add [not implemented]
+
+Can be also done with dynamic value modifier. 
+
+One time currency gain per level.
+
+- Currency [currency reference]
+- Gain [float value]

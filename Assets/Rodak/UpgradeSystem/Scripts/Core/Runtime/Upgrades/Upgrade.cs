@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
@@ -35,9 +34,17 @@ namespace Rodak.UpgradeSystem.Core
             if (!CanBeUpgraded())
                 return false;
 
-            Dictionary<ACurrencySO, BigDouble> costs = GetCosts();
-            if (!context.CurrencyWallet.TryPurchase(costs))
-                return false;
+            foreach (UpgradeCost cost in UpgradeSO.Costs)
+            {
+                ACurrencySO currency = cost.TargetCurrency;
+
+                if (currency == null) continue;
+                BigDouble costValue = cost.GetCostValue(currentLevel, MaxLevel);
+                bool isSpent = cost.IsSpent.GetBoolValue();
+
+                if (isSpent && !context.CurrencyWallet.TrySpend(currency, costValue))
+                    throw new Exception($"Failed to purchase upgrade '{UpgradeSO}'");
+            }
 
             currentLevel++;
             OnLevelIncreased?.Invoke(this);
@@ -82,13 +89,6 @@ namespace Rodak.UpgradeSystem.Core
 
         public bool CanAfford()
         {
-            Dictionary<ACurrencySO, BigDouble> costs = GetCosts();
-            return context.CurrencyWallet.CanAfford(costs);
-        }
-
-        public Dictionary<ACurrencySO, BigDouble> GetCosts()
-        {
-            Dictionary<ACurrencySO, BigDouble> costDict = new();
             foreach (UpgradeCost cost in UpgradeSO.Costs)
             {
                 ACurrencySO currency = cost.TargetCurrency;
@@ -96,10 +96,10 @@ namespace Rodak.UpgradeSystem.Core
                 if (currency == null) continue;
                 BigDouble costValue = cost.GetCostValue(currentLevel, MaxLevel);
 
-                costDict.TryAdd(currency, 0);
-                costDict[currency] += costValue;
+                if (!context.CurrencyWallet.CanSpend(currency, costValue))
+                    return false;
             }
-            return costDict;
+            return true;
         }
     }
 }

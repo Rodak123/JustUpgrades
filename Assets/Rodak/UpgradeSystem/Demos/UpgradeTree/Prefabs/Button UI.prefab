@@ -642,10 +642,10 @@ MonoBehaviour:
   completedColor: {r: 0, g: 1, b: 0, a: 1}
   upgradedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   notUpgradedColor: {r: 1, g: 0, b: 0, a: 1}
+  button: {fileID: 5836830822014295870}
   border: {fileID: 6259921739262415076}
   lockedContainer: {fileID: 7529662259330486672}
   purchasableOutline: {fileID: 5696704126732689302}
-  button: {fileID: 4902961853928662987}
   numberText: {fileID: 697396067115401462}
   nameText: {fileID: 8785668893730593246}
   levelText: {fileID: 1099310054835656358}
@@ -654,6 +654,8 @@ MonoBehaviour:
   parameterText: {fileID: 1516758562472958341}
   costContainer: {fileID: 1875927471210631973}
   maxStatusContainer: {fileID: 4369532214227276873}
+  autoBuyInterval: 0.05
+  maxAutoBuyUpgrades: 1000000000
 --- !u!1 &3567813116595734284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,6 +1621,7 @@ GameObject:
   - component: {fileID: 2129417624667672473}
   - component: {fileID: 8788924851449740422}
   - component: {fileID: 4902961853928662987}
+  - component: {fileID: 5836830822014295870}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1691,7 +1694,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6010362447280512931}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -1728,6 +1731,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5836830822014295870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010362447280512931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a8e6a63c33fe244a6c8c80466a6228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.CustomButton
+  Intractable: 1
+  HoldStartDuration: 0.2
+  IgnoredButtons: 0200000001000000
 --- !u!1 &6300432418300340447
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,7 +2101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1648871904252685877
 RectTransform:
   m_ObjectHideFlags: 0

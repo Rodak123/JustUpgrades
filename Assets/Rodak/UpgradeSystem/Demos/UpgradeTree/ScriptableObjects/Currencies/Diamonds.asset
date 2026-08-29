@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc24933644b174459b9f07003ce1ab6, type: 3}
+  m_Name: Diamonds
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencySO
+  uniqueId: 02481a2a02de4af48a5eac8544ae6832
+  currencyName: Diamonds
+  currencyColor: {r: 0.25872195, g: 0.9622642, b: 0.9437357, a: 1}
+  baseValue:
+    mantissa: 0
+    exponent: 0
+  baseGain:
+    mantissa: 0
+    exponent: 0

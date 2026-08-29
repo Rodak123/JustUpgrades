@@ -12,7 +12,11 @@ namespace Rodak.UpgradeSystem.UI
             if (upgradeCost == null) return string.Empty;
 
             BigDouble costValue = upgradeCost.GetCostValue(currentLevel, maxLevel);
-            return CurrencyPresenter.GetFormattedCurrency(upgradeCost.TargetCurrency, costValue, includeName, costNumberColor);
+            bool isSpent = upgradeCost.IsSpent.GetBoolValue();
+
+            return
+            (isSpent ? "Cost: " : "Requires: ") +
+            CurrencyPresenter.GetFormattedCurrency(upgradeCost.TargetCurrency, costValue, includeName, costNumberColor);
         }
 
         public static string GetFormattedRequirement(UpgradeRequirement upgradeRequirement)

@@ -11,9 +11,11 @@ namespace Rodak.UpgradeSystem.Editor
     {
         public const string TargetCurrencyPropertyName = "targetCurrency";
         public const string CostScalingPropertyName = "costScaling";
+        public const string IsSpentPropertyName = "isSpent";
 
         private SerializedProperty targetCurrencyProperty;
         private SerializedProperty costScalingProperty;
+        private SerializedProperty isSpentProperty;
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
@@ -21,10 +23,12 @@ namespace Rodak.UpgradeSystem.Editor
 
             targetCurrencyProperty = property.FindPropertyRelative(TargetCurrencyPropertyName);
             costScalingProperty = property.FindPropertyRelative(CostScalingPropertyName);
+            isSpentProperty = property.FindPropertyRelative(IsSpentPropertyName);
 
             if (
                 targetCurrencyProperty == null
                 || costScalingProperty == null
+                || isSpentProperty == null
             )
             {
                 return root;
@@ -34,19 +38,17 @@ namespace Rodak.UpgradeSystem.Editor
             foldout.BindProperty(property);
             root.Add(foldout);
 
-            VisualElement targetUpgradeContainer = new();
-            foldout.Add(targetUpgradeContainer);
-
             PropertyField targetUpgradeField = new(targetCurrencyProperty);
             targetUpgradeField.Bind(targetCurrencyProperty.serializedObject);
-            targetUpgradeContainer.Add(targetUpgradeField);
-
-            VisualElement costScalingContainer = new();
-            foldout.Add(costScalingContainer);
+            foldout.Add(targetUpgradeField);
 
             PropertyField costScalingField = new(costScalingProperty);
             costScalingField.Bind(costScalingProperty.serializedObject);
-            costScalingContainer.Add(costScalingField);
+            foldout.Add(costScalingField);
+
+            PropertyField isSpentField = new(isSpentProperty);
+            isSpentField.Bind(isSpentProperty.serializedObject);
+            foldout.Add(isSpentField);
 
             void UpdateUI()
             {
