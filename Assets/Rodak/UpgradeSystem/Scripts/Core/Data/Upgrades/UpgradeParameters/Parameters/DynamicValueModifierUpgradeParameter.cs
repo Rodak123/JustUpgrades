@@ -50,22 +50,29 @@ namespace Rodak.UpgradeSystem.Core
 
         public override void Init(UpgradeSystemContext context, AUpgradeSO upgradeSO)
         {
-            modifier = new Modifier(this);
+            if (targetDynamicValue == null)
+            {
+                Debug.LogError($"Can't initialize parameter '{nameof(DynamicValueModifierUpgradeParameter)}': {nameof(targetDynamicValue)} is null. In: {upgradeSO}");
+                return;
+            }
 
             context.UpgradeRegistry.TryGetUpgrade(upgradeSO, out upgrade);
-            context.DynamicValueRegistry.AttachModifier(targetDynamicValue, modifier);
 
             if (upgrade == null)
             {
-                throw new ArgumentNullException($"{nameof(upgradeSO)} '{upgradeSO}' is not registered.");
+                Debug.LogError($"Can't initialize parameter '{nameof(DynamicValueModifierUpgradeParameter)}': {nameof(upgradeSO)} '{upgradeSO}' is not registered. In: {upgradeSO}");
+                return;
             }
+
+            modifier = new Modifier(this);
+
+            context.DynamicValueRegistry.AttachModifier(targetDynamicValue, modifier);
         }
 
         public override void Update()
         {
-            if (modifier == null)
+            if (modifier == null || upgrade == null)
             {
-                Debug.LogWarning($"Parameter '{this}' not initialized.");
                 return;
             }
 
@@ -93,8 +100,9 @@ namespace Rodak.UpgradeSystem.Core
             return dynamicValueModifier.GetDynamicValues();
         }
 
-        public override string ToString()
+        public override string GetEditorDescription()
         {
+            if (targetDynamicValue == null) return $"Missing '{nameof(targetDynamicValue)}'!";
             return $"Modifies '{targetDynamicValue}'";
         }
     }

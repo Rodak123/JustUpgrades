@@ -20,7 +20,7 @@ MonoBehaviour:
       baseValue: 1
     isInfinite:
       exposedReference: {fileID: 0}
-      baseValue: 0
+      baseValue: 1
   costs:
   - targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
     costScaling:
@@ -31,28 +31,12 @@ MonoBehaviour:
       exposedReference: {fileID: 0}
       baseValue: 0
   requirements:
-  - targetUpgrade: {fileID: 11400000, guid: b51920eed6609c74599aee3ce2e63e10, type: 2}
-    useMaxLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
-    targetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 20
-  - targetUpgrade: {fileID: 11400000, guid: 5adf1594b8736e4489ac46bf099f64f4, type: 2}
-    useMaxLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
-    targetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 20
-  - targetUpgrade: {fileID: 11400000, guid: a1129d178b332854fa812b3a8d930af5, type: 2}
-    useMaxLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
-    targetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 20
-  parameters: []
+    requirements:
+    - rid: 3358812998158778453
+    - rid: 3358812998158778454
+    - rid: 3358812998158778455
+  parameters:
+    parameters: []
   upgradeNumber: 3
   visual:
     upgradeDescription: Reset all {C0} upgrades and gain {C1}.
@@ -72,6 +56,36 @@ MonoBehaviour:
           baseValue:
             mantissa: 2
             exponent: 4
-        ignoredAtZero:
+        ignoredBeforeLevel:
           exposedReference: {fileID: 0}
           baseValue: 0
+    - rid: 3358812998158778453
+      type: {class: UpgradeDependencyUpgradeRequirement, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetUpgradeSO: {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
+        useMaxLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+        targetLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 20
+    - rid: 3358812998158778454
+      type: {class: UpgradeDependencyUpgradeRequirement, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetUpgradeSO: {fileID: 11400000, guid: 5adf1594b8736e4489ac46bf099f64f4, type: 2}
+        useMaxLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+        targetLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 20
+    - rid: 3358812998158778455
+      type: {class: UpgradeDependencyUpgradeRequirement, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetUpgradeSO: {fileID: 11400000, guid: a1129d178b332854fa812b3a8d930af5, type: 2}
+        useMaxLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+        targetLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 20

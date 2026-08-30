@@ -1,6 +1,7 @@
 using Rodak.UpgradeSystem.Core;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Rodak.UpgradeSystem.Editor
@@ -26,6 +27,7 @@ namespace Rodak.UpgradeSystem.Editor
                 || isInfiniteProperty == null
             )
             {
+                Debug.LogWarning("No all properties found.");
                 return root;
             }
 

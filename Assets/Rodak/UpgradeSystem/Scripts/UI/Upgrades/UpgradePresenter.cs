@@ -19,23 +19,11 @@ namespace Rodak.UpgradeSystem.UI
             CurrencyPresenter.GetFormattedCurrency(upgradeCost.TargetCurrency, costValue, includeName, costNumberColor);
         }
 
-        public static string GetFormattedRequirement(UpgradeRequirement upgradeRequirement)
+        public static string GetFormattedRequirement(AUpgradeRequirement upgradeRequirement)
         {
             if (upgradeRequirement == null) return string.Empty;
 
-            if (upgradeRequirement.TargetUpgrade == null)
-            {
-                return $"Target Upgrade not set";
-            }
-            else
-            {
-                bool useMaxLevel = upgradeRequirement.UseMaxLevel.GetBoolValue();
-                bool isInfinite = upgradeRequirement.TargetUpgrade.Level.IsInfinite.GetBoolValue();
-                int targetLevel = upgradeRequirement.TargetLevel.GetIntValue();
-
-                string targetLevelString = (useMaxLevel && !isInfinite) ? "Max" : targetLevel.ToString();
-                return $"lv. {targetLevelString} {GetFormattedName(upgradeRequirement.TargetUpgrade)}";
-            }
+            return upgradeRequirement.GetInfoText();
         }
 
         public static string GetFormattedName(AUpgradeSO upgradeSO)

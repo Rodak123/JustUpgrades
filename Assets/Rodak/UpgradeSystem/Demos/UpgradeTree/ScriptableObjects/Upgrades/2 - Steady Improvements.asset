@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4843205995799267344
+--- !u!114 &-4156816006341003807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,22 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f396409c24400b44bd441a296ca2503, type: 3}
-  m_Name: maxLevel_level_upgrade:b51920eed6609c74599aee3ce2e63e10
+  m_Name: maxLevel_level_upgrade:b70a00dade1ad8347bf410f8190d7048
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.IntDynamicValueReferenceSO
-  uniqueId: 
---- !u!114 &-1339495461267389656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f396409c24400b44bd441a296ca2503, type: 3}
-  m_Name: MaxLevel_level_upgrade:b51920eed6609c74599aee3ce2e63e10
-  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.IntDynamicValueReferenceSO
-  uniqueId: b51920eed6609c74599aee3ce2e63e10
+  uniqueId: b70a00dade1ad8347bf410f8190d7048
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,12 +25,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39fbf7e032f9ae342a1f366150c00f6c, type: 3}
   m_Name: 2 - Steady Improvements
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
-  uniqueId: b51920eed6609c74599aee3ce2e63e10
+  uniqueId: b70a00dade1ad8347bf410f8190d7048
   upgradeName: Steady Improvements
   level:
     maxLevel:
-      exposedReference: {fileID: -4843205995799267344}
-      baseValue: 1
+      exposedReference: {fileID: -4156816006341003807}
+      baseValue: 5
     isInfinite:
       exposedReference: {fileID: 0}
       baseValue: 0
@@ -52,20 +39,16 @@ MonoBehaviour:
     costScaling:
       scaledValues:
       - scaler:
-          rid: 3358812953326125056
+          rid: 3358812998158778436
     isSpent:
       exposedReference: {fileID: 0}
       baseValue: 1
   requirements:
-  - targetUpgrade: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
-    useMaxLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 1
-    targetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
+    requirements:
+    - rid: 3358812998158778447
   parameters:
-  - rid: 3358812931200647238
+    parameters:
+    - rid: 3358812998158778445
   upgradeNumber: 2
   visual:
     upgradeDescription: Increase {C0} gain by {V0}x per level.
@@ -73,19 +56,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
     mentionedUpgrades: []
     mentionedDynamicValues:
-    - {fileID: 6436686239251782839}
+    - {fileID: 8062750619534991040}
   references:
     version: 2
     RefIds:
-    - rid: 3358812931200647238
-      type: {class: DynamicValueModifierUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
-      data:
-        targetDynamicValue: {fileID: 11400000, guid: 851cd9bfa46087d41beabcae298378ed, type: 2}
-        dynamicValueModifier:
-          scaler:
-            rid: 3358812931200647239
-        showInfoText: 1
-    - rid: 3358812931200647239
+    - rid: 3358812998158778436
       type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:
         baseValue:
@@ -94,7 +69,36 @@ MonoBehaviour:
             mantissa: 0
             exponent: 0
         increment:
-          exposedReference: {fileID: 6436686239251782839}
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1
+            exponent: 0
+        incrementGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        ignoredBeforeLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+    - rid: 3358812998158778445
+      type: {class: DynamicValueModifierUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetDynamicValue: {fileID: 11400000, guid: 851cd9bfa46087d41beabcae298378ed, type: 2}
+        dynamicValueModifier:
+          scaler:
+            rid: 3358812998158778446
+        showInfoText: 0
+    - rid: 3358812998158778446
+      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        increment:
+          exposedReference: {fileID: 8062750619534991040}
           baseValue:
             mantissa: 5
             exponent: -1
@@ -103,25 +107,20 @@ MonoBehaviour:
           baseValue:
             mantissa: 0
             exponent: 0
-    - rid: 3358812953326125056
-      type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+        ignoredBeforeLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+    - rid: 3358812998158778447
+      type: {class: UpgradeDependencyUpgradeRequirement, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
       data:
-        baseValue:
+        targetUpgradeSO: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
+        useMaxLevel:
           exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 1
-            exponent: 0
-        increment:
+          baseValue: 1
+        targetLevel:
           exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 1
-            exponent: 0
-        incrementGrow:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 0
-            exponent: 0
---- !u!114 &6436686239251782839
+          baseValue: 1
+--- !u!114 &8062750619534991040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,6 +130,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4da5934762fb83147aef0aefcb2c1f58, type: 3}
-  m_Name: increment_scaler_dynamicValueModifier_data[0]_Array_parameters_upgrade:b51920eed6609c74599aee3ce2e63e10
+  m_Name: increment_scaler_dynamicValueModifier_data[0]_Array_parameters_parameters_upgrade:b70a00dade1ad8347bf410f8190d7048
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
-  uniqueId: b51920eed6609c74599aee3ce2e63e10
+  uniqueId: b70a00dade1ad8347bf410f8190d7048

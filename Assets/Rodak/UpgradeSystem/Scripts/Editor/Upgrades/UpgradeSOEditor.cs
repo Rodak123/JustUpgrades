@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Rodak.UpgradeSystem.Core;
 using Rodak.Utils.Editor;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -13,8 +11,6 @@ namespace Rodak.UpgradeSystem.Editor
     [CustomEditor(typeof(AUpgradeSO), true)]
     public class UpgradeSOEditor : UnityEditor.Editor
     {
-        private const string NameShortcodeFormat = "{NAME}";
-
         public const string UpgradeNamePropertyName = "upgradeName";
         public const string LevelPropertyName = "level";
         public const string CostsArrayPropertyName = "costs";
@@ -26,162 +22,6 @@ namespace Rodak.UpgradeSystem.Editor
         private SerializedProperty costsProperty;
         private SerializedProperty requirementsProperty;
         private SerializedProperty parametersProperty;
-
-        private VisualElement CreateParametersList()
-        {
-            ListView parametersList = new()
-            {
-                bindingPath = parametersProperty.propertyPath,
-                makeItem = () => new PropertyField(),
-                bindItem = (element, index) =>
-                {
-                    SerializedProperty indexProperty = parametersProperty.GetArrayElementAtIndex(index);
-                    PropertyField field = (PropertyField)element;
-                    field.BindProperty(indexProperty);
-
-                    string label = $"{indexProperty.displayName} ( {indexProperty.managedReferenceValue} )";
-                    field.label = label;
-
-                    field.schedule.Execute(() =>
-                    {
-                        field.label = label;
-                        Foldout foldout = field.Q<Foldout>();
-                        if (foldout == null) return;
-                        foldout.text = label;
-                    });
-                },
-                reorderable = true,
-                reorderMode = ListViewReorderMode.Animated,
-                showAddRemoveFooter = true,
-                showFoldoutHeader = true,
-                showBorder = true,
-                headerTitle = "Parameters",
-                virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
-                showBoundCollectionSize = false
-            };
-
-            parametersList.schedule.Execute(() =>
-            {
-                Button builtInAddButton = parametersList.Q<Button>(EditorUtils.UnityListViewAddButtonName);
-
-                if (builtInAddButton != null)
-                {
-                    builtInAddButton.clickable.activators.Clear();
-
-                    builtInAddButton.RegisterCallback<MouseDownEvent>(evt =>
-                    {
-                        if (evt.button != 0) return;
-
-                        GenericMenu menu = GenerateTypeSelectionMenu(GetParameterTypes());
-                        menu.ShowAsContext();
-                    });
-                }
-            });
-
-            return parametersList;
-        }
-
-        private struct TypeMenuItem
-        {
-            public Type Type;
-            public int Order;
-            public string Name;
-        }
-
-        private GenericMenu GenerateTypeSelectionMenu(IEnumerable<Type> types)
-        {
-            List<TypeMenuItem> items = new();
-            foreach (Type type in types)
-            {
-                CreateUpgradeParameterMenuAttribute attribute = type.GetAttribute<CreateUpgradeParameterMenuAttribute>();
-                if (attribute == null || !attribute.ShowParameter)
-                {
-                    continue;
-                }
-
-                string typeName = GetName(type);
-
-                string name = attribute.MenuName?.Length > 0 ? attribute.MenuName : typeName;
-                name = name.Replace(NameShortcodeFormat, typeName);
-
-                items.Add(new()
-                {
-                    Type = type,
-                    Name = name,
-                    Order = attribute.Order,
-                });
-            }
-
-            items.Sort((a, b) => a.Order.CompareTo(b.Order));
-
-            for (int i = 0; i < items.Count; i++)
-            {
-                TypeMenuItem itemA = items[i];
-                bool isUnique = true;
-
-                for (int j = 0; j < items.Count; j++)
-                {
-                    if (i == j) continue;
-                    TypeMenuItem itemB = items[j];
-
-                    if (itemA.Name == itemB.Name)
-                    {
-                        isUnique = false;
-
-                        itemB.Name += $"/{itemB.Type.FullName}";
-                        items[j] = itemB;
-                    }
-                }
-
-                if (!isUnique)
-                {
-                    itemA.Name += $"/{itemA.Type.FullName}";
-                    items[i] = itemA;
-                }
-            }
-
-            GenericMenu menu = new();
-
-            foreach (TypeMenuItem item in items)
-            {
-                menu.AddItem(new GUIContent(item.Name), false, OnAddParameter, item.Type);
-            }
-
-            return menu;
-        }
-
-        private IEnumerable<Type> GetParameterTypes()
-        {
-            TypeCache.TypeCollection types = TypeCache.GetTypesDerivedFrom<AUpgradeParameter>();
-
-            foreach (Type type in types)
-            {
-                if (type.IsAbstract || !type.IsClass || !type.IsSerializable)
-                {
-                    continue;
-                }
-
-                yield return type;
-            }
-        }
-
-        private string GetName(Type type)
-        {
-            return ObjectNames.NicifyVariableName(type.Name);
-        }
-
-        private void OnAddParameter(object targetType)
-        {
-            Type type = (Type)targetType;
-            int index = parametersProperty.arraySize;
-            parametersProperty.arraySize++;
-
-            SerializedProperty element = parametersProperty.GetArrayElementAtIndex(index);
-
-            element.managedReferenceValue = Activator.CreateInstance(type);
-
-            serializedObject.ApplyModifiedProperties();
-        }
 
         protected virtual IEnumerable<string> GetIgnoredProperties()
         {
@@ -226,8 +66,8 @@ namespace Rodak.UpgradeSystem.Editor
             PropertyField requirementsField = new(requirementsProperty);
             root.Add(requirementsField);
 
-            VisualElement parametersList = CreateParametersList();
-            root.Add(parametersList);
+            PropertyField parametersField = new(parametersProperty);
+            root.Add(parametersField);
 
             return root;
         }

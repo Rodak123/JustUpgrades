@@ -85,7 +85,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             if (upgrade.CurrentLevel == 0)
                 return info;
 
-            foreach (AUpgradeParameter parameter in TargetUpgrade.Parameters)
+            foreach (AUpgradeParameter parameter in TargetUpgrade.Parameters.Parameters)
             {
                 info += $"{parameter.GetInfoText()} ";
             }

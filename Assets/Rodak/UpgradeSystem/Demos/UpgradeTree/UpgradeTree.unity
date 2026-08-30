@@ -277,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480381255341201911, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_Name
-      value: Button UI (2)
+      value: 2.1 Button UI
       objectReference: {fileID: 0}
     - target: {fileID: 3635598810482567598, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -535,7 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480381255341201911, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_Name
-      value: Button UI (1)
+      value: 2 Button UI
       objectReference: {fileID: 0}
     - target: {fileID: 3635598810482567598, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -676,7 +676,7 @@ PrefabInstance:
     - target: {fileID: 7725946205808147026, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: TargetUpgrade
       value: 
-      objectReference: {fileID: 11400000, guid: b51920eed6609c74599aee3ce2e63e10, type: 2}
+      objectReference: {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
     - target: {fileID: 8575742445174174816, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1149,7 +1149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480381255341201911, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_Name
-      value: Button UI (3)
+      value: 2.2 Button UI
       objectReference: {fileID: 0}
     - target: {fileID: 3635598810482567598, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1407,7 +1407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480381255341201911, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_Name
-      value: Button UI
+      value: 1 Button UI
       objectReference: {fileID: 0}
     - target: {fileID: 3635598810482567598, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1665,7 +1665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3480381255341201911, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_Name
-      value: Button UI (4)
+      value: 3 Button UI
       objectReference: {fileID: 0}
     - target: {fileID: 3635598810482567598, guid: aa7e3538ad15d8a419644b08937c1da6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2339,7 +2339,7 @@ PrefabInstance:
     - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'upgradeGroups.Array.data[0].upgrades.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: b51920eed6609c74599aee3ce2e63e10, type: 2}
+      objectReference: {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
     - target: {fileID: 1470455354607081831, guid: 85675cc5069014b4cba633ccd8be50af, type: 3}
       propertyPath: 'upgradeGroups.Array.data[0].upgrades.Array.data[2]'
       value: 

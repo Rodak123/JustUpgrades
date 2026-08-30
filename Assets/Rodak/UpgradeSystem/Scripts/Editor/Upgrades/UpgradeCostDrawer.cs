@@ -2,6 +2,7 @@ using Rodak.UpgradeSystem.Core;
 using Rodak.UpgradeSystem.UI;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Rodak.UpgradeSystem.Editor
@@ -31,6 +32,7 @@ namespace Rodak.UpgradeSystem.Editor
                 || isSpentProperty == null
             )
             {
+                Debug.LogWarning("No all properties found.");
                 return root;
             }
 

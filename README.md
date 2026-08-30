@@ -110,7 +110,7 @@ If referenced upgrade has the needed level.
 
 If max level is false, target level is used, otherwise target level is ignored.
 
-### Currency Dependency [not implemented]
+### Currency Dependency [not implemented by default]
 
 If referenced currency is unlocked.
 
@@ -138,7 +138,7 @@ For example:
 
 This can modify any dynamic value, even itself. 
 
-### Currency Unlock [not implemented]
+### Currency Unlock [not implemented by default]
 
 Can be also done with dynamic value modifier. 
 
@@ -147,7 +147,7 @@ Unlocks a currency after a level.
 - Target Level [int value, 1+] 
 - Currency [currency reference]
 
-### Currency Add [not implemented]
+### Currency Add [not implemented by default]
 
 Can be also done with dynamic value modifier. 
 

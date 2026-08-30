@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Rodak.UpgradeSystem.UI;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
@@ -11,30 +12,24 @@ namespace Rodak.UpgradeSystem.Core
         [Space]
         [SerializeField] private UpgradeLevel level;
         [SerializeField] private UpgradeCost[] costs;
-        [SerializeField] private UpgradeRequirement[] requirements;
-        [SerializeReference] private AUpgradeParameter[] parameters;
+        [SerializeField] private UpgradeRequirements requirements;
+        [SerializeField] private UpgradeParameters parameters;
 
         public string UpgradeName => upgradeName;
 
         public UpgradeLevel Level => level;
         public UpgradeCost[] Costs => costs;
-        public UpgradeRequirement[] Requirements => requirements;
-        public AUpgradeParameter[] Parameters => parameters;
+        public UpgradeRequirements Requirements => requirements;
+        public UpgradeParameters Parameters => parameters;
 
         public void Init(UpgradeSystemContext upgradeContext)
         {
-            foreach (AUpgradeParameter parameter in parameters)
-            {
-                parameter.Init(upgradeContext, this);
-            }
+            parameters.Init(upgradeContext, this);
         }
 
         public void Update()
         {
-            foreach (AUpgradeParameter parameter in parameters)
-            {
-                parameter.Update();
-            }
+            parameters.Update();
         }
 
         public IEnumerable<IDynamicValue> GetDynamicValues()
@@ -50,26 +45,19 @@ namespace Rodak.UpgradeSystem.Core
                     yield return dynamicValue;
                 }
             }
-            foreach (UpgradeRequirement requirement in requirements)
+            foreach (IDynamicValue dynamicValue in requirements.GetDynamicValues())
             {
-                foreach (IDynamicValue dynamicValue in requirement.GetDynamicValues())
-                {
-                    yield return dynamicValue;
-                }
+                yield return dynamicValue;
             }
-            foreach (AUpgradeParameter parameter in parameters)
+            foreach (IDynamicValue dynamicValue in parameters.GetDynamicValues())
             {
-                if (parameter is not IHasDynamicValues hasDynamicValues) continue;
-                foreach (IDynamicValue dynamicValue in hasDynamicValues.GetDynamicValues())
-                {
-                    yield return dynamicValue;
-                }
+                yield return dynamicValue;
             }
         }
 
         public override string ToString()
         {
-            return upgradeName;
+            return UpgradePresenter.GetFormattedName(this);
         }
 
         public string GetChangingValueSuffix()

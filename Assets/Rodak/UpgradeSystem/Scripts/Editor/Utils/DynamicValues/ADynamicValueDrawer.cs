@@ -210,6 +210,7 @@ namespace Rodak.UpgradeSystem.Editor
 
             if (exposedReferenceProperty == null)
             {
+                Debug.LogWarning("No all properties found.");
                 return root;
             }
 

@@ -72,19 +72,7 @@ namespace Rodak.UpgradeSystem.Core
 
         public bool CanFitRequirements()
         {
-            foreach (UpgradeRequirement requirement in UpgradeSO.Requirements)
-            {
-                if (!context.UpgradeRegistry.TryGetUpgrade(requirement.TargetUpgrade, out Upgrade requiredUpgrade))
-                    return false;
-
-                int targetLevel = requirement.UseMaxLevel.GetBoolValue()
-                    ? requiredUpgrade.UpgradeSO.Level.MaxLevel.GetIntValue()
-                    : requirement.TargetLevel.GetIntValue();
-
-                if (requiredUpgrade.CurrentLevel < targetLevel)
-                    return false;
-            }
-            return true;
+            return UpgradeSO.Requirements.FitsRequirements(context, UpgradeSO);
         }
 
         public bool CanAfford()

@@ -64,9 +64,9 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
                 description = description.Replace(replace, reference.GetValueString());
             }
 
-            for (int i = 0; i < upgradeSO.Parameters.Length; i++)
+            for (int i = 0; i < upgradeSO.Parameters.Parameters.Length; i++)
             {
-                AUpgradeParameter parameter = upgradeSO.Parameters[i];
+                AUpgradeParameter parameter = upgradeSO.Parameters.Parameters[i];
                 string replace = PARAMETER_SHORTCODE_FORMAT.Replace("0", i.ToString());
                 description = description.Replace(replace, parameter.GetInfoText());
             }
