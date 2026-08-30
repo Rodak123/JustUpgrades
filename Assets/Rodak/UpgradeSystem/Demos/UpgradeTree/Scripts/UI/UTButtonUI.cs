@@ -39,7 +39,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
         {
             upgradeContext = UpgradeSystemContext.Instance;
 
-            if (!upgradeContext.UpgradeRegistry.TryGetUpgrade(TargetUpgrade, out upgrade))
+            if (!upgradeContext.UpgradeTracker.TryGetUpgrade(TargetUpgrade, out upgrade))
             {
                 Debug.LogError($"{nameof(Upgrade)} {TargetUpgrade} not registered.");
                 gameObject.SetActive(false);

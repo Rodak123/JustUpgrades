@@ -56,7 +56,7 @@ namespace Rodak.UpgradeSystem.Core
                 return;
             }
 
-            context.UpgradeRegistry.TryGetUpgrade(upgradeSO, out upgrade);
+            context.UpgradeTracker.TryGetUpgrade(upgradeSO, out upgrade);
 
             if (upgrade == null)
             {

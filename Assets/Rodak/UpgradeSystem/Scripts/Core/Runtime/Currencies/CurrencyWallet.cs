@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    public class CurrencyWallet : MonoBehaviour
+    public class CurrencyWallet : MonoBehaviour, IHasSaveState
     {
+        [Serializable]
+        private class SaveState
+        {
+            public Dictionary<string, JObject> CurrencySaveStates;
+        }
+
         public struct OnCurrencyChangedArgs
         {
             public ACurrencySO ACurrencySO;
@@ -30,6 +37,8 @@ namespace Rodak.UpgradeSystem.Core
 
         public event Action<OnCurrencyChangedArgs> OnCurrencyChanged;
 
+        private bool isInitialized;
+
         public void Init()
         {
             for (int i = 0; i < currencyGroups.Count; i++)
@@ -46,6 +55,8 @@ namespace Rodak.UpgradeSystem.Core
                     currencyAmounts.Add(currency, currency.BaseValue);
                 }
             }
+
+            isInitialized = true;
         }
 
         public void SetCurrency(ACurrencySO currency, BigDouble amount)
@@ -124,6 +135,67 @@ namespace Rodak.UpgradeSystem.Core
                 });
             }
             return true;
+        }
+
+        public JObject CreateSaveState()
+        {
+            SaveState saveState = new()
+            {
+                CurrencySaveStates = new(),
+            };
+
+            foreach (ACurrencySO currencySO in currencyAmounts.Keys)
+            {
+                JObject currencySaveState = currencyAmounts[currencySO].CreateSaveState();
+                saveState.CurrencySaveStates.Add(currencySO.SaveId, currencySaveState);
+            }
+
+            return JObject.FromObject(saveState);
+        }
+
+        public void LoadSaveState(JObject saveStateObject)
+        {
+            if (!isInitialized)
+            {
+                Debug.LogError($"Can't load state before initialization");
+                return;
+            }
+
+            if (saveStateObject == null) return;
+
+            SaveState saveState = saveStateObject.ToObject<SaveState>();
+
+            if (saveState == null)
+            {
+                Debug.LogError($"Trying to load invalid save state: '{saveStateObject}'");
+                return;
+            }
+
+            foreach (string currencyKey in saveState.CurrencySaveStates.Keys)
+            {
+                JObject currencySaveState = saveState.CurrencySaveStates[currencyKey];
+
+                ACurrencySO targetCurrencySO = null;
+                foreach (ACurrencySO currencySO in currencyAmounts.Keys)
+                {
+                    if (currencySO.SaveId == currencyKey)
+                    {
+                        targetCurrencySO = currencySO;
+                        break;
+                    }
+                }
+
+                if (targetCurrencySO == null)
+                {
+                    Debug.LogWarning($"Failed to load currency: '{currencyKey}', currency not registered, ignoring");
+                    continue;
+                }
+
+                BigDouble savedValue = 0;
+                savedValue.LoadSaveState(currencySaveState);
+
+                SetCurrency(targetCurrencySO, savedValue);
+            }
         }
     }
 }

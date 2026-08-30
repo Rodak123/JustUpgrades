@@ -11,12 +11,14 @@ namespace Rodak.UpgradeSystem.Editor
     [CustomEditor(typeof(AUpgradeSO), true)]
     public class UpgradeSOEditor : UnityEditor.Editor
     {
+        public const string SaveIdPropertyName = "saveId";
         public const string UpgradeNamePropertyName = "upgradeName";
         public const string LevelPropertyName = "level";
         public const string CostsArrayPropertyName = "costs";
         public const string RequirementsArrayPropertyName = "requirements";
         public const string ParametersPropertyName = "parameters";
 
+        private SerializedProperty saveIdProperty;
         private SerializedProperty upgradeNameProperty;
         private SerializedProperty levelProperty;
         private SerializedProperty costsProperty;
@@ -25,6 +27,7 @@ namespace Rodak.UpgradeSystem.Editor
 
         protected virtual IEnumerable<string> GetIgnoredProperties()
         {
+            yield return SaveIdPropertyName;
             yield return UpgradeNamePropertyName;
             yield return LevelPropertyName;
             yield return CostsArrayPropertyName;
@@ -41,6 +44,7 @@ namespace Rodak.UpgradeSystem.Editor
             costsProperty = serializedObject.FindProperty(CostsArrayPropertyName);
             requirementsProperty = serializedObject.FindProperty(RequirementsArrayPropertyName);
             parametersProperty = serializedObject.FindProperty(ParametersPropertyName);
+            saveIdProperty = serializedObject.FindProperty(SaveIdPropertyName);
 
             if (
                 upgradeNameProperty == null
@@ -48,11 +52,15 @@ namespace Rodak.UpgradeSystem.Editor
                 || costsProperty == null
                 || requirementsProperty == null
                 || parametersProperty == null
+                || saveIdProperty == null
             )
             {
                 Debug.LogWarning("No all properties found.");
                 return root;
             }
+
+            PropertyField saveIdField = new(saveIdProperty);
+            root.Add(saveIdField);
 
             PropertyField upgradeNameField = new(upgradeNameProperty);
             root.Add(upgradeNameField);

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: 1 - Simple Beginning
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
   uniqueId: d4e76a22a42c83e48ada9182a2c36747
-  upgradeName: Simple Begining
+  saveId: simple_beginning
+  upgradeName: Simple Beginning
   level:
     maxLevel:
       exposedReference: {fileID: 0}

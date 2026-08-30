@@ -1,6 +1,10 @@
 using System;
 using System.Globalization;
 using Random = System.Random;
+using Rodak.UpgradeSystem.Core;
+using Newtonsoft.Json.Linq;
+
+
 
 #if UNITY_2017_1_OR_NEWER
 using UnityEngine;
@@ -16,8 +20,15 @@ namespace Rodak.UpgradeSystem.Utils
     /// <summary>
     /// BigDouble from BreakInfinity.cs: https://github.com/Razenpok/BreakInfinity.cs
     /// </summary>
-    public struct BigDouble : IFormattable, IComparable, IComparable<BigDouble>, IEquatable<BigDouble>
+    public struct BigDouble : IFormattable, IComparable, IComparable<BigDouble>, IEquatable<BigDouble>, IHasSaveState
     {
+        [Serializable]
+        private class SaveState
+        {
+            public double Mantissa;
+            public long Exponent;
+        }
+
         public static int ScientificNotationStartDigit = 4;
 
         public const double Tolerance = 1e-18;
@@ -561,6 +572,33 @@ namespace Rodak.UpgradeSystem.Utils
         {
             return IsPositiveInfinity(first) && IsPositiveInfinity(second)
                 || IsNegativeInfinity(first) && IsNegativeInfinity(second);
+        }
+
+        public JObject CreateSaveState()
+        {
+            SaveState saveState = new()
+            {
+                Mantissa = mantissa,
+                Exponent = exponent,
+            };
+
+            return JObject.FromObject(saveState);
+        }
+
+        public void LoadSaveState(JObject saveStateObject)
+        {
+            if (saveStateObject == null) return;
+
+            SaveState saveState = saveStateObject.ToObject<SaveState>();
+
+            if (saveState == null)
+            {
+                Debug.LogError($"Trying to load invalid save state: '{saveStateObject}'");
+                return;
+            }
+
+            mantissa = saveState.Mantissa;
+            exponent = saveState.Exponent;
         }
 
         public static bool operator ==(BigDouble left, BigDouble right)

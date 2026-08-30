@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cash
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencySO
   uniqueId: e270cfe36f61a1846a1731c6408fe59d
+  saveId: cash
   currencyName: Cash
   currencyColor: {r: 0.1556984, g: 0.9716981, b: 0.041251317, a: 1}
   baseValue:

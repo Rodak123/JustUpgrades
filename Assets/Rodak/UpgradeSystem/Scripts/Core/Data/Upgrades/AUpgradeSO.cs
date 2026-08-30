@@ -7,6 +7,7 @@ namespace Rodak.UpgradeSystem.Core
 {
     public abstract class AUpgradeSO : UniqueScriptableObject<AUpgradeSO>, IHasDynamicValues
     {
+        [SerializeField] private string saveId;
         [SerializeField] private string upgradeName = "Upgrade Name";
 
         [Space]
@@ -15,12 +16,36 @@ namespace Rodak.UpgradeSystem.Core
         [SerializeField] private UpgradeRequirements requirements;
         [SerializeField] private UpgradeParameters parameters;
 
+        public string SaveId => saveId;
         public string UpgradeName => upgradeName;
 
         public UpgradeLevel Level => level;
         public UpgradeCost[] Costs => costs;
         public UpgradeRequirements Requirements => requirements;
         public UpgradeParameters Parameters => parameters;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (string.IsNullOrEmpty(upgradeName))
+            {
+                Debug.LogWarning($"Missing upgrade name for '{name}'");
+            }
+
+            if (string.IsNullOrEmpty(saveId))
+            {
+                if (string.IsNullOrEmpty(upgradeName))
+                {
+                    Debug.LogWarning($"Missing saveId for '{name}'");
+                }
+                else
+                {
+                    Debug.Log($"Auto-filled {nameof(saveId)}");
+                    saveId = UpgradeSystemSaveSystem.SanitizeName(upgradeName);
+                }
+            }
+        }
+#endif
 
         public void Init(UpgradeSystemContext upgradeContext)
         {
@@ -64,5 +89,6 @@ namespace Rodak.UpgradeSystem.Core
         {
             return $"upgrade:{UniqueId}";
         }
+
     }
 }

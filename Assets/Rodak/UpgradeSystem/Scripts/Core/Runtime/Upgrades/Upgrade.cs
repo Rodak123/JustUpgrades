@@ -1,11 +1,18 @@
 using System;
+using Newtonsoft.Json.Linq;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    public class Upgrade
+    public class Upgrade : IHasSaveState
     {
+        [Serializable]
+        private class SaveState
+        {
+            public int CurrentLevel;
+        }
+
         private int currentLevel = 0;
 
         private readonly UpgradeSystemContext context;
@@ -88,6 +95,31 @@ namespace Rodak.UpgradeSystem.Core
                     return false;
             }
             return true;
+        }
+
+        public JObject CreateSaveState()
+        {
+            SaveState saveState = new()
+            {
+                CurrentLevel = CurrentLevel,
+            };
+
+            return JObject.FromObject(saveState);
+        }
+
+        public void LoadSaveState(JObject saveStateObject)
+        {
+            if (saveStateObject == null) return;
+
+            SaveState saveState = saveStateObject.ToObject<SaveState>();
+
+            if (saveState == null)
+            {
+                Debug.LogError($"Trying to load invalid save state: '{saveStateObject}'");
+                return;
+            }
+
+            currentLevel = saveState.CurrentLevel;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Rodak.UpgradeSystem.Core
 
         public override bool FitsRequirement(UpgradeSystemContext context, AUpgradeSO upgradeSO)
         {
-            if (targetUpgradeSO == null || !context.UpgradeRegistry.TryGetUpgrade(targetUpgradeSO, out Upgrade targetUpgrade))
+            if (targetUpgradeSO == null || !context.UpgradeTracker.TryGetUpgrade(targetUpgradeSO, out Upgrade targetUpgrade))
             {
                 return false;
             }

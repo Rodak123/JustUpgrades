@@ -3,9 +3,36 @@
 My goals:
 - provide a solid essentials core
 - allow easily adding new features / custom behaviour
-- ascension/resets support
 - saving/loading support
+- ascension/resets support
 - WebGL, Linux, Windows
+
+## Contents
+
+- [Upgrade System](#upgrade-system)
+  - [Contents](#contents)
+  - [Disclaimer](#disclaimer)
+  - [Currency](#currency)
+  - [Dynamic Values](#dynamic-values)
+  - [Scaled Values](#scaled-values)
+  - [Upgrades](#upgrades)
+    - [Upgrade Properties](#upgrade-properties)
+      - [Core properties](#core-properties)
+      - [Exposable Properties](#exposable-properties)
+    - [Upgrade Level](#upgrade-level)
+    - [Upgrade Cost](#upgrade-cost)
+    - [Upgrade Requirements](#upgrade-requirements)
+      - [Upgrade Dependency](#upgrade-dependency)
+      - [Currency Dependency \[not implemented by default\]](#currency-dependency-not-implemented-by-default)
+    - [Upgrade Modifiers](#upgrade-modifiers)
+      - [Dynamic Value Modifier](#dynamic-value-modifier)
+      - [Currency Unlock \[not implemented by default\]](#currency-unlock-not-implemented-by-default)
+      - [Currency Add \[not implemented by default\]](#currency-add-not-implemented-by-default)
+  - [Core Runtime Systems](#core-runtime-systems)
+    - [Currency Wallet](#currency-wallet)
+    - [Dynamic Value Registry](#dynamic-value-registry)
+    - [Upgrade Tracker](#upgrade-tracker)
+
 
 ## Disclaimer
 
@@ -15,11 +42,11 @@ I just don't want to type out 'whole number' and 'decimal number'.
 ## Currency
 
 A currency is a value that can be used for upgrade costs. 
-Currencies are stored in a "currency wallet" where they can be read, spent or gained.
+Currencies are stored in a "[currency wallet](#currency-wallet)" where they can be read, spent or gained.
 
 Each currency can be locked. Locked status is used in currency generators or UI. 
 
-## Dynamic Value
+## Dynamic Values
 
 Each dynamic value [TYPE value, OPTIONS] has:
 - Unique Id [string]
@@ -28,13 +55,15 @@ Each dynamic value [TYPE value, OPTIONS] has:
 - Min amount
 - Max amount
 
-The values are stored/managed by the central "value manager". This manager allows modifiers to subscribe to the mediator of each value. This is so that no value is fixed, rather they are queried.
+The values are stored/managed by the central "[dynamic value registry](#dynamic-value-registry)". This registry allows modifiers to subscribe to the mediator of each value. This is so that no value is fixed, rather they are queried.
 
 So the current amount of a value is:
+$$
 Amount = Base + Modifiers
+$$
+The base is also implemented as a modifier
 
 Modifiers can only affect exposed values.
-
 These values are defined in:
 - upgrades (their properties)
 - generators (gain per second)
@@ -48,7 +77,7 @@ Dynamic value is implemented to only store a float number, other types are extra
 - boolean = value > 0
 - int = floor(value)
 
-## Scaled Value
+## Scaled Values
 
 A scaled value is a value type that defines how a number scales with each level.
 This value is only used when a value is clearly linked to an upgrade.
@@ -62,16 +91,18 @@ Scalers:
 
 Each scaler can expose 
 
-## Upgrade Properties
+## Upgrades
 
-### Core properties
+### Upgrade Properties
+
+#### Core properties
 
 - Id - unique upgrade id
 - Name - title of the upgrade
 - Custom - some custom properties, for example:
   - Upgrade Visual - used for UI, like description
 
-### Exposable Properties
+#### Exposable Properties
 
 - Level [level]
 - Costs [cost array] - they are added together
@@ -81,14 +112,14 @@ Each scaler can expose
 Requirements and modifiers have their own upgrade properties, these get added to the base exposable properties. All properties under an upgrade can be "exposed". 
 By exposing a property, it can be modified.
 
-## Upgrade Level
+### Upgrade Level
 
 Defines how the upgrade is allowed to well, upgrade.
 
 - Level Cap [int value, 1+] - max level
 - Infinite [bool value]
 
-## Upgrade Cost
+### Upgrade Cost
 
 The cost is for a single currency.
 
@@ -96,11 +127,11 @@ The cost is for a single currency.
 - Currency [currency reference]
 - Is Spent [bool value] - when false, buying doesn't reduce the currency (this is for requirement upgrade late game)
 
-## Upgrade Requirement [requirement]
+### Upgrade Requirements
 
 All requirements must be met to unlock the upgrade.
 
-### Upgrade Dependency
+#### Upgrade Dependency
 
 If referenced upgrade has the needed level.
 
@@ -110,18 +141,18 @@ If referenced upgrade has the needed level.
 
 If max level is false, target level is used, otherwise target level is ignored.
 
-### Currency Dependency [not implemented by default]
+#### Currency Dependency [not implemented by default]
 
 If referenced currency is unlocked.
 
 - Currency [currency reference]
 
-## Upgrade Modifiers [modifier]
+### Upgrade Modifiers
 
 Each upgrade has some modifiers. These make the upgrade "do" stuff. 
 Usually it's modifying a value (hence the name modifiers).
 
-### Dynamic Value Modifier
+#### Dynamic Value Modifier
 
 Modifies some dynamic value.
 
@@ -138,7 +169,7 @@ For example:
 
 This can modify any dynamic value, even itself. 
 
-### Currency Unlock [not implemented by default]
+#### Currency Unlock [not implemented by default]
 
 Can be also done with dynamic value modifier. 
 
@@ -147,7 +178,7 @@ Unlocks a currency after a level.
 - Target Level [int value, 1+] 
 - Currency [currency reference]
 
-### Currency Add [not implemented by default]
+#### Currency Add [not implemented by default]
 
 Can be also done with dynamic value modifier. 
 
@@ -155,3 +186,26 @@ One time currency gain per level.
 
 - Currency [currency reference]
 - Gain [float value]
+
+## Core Runtime Systems
+
+These systems use the data above (scriptable objects) 
+and then act as a single source of truth for the upgrade system game state.
+
+### Currency Wallet
+
+Just like the analogy, it stores the exact amount of each currency.
+
+Provides functions to gain, check and spend currencies.
+
+### Dynamic Value Registry
+
+This registry stores all dynamic values and their modifiers.
+
+It does not store state, each dynamic value is made up from the modifiers. Provides functions to query dynamic values.
+
+### Upgrade Tracker
+
+The upgrade tracker holds all registered upgrades. 
+
+It stores each upgrades state and provides functions to access them.
