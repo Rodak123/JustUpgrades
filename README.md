@@ -3,9 +3,10 @@
 My goals:
 - provide a solid essentials core
 - allow easily adding new features / custom behaviour
+- have events and hooks for new scripts 
 - saving/loading support
 - ascension/resets support
-- WebGL, Linux, Windows
+- work for WebGL, Linux, Windows (and Android?)
 
 ## Contents
 
@@ -16,6 +17,7 @@ My goals:
   - [Dynamic Values](#dynamic-values)
   - [Scaled Values](#scaled-values)
   - [Upgrades](#upgrades)
+    - [Upgrade Container](#upgrade-container)
     - [Upgrade Properties](#upgrade-properties)
       - [Core properties](#core-properties)
       - [Exposable Properties](#exposable-properties)
@@ -32,12 +34,16 @@ My goals:
     - [Currency Wallet](#currency-wallet)
     - [Dynamic Value Registry](#dynamic-value-registry)
     - [Upgrade Tracker](#upgrade-tracker)
+  - [Currency Generators and UI](#currency-generators-and-ui)
+  - [Ascensions / Resets / Prestige](#ascensions--resets--prestige)
 
 
 ## Disclaimer
 
+I tired to make this library as versatile as possible, that doesn't mean it covers all needs. So feel free to change its code for you game.
+
 Whenever I say 'float', what I actually mean is a non-integer or decimal or fraction. In c# code, it actually uses the BigDouble. 
-I just don't want to type out 'whole number' and 'decimal number'. 
+I just don't want to type out 'whole number' and 'decimal number'.  
 
 ## Currency
 
@@ -92,6 +98,13 @@ Scalers:
 Each scaler can expose 
 
 ## Upgrades
+
+### Upgrade Container
+
+An upgrade container holds upgrades. Used to organize.
+
+- Upgrade - Is a upgrade container of itself
+- Upgrade Group - Holds N upgrades
 
 ### Upgrade Properties
 
@@ -185,7 +198,7 @@ Can be also done with dynamic value modifier.
 One time currency gain per level.
 
 - Currency [currency reference]
-- Gain [float value]
+- Gain [float value] 
 
 ## Core Runtime Systems
 
@@ -209,3 +222,19 @@ It does not store state, each dynamic value is made up from the modifiers. Provi
 The upgrade tracker holds all registered upgrades. 
 
 It stores each upgrades state and provides functions to access them.
+
+## Currency Generators and UI
+
+A currency generator is a term I made up, it is a script which handles how a currency is gained. This can be per second, once per click or anything. 
+The main point is that the generator uses dynamic values so that the upgrades can interact with it (upgrade it) and UI can ask it about how much are we generating over time. 
+
+Since each incremental is very different, it's basically impossible to make a generic solution for generating currencies and UI. (also, I don't think that making something for ALL games is a good idea anyway)
+
+Because of this, this library lets you make your own generators and UI, which will use the core systems and data above. 
+I will implement few demos which have various generator and UI implementations.
+
+## Ascensions / Resets / Prestige
+
+Most incrementals allow to reset some part of the game to gain some new currency or unlock a new area.
+
+This is also very differently implemented across incrementals. I want to provide a simple system where you can specify "tiers" of ascension.
