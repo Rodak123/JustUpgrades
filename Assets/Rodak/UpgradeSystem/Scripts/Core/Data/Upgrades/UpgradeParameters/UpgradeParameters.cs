@@ -8,15 +8,15 @@ namespace Rodak.UpgradeSystem.Core
     [Serializable]
     public class UpgradeParameters : IHasDynamicValues
     {
-        [SerializeReference] private AUpgradeParameter[] parameters;
+        [SerializeReference] private List<AUpgradeParameter> parameters;
 
-        public AUpgradeParameter[] Parameters => parameters;
+        public IReadOnlyList<AUpgradeParameter> Parameters => parameters;
 
-        public void Init(UpgradeSystemContext upgradeContext, AUpgradeSO upgradeSO)
+        public void Init(AUpgradeSO upgradeSO)
         {
             foreach (AUpgradeParameter parameter in parameters)
             {
-                parameter.Init(upgradeContext, upgradeSO);
+                parameter.Init(upgradeSO);
             }
         }
 

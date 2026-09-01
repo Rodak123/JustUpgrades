@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencyGenerator
   targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
   targetUnlockedStatus:
-    exposedReference: {fileID: 11400000, guid: 13c5928588c614e4789e2ddafabd44ab, type: 2}
+    exposedReference: {fileID: 11400000, guid: 5a189a5cd9f1b9540b2b5f3325246a73, type: 2}
     baseValue: 0
   targetSingleUseGain:
     exposedReference: {fileID: 0}
@@ -173,7 +173,7 @@ MonoBehaviour:
       mantissa: 0
       exponent: 0
   targetLinearGain:
-    exposedReference: {fileID: 11400000, guid: 851cd9bfa46087d41beabcae298378ed, type: 2}
+    exposedReference: {fileID: 11400000, guid: ec27430de89dbf946a48add756618c6b, type: 2}
     baseValue:
       mantissa: 1
       exponent: 0
@@ -878,19 +878,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed7de5ca3ec262449633410b772d024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencyGenerator
-  targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+  targetCurrency: {fileID: 11400000, guid: 02481a2a02de4af48a5eac8544ae6832, type: 2}
   targetUnlockedStatus:
-    exposedReference: {fileID: 11400000, guid: 13c5928588c614e4789e2ddafabd44ab, type: 2}
-    baseValue: 0
+    exposedReference: {fileID: 0}
+    baseValue: 1
   targetSingleUseGain:
     exposedReference: {fileID: 0}
     baseValue:
       mantissa: 0
       exponent: 0
   targetLinearGain:
-    exposedReference: {fileID: 11400000, guid: 851cd9bfa46087d41beabcae298378ed, type: 2}
+    exposedReference: {fileID: 0}
     baseValue:
-      mantissa: 1
+      mantissa: 0
       exponent: 0
   targetExponentialGain:
     exposedReference: {fileID: 0}
@@ -2375,6 +2375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586553005}
   - component: {fileID: 1586553006}
+  - component: {fileID: 1586553007}
   m_Layer: 5
   m_Name: Currencies
   m_TagString: Untagged
@@ -2415,7 +2416,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencyListUI
   currencyGenerators:
   - {fileID: 248243809}
+  - {fileID: 499146787}
   currencyUIPrefab: {fileID: 7581979485676504809, guid: 8b90c30da3d951840a4c3a5652ea5886, type: 3}
+--- !u!114 &1586553007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586553004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1984154254
 GameObject:
   m_ObjectHideFlags: 0

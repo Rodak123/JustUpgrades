@@ -48,7 +48,7 @@ namespace Rodak.UpgradeSystem.Core
 
         public ScaledValue DynamicValueModifier => dynamicValueModifier;
 
-        public override void Init(UpgradeSystemContext context, AUpgradeSO upgradeSO)
+        public override void Init(AUpgradeSO upgradeSO)
         {
             if (targetDynamicValue == null)
             {
@@ -56,7 +56,7 @@ namespace Rodak.UpgradeSystem.Core
                 return;
             }
 
-            context.UpgradeTracker.TryGetUpgrade(upgradeSO, out upgrade);
+            UpgradeSystemContext.Instance.UpgradeTracker.TryGetUpgrade(upgradeSO, out upgrade);
 
             if (upgrade == null)
             {
@@ -66,7 +66,7 @@ namespace Rodak.UpgradeSystem.Core
 
             modifier = new Modifier(this);
 
-            context.DynamicValueRegistry.AttachModifier(targetDynamicValue, modifier);
+            UpgradeSystemContext.Instance.DynamicValueRegistry.AttachModifier(targetDynamicValue, modifier);
         }
 
         public override void Update()

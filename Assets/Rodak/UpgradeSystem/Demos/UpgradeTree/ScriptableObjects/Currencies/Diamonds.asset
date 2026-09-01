@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Diamonds
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTCurrencySO
   uniqueId: 02481a2a02de4af48a5eac8544ae6832
+  saveId: diamonds
   currencyName: Diamonds
   currencyColor: {r: 0.25872195, g: 0.9622642, b: 0.9437357, a: 1}
   baseValue:
     mantissa: 0
     exponent: 0
   baseGain:
-    mantissa: 0
+    mantissa: 1
     exponent: 0

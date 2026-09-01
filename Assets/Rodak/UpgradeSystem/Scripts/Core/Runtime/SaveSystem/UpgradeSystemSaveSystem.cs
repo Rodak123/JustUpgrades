@@ -25,12 +25,12 @@ namespace Rodak.UpgradeSystem.Core
 
         public JObject CreateSaveState()
         {
-            UpgradeSystemContext context = UpgradeSystemContext.Instance;
+            UpgradeSystemContext upgradeContext = UpgradeSystemContext.Instance;
 
             SaveState saveState = new()
             {
-                UpgradeTrackerState = context.UpgradeTracker.CreateSaveState(),
-                CurrencyWalletState = context.CurrencyWallet.CreateSaveState(),
+                UpgradeTrackerState = upgradeContext.UpgradeTracker.CreateSaveState(),
+                CurrencyWalletState = upgradeContext.CurrencyWallet.CreateSaveState(),
             };
 
             return JObject.FromObject(saveState);
@@ -48,10 +48,10 @@ namespace Rodak.UpgradeSystem.Core
                 return;
             }
 
-            UpgradeSystemContext context = UpgradeSystemContext.Instance;
+            UpgradeSystemContext upgradeContext = UpgradeSystemContext.Instance;
 
-            context.UpgradeTracker.LoadSaveState(saveState.UpgradeTrackerState);
-            context.CurrencyWallet.LoadSaveState(saveState.CurrencyWalletState);
+            upgradeContext.UpgradeTracker.LoadSaveState(saveState.UpgradeTrackerState);
+            upgradeContext.CurrencyWallet.LoadSaveState(saveState.CurrencyWalletState);
         }
 
         public string CreateSaveJSONString()

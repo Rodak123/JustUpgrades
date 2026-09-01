@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93261771a33644940998fbf79ea68624, type: 3}
   m_Name: targetUnlockedStatus_Cash Generator
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.BoolDynamicValueReferenceSO
-  uniqueId: 13c5928588c614e4789e2ddafabd44ab
+  uniqueId: 5a189a5cd9f1b9540b2b5f3325246a73

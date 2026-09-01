@@ -8,15 +8,15 @@ namespace Rodak.UpgradeSystem.Core
     [Serializable]
     public class UpgradeRequirements : IHasDynamicValues
     {
-        [SerializeReference] private AUpgradeRequirement[] requirements;
+        [SerializeReference] private List<AUpgradeRequirement> requirements;
 
-        public AUpgradeRequirement[] Requirements => requirements;
+        public IReadOnlyList<AUpgradeRequirement> Requirements => requirements;
 
-        public bool FitsRequirements(UpgradeSystemContext context, AUpgradeSO upgradeSO)
+        public bool FitsRequirements(AUpgradeSO upgradeSO)
         {
             foreach (AUpgradeRequirement requirement in requirements)
             {
-                bool fits = requirement.FitsRequirement(context, upgradeSO);
+                bool fits = requirement.FitsRequirement(upgradeSO);
                 if (!fits)
                 {
                     return false;

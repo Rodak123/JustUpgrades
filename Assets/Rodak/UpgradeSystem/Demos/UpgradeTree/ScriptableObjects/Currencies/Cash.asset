@@ -21,4 +21,4 @@ MonoBehaviour:
     exponent: 0
   baseGain:
     mantissa: 1
-    exponent: 0
+    exponent: 2

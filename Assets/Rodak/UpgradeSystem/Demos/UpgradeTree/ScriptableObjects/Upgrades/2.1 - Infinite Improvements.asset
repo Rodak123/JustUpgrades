@@ -26,6 +26,7 @@ MonoBehaviour:
   m_Name: 2.1 - Infinite Improvements
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
   uniqueId: 5adf1594b8736e4489ac46bf099f64f4
+  saveId: infinite_improvements
   upgradeName: Infinite Improvements
   level:
     maxLevel:
@@ -52,11 +53,12 @@ MonoBehaviour:
   upgradeNumber: 2.1
   visual:
     upgradeDescription: Increase {U0} max level by {V0} per level.
-    mentionedCurrencies: []
-    mentionedUpgrades:
-    - {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
-    mentionedDynamicValues:
-    - {fileID: -8668496310615442988}
+    mentions:
+      mentionedCurrencies: []
+      mentionedUpgrades:
+      - {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
+      mentionedDynamicValues:
+      - {fileID: -8668496310615442988}
   references:
     version: 2
     RefIds:
@@ -88,7 +90,7 @@ MonoBehaviour:
         dynamicValueModifier:
           scaler:
             rid: 3358812998158778438
-        showInfoText: 0
+        showInfoText: 1
     - rid: 3358812998158778438
       type: {class: LinearValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
       data:

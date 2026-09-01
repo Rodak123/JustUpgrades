@@ -17,9 +17,11 @@ namespace Rodak.UpgradeSystem.Core
         public BoolDynamicValue UseMaxLevel => useMaxLevel;
         public IntDynamicValue TargetLevel => targetLevel;
 
-        public override bool FitsRequirement(UpgradeSystemContext context, AUpgradeSO upgradeSO)
+        public override bool FitsRequirement(AUpgradeSO upgradeSO)
         {
-            if (targetUpgradeSO == null || !context.UpgradeTracker.TryGetUpgrade(targetUpgradeSO, out Upgrade targetUpgrade))
+            UpgradeSystemContext upgradeContext = UpgradeSystemContext.Instance;
+
+            if (targetUpgradeSO == null || !upgradeContext.UpgradeTracker.TryGetUpgrade(targetUpgradeSO, out Upgrade targetUpgrade))
             {
                 return false;
             }

@@ -31,17 +31,18 @@ MonoBehaviour:
   upgradeNumber: 1
   visual:
     upgradeDescription: Start generating {C0}. Ka-Ching!
-    mentionedCurrencies:
-    - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
-    mentionedUpgrades: []
-    mentionedDynamicValues: []
+    mentions:
+      mentionedCurrencies:
+      - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+      mentionedUpgrades: []
+      mentionedDynamicValues: []
   references:
     version: 2
     RefIds:
     - rid: 3358812998158778442
       type: {class: DynamicValueModifierUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
       data:
-        targetDynamicValue: {fileID: 11400000, guid: 13c5928588c614e4789e2ddafabd44ab, type: 2}
+        targetDynamicValue: {fileID: 11400000, guid: 5a189a5cd9f1b9540b2b5f3325246a73, type: 2}
         dynamicValueModifier:
           scaler:
             rid: 3358812998158778444

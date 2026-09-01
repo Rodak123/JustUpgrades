@@ -35,9 +35,9 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         protected void UpdateUI()
         {
-            container.SetActive(TargetGenerator.LastUnlockedStatus);
-
             BigDouble amount = upgradeContext.CurrencyWallet.GetCurrencyAmount(TargetGenerator.TargetCurrency);
+
+            container.SetActive(TargetGenerator.LastUnlockedStatus && amount > 0);
 
             nameText.text = $"{CurrencyPresenter.GetFormattedCurrency(TargetGenerator.TargetCurrency)}:";
             amountText.text = CurrencyPresenter.WrapInCurrencyColor(amount.ToString(), TargetGenerator.TargetCurrency);

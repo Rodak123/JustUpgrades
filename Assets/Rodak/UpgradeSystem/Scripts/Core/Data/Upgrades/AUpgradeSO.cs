@@ -12,7 +12,7 @@ namespace Rodak.UpgradeSystem.Core
 
         [Space]
         [SerializeField] private UpgradeLevel level;
-        [SerializeField] private UpgradeCost[] costs;
+        [SerializeField] private List<UpgradeCost> costs;
         [SerializeField] private UpgradeRequirements requirements;
         [SerializeField] private UpgradeParameters parameters;
 
@@ -20,36 +20,23 @@ namespace Rodak.UpgradeSystem.Core
         public string UpgradeName => upgradeName;
 
         public UpgradeLevel Level => level;
-        public UpgradeCost[] Costs => costs;
+        public IReadOnlyList<UpgradeCost> Costs => costs;
         public UpgradeRequirements Requirements => requirements;
         public UpgradeParameters Parameters => parameters;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (string.IsNullOrEmpty(upgradeName))
-            {
-                Debug.LogWarning($"Missing upgrade name for '{name}'");
-            }
-
             if (string.IsNullOrEmpty(saveId))
             {
-                if (string.IsNullOrEmpty(upgradeName))
-                {
-                    Debug.LogWarning($"Missing saveId for '{name}'");
-                }
-                else
-                {
-                    Debug.Log($"Auto-filled {nameof(saveId)}");
-                    saveId = UpgradeSystemSaveSystem.SanitizeName(upgradeName);
-                }
+                Debug.LogWarning($"Missing saveId for '{name}'");
             }
         }
 #endif
 
-        public void Init(UpgradeSystemContext upgradeContext)
+        public void Init()
         {
-            parameters.Init(upgradeContext, this);
+            parameters.Init(this);
         }
 
         public void Update()

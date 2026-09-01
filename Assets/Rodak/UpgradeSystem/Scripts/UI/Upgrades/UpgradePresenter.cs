@@ -49,7 +49,7 @@ namespace Rodak.UpgradeSystem.UI
         {
             if (upgrade == null || !upgrade.CanImprove()) return string.Empty;
 
-            if (upgrade.UpgradeSO.Costs.Length == 0)
+            if (upgrade.UpgradeSO.Costs.Count == 0)
             {
                 return "Free";
             }

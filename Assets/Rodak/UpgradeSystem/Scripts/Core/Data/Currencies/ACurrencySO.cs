@@ -16,30 +16,16 @@ namespace Rodak.UpgradeSystem.Core
 
         public Color CurrencyColor => currencyColor;
         public BigDouble BaseValue => baseValue;
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (string.IsNullOrEmpty(currencyName))
-            {
-                Debug.LogWarning($"Missing currency name for '{name}'");
-            }
-
-
             if (string.IsNullOrEmpty(saveId))
             {
-                if (string.IsNullOrEmpty(currencyName))
-                {
-                    Debug.LogWarning($"Missing saveId for '{name}'");
-                }
-                else
-                {
-                    Debug.Log($"Auto-filled {nameof(saveId)}");
-                    saveId = UpgradeSystemSaveSystem.SanitizeName(currencyName);
-                }
+                Debug.LogWarning($"Missing saveId for '{name}'");
             }
         }
 #endif
-
         public override string ToString()
         {
             return CurrencyPresenter.GetFormattedCurrency(this);

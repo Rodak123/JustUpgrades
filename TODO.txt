@@ -1,4 +1,4 @@
-[ ] Ascension
-[ ] Upgrade Containers
+[x] Ascension
+[x] Upgrade Containers
 [ ] Upgrade Tree Demo
 [ ] Clicker Demo

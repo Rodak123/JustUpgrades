@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 3 - First Reset
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
   uniqueId: 6c9fa418aad708d4892916d38c2288b9
+  saveId: first_reset
   upgradeName: First Reset
   level:
     maxLevel:
@@ -36,15 +37,19 @@ MonoBehaviour:
     - rid: 3358812998158778454
     - rid: 3358812998158778455
   parameters:
-    parameters: []
+    parameters:
+    - rid: 5971280561107370056
+    - rid: 5971280561107370055
   upgradeNumber: 3
   visual:
-    upgradeDescription: Reset all {C0} upgrades and gain {C1}.
-    mentionedCurrencies:
-    - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
-    - {fileID: 11400000, guid: 02481a2a02de4af48a5eac8544ae6832, type: 2}
-    mentionedUpgrades: []
-    mentionedDynamicValues: []
+    upgradeDescription: Reset all {C0} upgrades and gain {C1}. ( {C1} = sqrt({C0})
+      )
+    mentions:
+      mentionedCurrencies:
+      - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+      - {fileID: 11400000, guid: 02481a2a02de4af48a5eac8544ae6832, type: 2}
+      mentionedUpgrades: []
+      mentionedDynamicValues: []
   references:
     version: 2
     RefIds:
@@ -89,3 +94,12 @@ MonoBehaviour:
         targetLevel:
           exposedReference: {fileID: 0}
           baseValue: 20
+    - rid: 5971280561107370055
+      type: {class: AscensionUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetAscension: {fileID: 11400000, guid: 7035a48f373fb6342bb495cebd3f2395, type: 2}
+    - rid: 5971280561107370056
+      type: {class: UTAscensionGainUpgradeParameter, ns: Rodak.UpgradeSystem.Demos.UpgradeTree, asm: Assembly-CSharp}
+      data:
+        scalerCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+        gainedCurrency: {fileID: 11400000, guid: 02481a2a02de4af48a5eac8544ae6832, type: 2}

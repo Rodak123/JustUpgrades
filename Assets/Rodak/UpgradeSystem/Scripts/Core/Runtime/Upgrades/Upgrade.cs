@@ -15,7 +15,7 @@ namespace Rodak.UpgradeSystem.Core
 
         private int currentLevel = 0;
 
-        private readonly UpgradeSystemContext context;
+        private readonly UpgradeSystemContext upgradeContext;
         public readonly AUpgradeSO UpgradeSO;
 
         public int CurrentLevel => currentLevel;
@@ -23,11 +23,12 @@ namespace Rodak.UpgradeSystem.Core
         public int MaxLevel => IsInfinite ? currentLevel + 1 : UpgradeSO.Level.MaxLevel.GetIntValue();
         public int NextLevel => Mathf.Min(currentLevel + 1, MaxLevel);
 
-        public event Action<Upgrade> OnLevelIncreased;
+        public event Action<Upgrade> OnUpgraded;
+        public event Action<Upgrade> OnReset;
 
-        public Upgrade(UpgradeSystemContext context, AUpgradeSO upgradeSO)
+        public Upgrade(AUpgradeSO upgradeSO)
         {
-            this.context = context;
+            upgradeContext = UpgradeSystemContext.Instance;
             UpgradeSO = upgradeSO;
         }
 
@@ -49,13 +50,20 @@ namespace Rodak.UpgradeSystem.Core
                 BigDouble costValue = cost.GetCostValue(currentLevel, MaxLevel);
                 bool isSpent = cost.IsSpent.GetBoolValue();
 
-                if (isSpent && !context.CurrencyWallet.TrySpend(currency, costValue))
+                if (isSpent && !upgradeContext.CurrencyWallet.TrySpend(currency, costValue))
                     throw new Exception($"Failed to purchase upgrade '{UpgradeSO}'");
             }
 
             currentLevel++;
-            OnLevelIncreased?.Invoke(this);
+            OnUpgraded?.Invoke(this);
             return true;
+        }
+
+        public void ResetTo(int resetLevel)
+        {
+            if (resetLevel < 0) resetLevel = 0;
+            currentLevel = resetLevel;
+            OnReset?.Invoke(this);
         }
 
         public bool CanBeUpgraded()
@@ -79,7 +87,7 @@ namespace Rodak.UpgradeSystem.Core
 
         public bool CanFitRequirements()
         {
-            return UpgradeSO.Requirements.FitsRequirements(context, UpgradeSO);
+            return UpgradeSO.Requirements.FitsRequirements(UpgradeSO);
         }
 
         public bool CanAfford()
@@ -91,7 +99,7 @@ namespace Rodak.UpgradeSystem.Core
                 if (currency == null) continue;
                 BigDouble costValue = cost.GetCostValue(currentLevel, MaxLevel);
 
-                if (!context.CurrencyWallet.CanSpend(currency, costValue))
+                if (!upgradeContext.CurrencyWallet.CanSpend(currency, costValue))
                     return false;
             }
             return true;

@@ -238,3 +238,4 @@ I will implement few demos which have various generator and UI implementations.
 Most incrementals allow to reset some part of the game to gain some new currency or unlock a new area.
 
 This is also very differently implemented across incrementals. I want to provide a simple system where you can specify "tiers" of ascension.
+

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ef3248e7962be44a215ced7184dc4a, type: 3}
+  m_Name: First Reset
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Core.UTAscension
+  uniqueId: 7035a48f373fb6342bb495cebd3f2395
+  upgradeResets:
+  - TargetUpgrade: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
+    ResetLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  - TargetUpgrade: {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
+    ResetLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  - TargetUpgrade: {fileID: 11400000, guid: 5adf1594b8736e4489ac46bf099f64f4, type: 2}
+    ResetLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  - TargetUpgrade: {fileID: 11400000, guid: a1129d178b332854fa812b3a8d930af5, type: 2}
+    ResetLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  currencyResets:
+  - TargetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+    ResetAmount:
+      exposedReference: {fileID: 0}
+      baseValue:
+        mantissa: 0
+        exponent: 0

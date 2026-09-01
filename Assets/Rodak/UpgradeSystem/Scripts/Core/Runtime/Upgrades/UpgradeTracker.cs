@@ -29,8 +29,10 @@ namespace Rodak.UpgradeSystem.Core
 
         private bool isInitialized;
 
-        public void Init(UpgradeSystemContext context)
+        public void Init()
         {
+            UpgradeSystemContext upgradeContext = UpgradeSystemContext.Instance;
+
             for (int i = 0; i < upgradeGroups.Count; i++)
             {
                 List<AUpgradeSO> groupUpgrades = upgradeGroups[i].upgrades;
@@ -42,20 +44,20 @@ namespace Rodak.UpgradeSystem.Core
                         Debug.LogWarning($"Null upgrade at [{j}] in group: '{upgradeGroups[i].groupName}'");
                         continue;
                     }
-                    upgrades.Add(upgradeSO, new(context, upgradeSO));
+                    upgrades.Add(upgradeSO, new(upgradeSO));
                 }
             }
 
             // register dynamic values
             foreach (Upgrade upgrade in upgrades.Values)
             {
-                context.DynamicValueRegistry.RegisterDynamicValuesFrom(upgrade.UpgradeSO);
+                upgradeContext.DynamicValueRegistry.RegisterDynamicValuesFrom(upgrade.UpgradeSO);
             }
 
             // init all upgrades
             foreach (Upgrade upgrade in upgrades.Values)
             {
-                upgrade.UpgradeSO.Init(context);
+                upgrade.UpgradeSO.Init();
             }
 
             isInitialized = true;
