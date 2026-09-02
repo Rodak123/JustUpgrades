@@ -42,7 +42,7 @@ namespace Rodak.UpgradeSystem.Core
             if (!CanBeUpgraded())
                 return false;
 
-            foreach (UpgradeCost cost in UpgradeSO.Costs)
+            foreach (UpgradeCost cost in UpgradeSO.Costs.Costs)
             {
                 ACurrencySO currency = cost.TargetCurrency;
 
@@ -92,17 +92,7 @@ namespace Rodak.UpgradeSystem.Core
 
         public bool CanAfford()
         {
-            foreach (UpgradeCost cost in UpgradeSO.Costs)
-            {
-                ACurrencySO currency = cost.TargetCurrency;
-
-                if (currency == null) continue;
-                BigDouble costValue = cost.GetCostValue(currentLevel, MaxLevel);
-
-                if (!upgradeContext.CurrencyWallet.CanSpend(currency, costValue))
-                    return false;
-            }
-            return true;
+            return UpgradeSO.Costs.CanAffordAt(currentLevel, MaxLevel);
         }
 
         public JObject CreateSaveState()

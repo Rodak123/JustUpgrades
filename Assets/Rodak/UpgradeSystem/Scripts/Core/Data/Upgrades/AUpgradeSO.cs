@@ -12,7 +12,7 @@ namespace Rodak.UpgradeSystem.Core
 
         [Space]
         [SerializeField] private UpgradeLevel level;
-        [SerializeField] private List<UpgradeCost> costs;
+        [SerializeField] private UpgradeCosts costs;
         [SerializeField] private UpgradeRequirements requirements;
         [SerializeField] private UpgradeParameters parameters;
 
@@ -20,7 +20,7 @@ namespace Rodak.UpgradeSystem.Core
         public string UpgradeName => upgradeName;
 
         public UpgradeLevel Level => level;
-        public IReadOnlyList<UpgradeCost> Costs => costs;
+        public UpgradeCosts Costs => costs;
         public UpgradeRequirements Requirements => requirements;
         public UpgradeParameters Parameters => parameters;
 
@@ -50,12 +50,9 @@ namespace Rodak.UpgradeSystem.Core
             {
                 yield return dynamicValue;
             }
-            foreach (UpgradeCost cost in costs)
+            foreach (IDynamicValue dynamicValue in costs.GetDynamicValues())
             {
-                foreach (IDynamicValue dynamicValue in cost.GetDynamicValues())
-                {
-                    yield return dynamicValue;
-                }
+                yield return dynamicValue;
             }
             foreach (IDynamicValue dynamicValue in requirements.GetDynamicValues())
             {

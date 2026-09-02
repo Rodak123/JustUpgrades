@@ -49,7 +49,7 @@ namespace Rodak.UpgradeSystem.UI
         {
             if (upgrade == null || !upgrade.CanImprove()) return string.Empty;
 
-            if (upgrade.UpgradeSO.Costs.Count == 0)
+            if (upgrade.UpgradeSO.Costs.Costs.Count == 0)
             {
                 return "Free";
             }
@@ -57,7 +57,7 @@ namespace Rodak.UpgradeSystem.UI
             int maxLevel = upgrade.UpgradeSO.Level.MaxLevel.GetIntValue();
 
             List<string> costsList = new();
-            foreach (UpgradeCost cost in upgrade.UpgradeSO.Costs)
+            foreach (UpgradeCost cost in upgrade.UpgradeSO.Costs.Costs)
             {
                 costsList.Add(GetFormattedCost(cost, upgrade.CurrentLevel, maxLevel, includeName));
             }
