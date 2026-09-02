@@ -24,7 +24,7 @@ namespace Rodak.UpgradeSystem.Core
         private struct CurrencyGroup
         {
             public string groupName;
-            public List<ACurrencySO> currencies;
+            public List<ACurrencyContainerSO> currencies;
         }
 
         [Header("Grouping only to organize")]
@@ -43,16 +43,18 @@ namespace Rodak.UpgradeSystem.Core
         {
             for (int i = 0; i < currencyGroups.Count; i++)
             {
-                List<ACurrencySO> currencies = currencyGroups[i].currencies;
-                for (int j = 0; j < currencies.Count; j++)
+                List<ACurrencyContainerSO> currencyContainers = currencyGroups[i].currencies;
+                for (int j = 0; j < currencyContainers.Count; j++)
                 {
-                    ACurrencySO currency = currencies[j];
-                    if (currency == null)
+                    foreach (ACurrencySO currency in currencyContainers[j])
                     {
-                        Debug.LogWarning($"Null currency at [{j}] in group: '{currencyGroups[i].groupName}'");
-                        continue;
+                        if (currency == null)
+                        {
+                            Debug.LogWarning($"Null currency at [{j}] in group: '{currencyGroups[i].groupName}'");
+                            continue;
+                        }
+                        currencyAmounts.Add(currency, currency.BaseValue);
                     }
-                    currencyAmounts.Add(currency, currency.BaseValue);
                 }
             }
 

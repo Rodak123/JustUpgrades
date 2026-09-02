@@ -22,21 +22,28 @@ namespace Rodak.UpgradeSystem.Core
 
             foreach (UpgradeReset upgradeReset in targetAscension.UpgradeResets)
             {
-                if (!upgradeContext.UpgradeTracker.TryGetUpgrade(upgradeReset.TargetUpgrade, out Upgrade upgrade))
-                {
-                    continue;
-                }
-
                 int resetLevel = upgradeReset.ResetLevel.GetIntValue();
 
-                upgrade.ResetTo(resetLevel);
+                foreach (AUpgradeSO upgradeSO in upgradeReset.TargetUpgradeContainer)
+                {
+                    if (!upgradeContext.UpgradeTracker.TryGetUpgrade(upgradeSO, out Upgrade upgrade))
+                    {
+                        Debug.LogWarning($"Upgrade '{upgradeSO}' was not reset.");
+                        continue;
+                    }
+
+                    upgrade.ResetTo(resetLevel);
+                }
             }
 
             foreach (CurrencyReset currencyReset in targetAscension.CurrencyResets)
             {
                 BigDouble resetAmount = currencyReset.ResetAmount.GetFloatValue();
 
-                upgradeContext.CurrencyWallet.SetCurrency(currencyReset.TargetCurrency, resetAmount);
+                foreach (ACurrencySO currencySO in currencyReset.TargetCurrencyContainer)
+                {
+                    upgradeContext.CurrencyWallet.SetCurrency(currencySO, resetAmount);
+                }
             }
         }
 

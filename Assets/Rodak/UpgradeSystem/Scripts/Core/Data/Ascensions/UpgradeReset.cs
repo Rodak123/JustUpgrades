@@ -6,7 +6,7 @@ namespace Rodak.UpgradeSystem.Core
     [Serializable]
     public class UpgradeReset
     {
-        public AUpgradeSO TargetUpgrade;
+        public AUpgradeContainerSO TargetUpgradeContainer;
         public IntDynamicValue ResetLevel = new(0, 0);
     }
 }

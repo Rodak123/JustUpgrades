@@ -17,7 +17,7 @@ namespace Rodak.UpgradeSystem.Core
         private struct UpgradeGroup
         {
             public string groupName;
-            public List<AUpgradeSO> upgrades;
+            public List<AUpgradeContainerSO> upgrades;
         }
 
         [Header("Grouping only to organize")]
@@ -35,16 +35,18 @@ namespace Rodak.UpgradeSystem.Core
 
             for (int i = 0; i < upgradeGroups.Count; i++)
             {
-                List<AUpgradeSO> groupUpgrades = upgradeGroups[i].upgrades;
-                for (int j = 0; j < groupUpgrades.Count; j++)
+                List<AUpgradeContainerSO> upgradeContainers = upgradeGroups[i].upgrades;
+                for (int j = 0; j < upgradeContainers.Count; j++)
                 {
-                    AUpgradeSO upgradeSO = groupUpgrades[j];
-                    if (upgradeSO == null)
+                    foreach (AUpgradeSO upgradeSO in upgradeContainers[j])
                     {
-                        Debug.LogWarning($"Null upgrade at [{j}] in group: '{upgradeGroups[i].groupName}'");
-                        continue;
+                        if (upgradeSO == null)
+                        {
+                            Debug.LogWarning($"Null upgrade at [{j}] in group: '{upgradeGroups[i].groupName}'");
+                            continue;
+                        }
+                        upgrades.Add(upgradeSO, new(upgradeSO));
                     }
-                    upgrades.Add(upgradeSO, new(upgradeSO));
                 }
             }
 

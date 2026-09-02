@@ -14,24 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Core.UTAscension
   uniqueId: 7035a48f373fb6342bb495cebd3f2395
   upgradeResets:
-  - TargetUpgrade: {fileID: 11400000, guid: d4e76a22a42c83e48ada9182a2c36747, type: 2}
-    ResetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
-  - TargetUpgrade: {fileID: 11400000, guid: b70a00dade1ad8347bf410f8190d7048, type: 2}
-    ResetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
-  - TargetUpgrade: {fileID: 11400000, guid: 5adf1594b8736e4489ac46bf099f64f4, type: 2}
-    ResetLevel:
-      exposedReference: {fileID: 0}
-      baseValue: 0
-  - TargetUpgrade: {fileID: 11400000, guid: a1129d178b332854fa812b3a8d930af5, type: 2}
+  - TargetUpgradeContainer: {fileID: 11400000, guid: b8843dd8e2aad794daad3348adf49917, type: 2}
     ResetLevel:
       exposedReference: {fileID: 0}
       baseValue: 0
   currencyResets:
-  - TargetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+  - TargetCurrencyContainer: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
     ResetAmount:
       exposedReference: {fileID: 0}
       baseValue:

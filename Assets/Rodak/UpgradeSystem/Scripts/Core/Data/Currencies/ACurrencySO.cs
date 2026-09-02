@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using Rodak.UpgradeSystem.UI;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    public abstract class ACurrencySO : UniqueScriptableObject<ACurrencySO>
+    public abstract class ACurrencySO : ACurrencyContainerSO
     {
         [SerializeField] private string saveId;
         [SerializeField] private string currencyName;
@@ -26,6 +27,11 @@ namespace Rodak.UpgradeSystem.Core
             }
         }
 #endif
+
+        public override IEnumerable<ACurrencySO> GetCurrencySOs()
+        {
+            yield return this;
+        }
         public override string ToString()
         {
             return CurrencyPresenter.GetFormattedCurrency(this);

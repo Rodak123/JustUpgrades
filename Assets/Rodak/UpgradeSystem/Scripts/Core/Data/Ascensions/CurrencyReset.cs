@@ -6,7 +6,7 @@ namespace Rodak.UpgradeSystem.Core
     [Serializable]
     public class CurrencyReset
     {
-        public ACurrencySO TargetCurrency;
+        public ACurrencyContainerSO TargetCurrencyContainer;
         public FloatDynamicValue ResetAmount = new(0, 0);
     }
 }

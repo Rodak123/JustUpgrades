@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Rodak.UpgradeSystem.Core
 {
-    public abstract class AUpgradeSO : UniqueScriptableObject<AUpgradeSO>, IHasDynamicValues
+    public abstract class AUpgradeSO : AUpgradeContainerSO, IHasDynamicValues
     {
         [SerializeField] private string saveId;
         [SerializeField] private string upgradeName = "Upgrade Name";
@@ -62,6 +62,11 @@ namespace Rodak.UpgradeSystem.Core
             {
                 yield return dynamicValue;
             }
+        }
+
+        public override IEnumerable<AUpgradeSO> GetUpgradeSOs()
+        {
+            yield return this;
         }
 
         public override string ToString()
