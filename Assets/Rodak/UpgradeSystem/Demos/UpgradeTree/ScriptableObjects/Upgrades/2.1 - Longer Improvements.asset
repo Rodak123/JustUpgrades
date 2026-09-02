@@ -13,6 +13,19 @@ MonoBehaviour:
   m_Name: increment_scaler_dynamicValueModifier_data[0]_Array_parameters_parameters_upgrade:5adf1594b8736e4489ac46bf099f64f4
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.FloatDynamicValueReferenceSO
   uniqueId: 5adf1594b8736e4489ac46bf099f64f4
+--- !u!114 &-5498536209332630833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93261771a33644940998fbf79ea68624, type: 3}
+  m_Name: isAutomated_upgrade:5adf1594b8736e4489ac46bf099f64f4
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Utils.BoolDynamicValueReferenceSO
+  uniqueId: 5adf1594b8736e4489ac46bf099f64f4
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23,33 +36,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39fbf7e032f9ae342a1f366150c00f6c, type: 3}
-  m_Name: 2.1 - Infinite Improvements
+  m_Name: 2.1 - Longer Improvements
   m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
   uniqueId: 5adf1594b8736e4489ac46bf099f64f4
-  saveId: infinite_improvements
-  upgradeName: Infinite Improvements
+  saveId: longer_improvements
+  upgradeName: Longer Improvements
   level:
     maxLevel:
       exposedReference: {fileID: 0}
-      baseValue: 1
+      baseValue: 50
     isInfinite:
       exposedReference: {fileID: 0}
       baseValue: 1
   costs:
-  - targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
-    costScaling:
-      scaledValues:
-      - scaler:
-          rid: 3358812931200647241
-    isSpent:
-      exposedReference: {fileID: 0}
-      baseValue: 0
+    costs:
+    - targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+      costScaling:
+        scaledValues:
+        - scaler:
+            rid: 5971280579742138443
+      isSpent:
+        exposedReference: {fileID: 0}
+        baseValue: 0
   requirements:
     requirements:
     - rid: 3358812998158778449
   parameters:
     parameters:
     - rid: 3358812998158778437
+  isAutomated:
+    exposedReference: {fileID: -5498536209332630833}
+    baseValue: 0
   upgradeNumber: 2.1
   visual:
     upgradeDescription: Increase {U0} max level by {V0} per level.
@@ -62,27 +79,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3358812931200647241
-      type: {class: ExponentialValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        baseValue:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 5
-            exponent: -1
-        multiplier:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 1.15
-            exponent: 0
-        multiplierGrow:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 0
-            exponent: 0
-        ignoredBeforeLevel:
-          exposedReference: {fileID: 0}
-          baseValue: 0
     - rid: 3358812998158778437
       type: {class: DynamicValueModifierUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
       data:
@@ -122,3 +118,24 @@ MonoBehaviour:
         targetLevel:
           exposedReference: {fileID: 0}
           baseValue: 5
+    - rid: 5971280579742138443
+      type: {class: ExponentialValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1
+            exponent: 0
+        multiplier:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1.1
+            exponent: 0
+        multiplierGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        ignoredBeforeLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0

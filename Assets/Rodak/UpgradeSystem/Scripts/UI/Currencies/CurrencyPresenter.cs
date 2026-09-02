@@ -21,7 +21,7 @@ namespace Rodak.UpgradeSystem.UI
         public static string GetFormattedCurrency(ACurrencySO currency, BigDouble value, bool includeName = true, Color? valueColor = null)
         {
             if (currency == null) return "None";
-            string text = value.ToString().WrapInColor(valueColor);
+            string text = value.ToNiceString().WrapInColor(valueColor);
             if (includeName) text += $" {currency.CurrencyName}";
             return WrapInCurrencyColor(text, currency);
         }

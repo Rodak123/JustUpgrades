@@ -27,9 +27,10 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         [Header("Gains")]
         [SerializeField] private BoolDynamicValue targetUnlockedStatus = new(true);
-        [SerializeField] private FloatDynamicValue targetSingleUseGain;
-        [SerializeField] private FloatDynamicValue targetLinearGain;
-        [SerializeField] private FloatDynamicValue targetExponentialGain;
+        [SerializeField] private FloatDynamicValue targetSingleUseGain = new(0);
+        [SerializeField] private FloatDynamicValue targetBaseMultiplier = new(0);
+        [SerializeField] private FloatDynamicValue targetLinearGain = new(1);
+        [SerializeField] private FloatDynamicValue targetExponentialGain = new(0);
 
         [Header("Boosts")]
         [Tooltip("These use the currency value to boost this currency gain")]
@@ -66,10 +67,14 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             // Automated
             BigDouble previousAmount = upgradeContext.CurrencyWallet.GetCurrencyAmount(targetCurrency);
 
+            BigDouble baseGainMultiplier = targetBaseMultiplier.GetFloatValue();
+
+            BigDouble baseGain = targetCurrency.BaseGain * (baseGainMultiplier > 0 ? baseGainMultiplier : 1);
+
             LastLinearGain = CalculateLinearGain();
             LastExponentialGain = CalculateExponentialGain();
 
-            LastGain = targetCurrency.BaseGain * LastLinearGain + previousAmount * LastExponentialGain;
+            LastGain = baseGain * LastLinearGain + previousAmount * LastExponentialGain;
 
             BigDouble generated = LastGain * Time.deltaTime;
             upgradeContext.CurrencyWallet.AddCurrency(targetCurrency, generated);
@@ -109,6 +114,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             yield return targetSingleUseGain;
             yield return targetLinearGain;
             yield return targetExponentialGain;
+            yield return targetBaseMultiplier;
 
             foreach (CurrencyBoost currencyBoost in linearCurrencyBoosts)
             {

@@ -31,8 +31,10 @@ namespace Rodak.UpgradeSystem.Editor
                 return root;
             }
 
-            Foldout foldout = new();
-            foldout.text = property.displayName;
+            Foldout foldout = new()
+            {
+                text = property.displayName
+            };
             foldout.BindProperty(property);
             root.Add(foldout);
 

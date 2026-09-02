@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fbf7e032f9ae342a1f366150c00f6c, type: 3}
+  m_Name: 4 - Double It Up
+  m_EditorClassIdentifier: Assembly-CSharp::Rodak.UpgradeSystem.Demos.UpgradeTree.UTUpgradeSO
+  uniqueId: 
+  saveId: double_it_up
+  upgradeName: Double It Up
+  level:
+    maxLevel:
+      exposedReference: {fileID: 0}
+      baseValue: 4
+    isInfinite:
+      exposedReference: {fileID: 0}
+      baseValue: 0
+  costs:
+    costs:
+    - targetCurrency: {fileID: 11400000, guid: 02481a2a02de4af48a5eac8544ae6832, type: 2}
+      costScaling:
+        scaledValues:
+        - scaler:
+            rid: 5971280579742138438
+      isSpent:
+        exposedReference: {fileID: 0}
+        baseValue: 0
+  requirements:
+    requirements:
+    - rid: 5971280579742138439
+  parameters:
+    parameters:
+    - rid: 5971280579742138440
+  upgradeNumber: 4
+  visual:
+    upgradeDescription: Double base {C0} gain.
+    mentions:
+      mentionedCurrencies:
+      - {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+      mentionedUpgrades: []
+      mentionedDynamicValues: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5971280579742138438
+      type: {class: ExponentialValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 2
+            exponent: 2
+        multiplier:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1.5
+            exponent: 0
+        multiplierGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        ignoredBeforeLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+    - rid: 5971280579742138439
+      type: {class: UpgradeDependencyUpgradeRequirement, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetUpgradeSO: {fileID: 11400000, guid: 6c9fa418aad708d4892916d38c2288b9, type: 2}
+        useMaxLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0
+        targetLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 1
+    - rid: 5971280579742138440
+      type: {class: DynamicValueModifierUpgradeParameter, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
+      data:
+        targetDynamicValue: {fileID: 11400000, guid: 9032ce3e2c84b8249a8550b3dec7f0e3, type: 2}
+        dynamicValueModifier:
+          scaler:
+            rid: 5971280579742138441
+        showInfoText: 1
+    - rid: 5971280579742138441
+      type: {class: ExponentialValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        baseValue:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 1
+            exponent: 0
+        multiplier:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 2
+            exponent: 0
+        multiplierGrow:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 0
+            exponent: 0
+        ignoredBeforeLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 1

@@ -23,14 +23,15 @@ MonoBehaviour:
       exposedReference: {fileID: 0}
       baseValue: 1
   costs:
-  - targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
-    costScaling:
-      scaledValues:
-      - scaler:
-          rid: 3358812977050157125
-    isSpent:
-      exposedReference: {fileID: 0}
-      baseValue: 0
+    costs:
+    - targetCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
+      costScaling:
+        scaledValues:
+        - scaler:
+            rid: 5971280579742138446
+      isSpent:
+        exposedReference: {fileID: 0}
+        baseValue: 1
   requirements:
     requirements:
     - rid: 3358812998158778453
@@ -53,17 +54,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3358812977050157125
-      type: {class: ConstantValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
-      data:
-        value:
-          exposedReference: {fileID: 0}
-          baseValue:
-            mantissa: 2
-            exponent: 4
-        ignoredBeforeLevel:
-          exposedReference: {fileID: 0}
-          baseValue: 0
     - rid: 3358812998158778453
       type: {class: UpgradeDependencyUpgradeRequirement, ns: Rodak.UpgradeSystem.Core, asm: Assembly-CSharp}
       data:
@@ -103,3 +93,14 @@ MonoBehaviour:
       data:
         scalerCurrency: {fileID: 11400000, guid: e270cfe36f61a1846a1731c6408fe59d, type: 2}
         gainedCurrency: {fileID: 11400000, guid: 02481a2a02de4af48a5eac8544ae6832, type: 2}
+    - rid: 5971280579742138446
+      type: {class: ConstantValueScaler, ns: Rodak.UpgradeSystem.Utils, asm: Assembly-CSharp}
+      data:
+        value:
+          exposedReference: {fileID: 0}
+          baseValue:
+            mantissa: 2
+            exponent: 4
+        ignoredBeforeLevel:
+          exposedReference: {fileID: 0}
+          baseValue: 0

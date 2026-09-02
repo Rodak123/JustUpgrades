@@ -44,7 +44,7 @@ namespace Rodak.UpgradeSystem.Core
             parameters.Update();
         }
 
-        public IEnumerable<IDynamicValue> GetDynamicValues()
+        public virtual IEnumerable<IDynamicValue> GetDynamicValues()
         {
             foreach (IDynamicValue dynamicValue in level.GetDynamicValues())
             {

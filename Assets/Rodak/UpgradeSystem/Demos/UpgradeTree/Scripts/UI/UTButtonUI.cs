@@ -31,6 +31,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
         [SerializeField] private TMP_Text parameterText;
         [SerializeField] private GameObject costContainer;
         [SerializeField] private GameObject maxStatusContainer;
+        [SerializeField] private GameObject automationMarkContainer;
 
         private UpgradeSystemContext upgradeContext;
         private Upgrade upgrade;
@@ -51,17 +52,20 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             UpdateUI();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             UpdateUI();
         }
 
         private void UpdateUI()
         {
+            bool isAutomated = TargetUpgrade.IsAutomated.GetBoolValue();
+            automationMarkContainer.SetActive(isAutomated);
+
             lockedContainer.SetActive(!upgrade.CanFitRequirements());
 
             button.Intractable = upgrade.CanBeUpgraded();
-            purchasableOutline.SetActive(upgrade.CanBeUpgraded());
+            purchasableOutline.SetActive(!isAutomated && upgrade.CanBeUpgraded());
 
             numberText.text = $"#{TargetUpgrade.UpgradeNumber}";
             nameText.text = $"{UpgradePresenter.GetFormattedName(upgrade.UpgradeSO)}";

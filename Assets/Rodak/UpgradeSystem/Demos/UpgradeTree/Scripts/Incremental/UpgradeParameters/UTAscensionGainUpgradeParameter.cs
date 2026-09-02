@@ -1,5 +1,6 @@
 using System;
 using Rodak.UpgradeSystem.Core;
+using Rodak.UpgradeSystem.UI;
 using Rodak.UpgradeSystem.Utils;
 using UnityEngine;
 
@@ -13,15 +14,19 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         private Upgrade upgrade;
 
+        public BigDouble CurrentGain
+        {
+            get
+            {
+                BigDouble scaler = UpgradeSystemContext.Instance.CurrencyWallet.GetCurrencyAmount(scalerCurrency);
+                BigDouble gain = CalculateGain(scaler);
+                return gain;
+            }
+        }
+
         private void Upgrade_OnUpgraded(Upgrade upgrade)
         {
-            UpgradeSystemContext upgradeContext = UpgradeSystemContext.Instance;
-
-            BigDouble scaler = upgradeContext.CurrencyWallet.GetCurrencyAmount(scalerCurrency);
-
-            BigDouble gain = CalculateGain(scaler);
-
-            upgradeContext.CurrencyWallet.AddCurrency(gainedCurrency, gain);
+            UpgradeSystemContext.Instance.CurrencyWallet.AddCurrency(gainedCurrency, CurrentGain);
         }
 
         protected virtual BigDouble CalculateGain(BigDouble scaler)
@@ -39,7 +44,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         public override string GetInfoText()
         {
-            return string.Empty;
+            return $"Current: {CurrencyPresenter.GetFormattedCurrency(gainedCurrency, CurrentGain, false)}";
         }
 
         public override string GetEditorDescription()
