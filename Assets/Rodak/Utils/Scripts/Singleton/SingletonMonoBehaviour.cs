@@ -4,6 +4,17 @@ namespace Rodak.Utils.Singleton
 {
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
     {
+        static SingletonMonoBehaviour()
+        {
+            SingletonReloader.OnReset += Reset;
+        }
+
+        private static void Reset()
+        {
+            instance = null;
+            applicationIsQuitting = false;
+        }
+
         private static T instance;
         private static bool applicationIsQuitting = false;
 
