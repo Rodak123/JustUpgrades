@@ -12,6 +12,7 @@ My goals:
 
 - [Upgrade System](#upgrade-system)
   - [Contents](#contents)
+  - [Dependencies](#dependencies)
   - [Disclaimer](#disclaimer)
   - [Currency](#currency)
   - [Dynamic Values](#dynamic-values)
@@ -36,6 +37,11 @@ My goals:
     - [Upgrade Tracker](#upgrade-tracker)
   - [Currency Generators and UI](#currency-generators-and-ui)
   - [Ascensions / Resets / Prestige](#ascensions--resets--prestige)
+
+## Dependencies
+
+- [Newtonsoft Json Unity Package](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@3.2/manual/index.html) - Install by name: `com.unity.nuget.newtonsoft-json`
+- Text Mesh Pro (only for demos, can use your own variant)
 
 
 ## Disclaimer
