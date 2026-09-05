@@ -106,6 +106,11 @@ namespace Rodak.UpgradeSystem.Core
         {
             if (!CanSpend(currency, costValue)) return false;
             currencyAmounts[currency] -= costValue;
+            OnCurrencyChanged?.Invoke(new()
+            {
+                ACurrencySO = currency,
+                Amount = currencyAmounts[currency],
+            });
             return true;
         }
 

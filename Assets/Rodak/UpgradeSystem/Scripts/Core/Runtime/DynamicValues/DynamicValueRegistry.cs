@@ -28,7 +28,7 @@ namespace Rodak.UpgradeSystem.Core
                 List<Object> groupContainers = dynamicValueContainerGroups[i].dynamicValueContainers;
                 for (int j = 0; j < groupContainers.Count; j++)
                 {
-                    Object container = groupContainers[i];
+                    Object container = groupContainers[j];
 
                     if (container is GameObject gameObject)
                     {
