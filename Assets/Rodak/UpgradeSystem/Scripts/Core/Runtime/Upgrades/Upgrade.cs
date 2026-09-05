@@ -7,7 +7,6 @@ namespace Rodak.UpgradeSystem.Core
 {
     public class Upgrade : IHasSaveState
     {
-        [Serializable]
         private class SaveState
         {
             public int CurrentLevel;

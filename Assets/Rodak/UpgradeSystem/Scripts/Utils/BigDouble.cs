@@ -22,7 +22,6 @@ namespace Rodak.UpgradeSystem.Utils
     /// </summary>
     public struct BigDouble : IFormattable, IComparable, IComparable<BigDouble>, IEquatable<BigDouble>, IHasSaveState
     {
-        [Serializable]
         private class SaveState
         {
             public double Mantissa;

@@ -8,7 +8,6 @@ namespace Rodak.UpgradeSystem.Core
 {
     public class CurrencyWallet : MonoBehaviour, IHasSaveState
     {
-        [Serializable]
         private class SaveState
         {
             public Dictionary<string, JObject> CurrencySaveStates;

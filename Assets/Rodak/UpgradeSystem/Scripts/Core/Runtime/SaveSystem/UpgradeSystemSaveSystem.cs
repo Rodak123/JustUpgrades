@@ -8,7 +8,6 @@ namespace Rodak.UpgradeSystem.Core
     {
         private const string PlayerPrefsSaveKey = "RODAK_UPGRADE_SYSTEM_SAVE";
 
-        [Serializable]
         private class SaveState
         {
             public JObject UpgradeTrackerState;

@@ -7,7 +7,6 @@ namespace Rodak.UpgradeSystem.Core
 {
     public class UpgradeTracker : MonoBehaviour, IHasSaveState
     {
-        [Serializable]
         private class SaveState
         {
             public Dictionary<string, JObject> UpgradeSaveStates;
