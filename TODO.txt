@@ -1,4 +1,5 @@
 [x] Ascension
 [x] Upgrade Containers
+[ ] Min and Max editable in editor for dynamic values
 [ ] Upgrade Tree Demo
 [ ] Clicker Demo

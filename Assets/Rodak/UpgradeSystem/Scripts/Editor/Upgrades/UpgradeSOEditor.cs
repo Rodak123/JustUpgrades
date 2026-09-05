@@ -11,6 +11,8 @@ namespace Rodak.UpgradeSystem.Editor
     [CustomEditor(typeof(AUpgradeSO), true)]
     public class UpgradeSOEditor : UnityEditor.Editor
     {
+        private const string RegenerateSaveIdIconName = "d_Refresh";
+
         public const string SaveIdPropertyName = "saveId";
         public const string UpgradeNamePropertyName = "upgradeName";
         public const string LevelPropertyName = "level";
@@ -24,6 +26,20 @@ namespace Rodak.UpgradeSystem.Editor
         private SerializedProperty costsProperty;
         private SerializedProperty requirementsProperty;
         private SerializedProperty parametersProperty;
+
+        private void GenerateSaveIdFromName()
+        {
+            string upgradeName = upgradeNameProperty.stringValue;
+            if (string.IsNullOrEmpty(upgradeName))
+            {
+                Debug.LogWarning("Can't generate from empty name.");
+            }
+            else
+            {
+                saveIdProperty.stringValue = UpgradeSystemSaveSystem.SanitizeName(upgradeName);
+                serializedObject.ApplyModifiedProperties();
+            }
+        }
 
         protected virtual IEnumerable<string> GetIgnoredProperties()
         {
@@ -59,8 +75,21 @@ namespace Rodak.UpgradeSystem.Editor
                 return root;
             }
 
+            VisualElement saveIdRow = new();
+            saveIdRow.style.flexDirection = FlexDirection.Row;
+            root.Add(saveIdRow);
+
+            Button generateSaveIdButton = new()
+            {
+                iconImage = EditorUtils.CreateEditorIcon(RegenerateSaveIdIconName),
+                tooltip = "Generate from name"
+            };
+            generateSaveIdButton.clicked += GenerateSaveIdFromName;
+            saveIdRow.Add(generateSaveIdButton);
+
             PropertyField saveIdField = new(saveIdProperty);
-            root.Add(saveIdField);
+            saveIdField.style.flexGrow = 1;
+            saveIdRow.Add(saveIdField);
 
             PropertyField upgradeNameField = new(upgradeNameProperty);
             root.Add(upgradeNameField);
