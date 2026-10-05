@@ -1,5 +1,9 @@
 # Upgrade System
 
+**THIS IS AN IN-DEVELOPMENT LIBRARY**
+
+<img width="531" height="1535" alt="image" src="https://github.com/user-attachments/assets/78ac3c0f-2ee9-4702-8299-d6aa2cf52d2d" />
+
 My goals:
 - provide a solid essentials core
 - allow easily adding new features / custom behaviour
