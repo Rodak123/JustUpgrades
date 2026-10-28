@@ -3,3 +3,4 @@
 [ ] Min and Max editable in editor for dynamic values
 [ ] Upgrade Tree Demo
 [ ] Clicker Demo
+[ ] Separate saving to JSON into an extension

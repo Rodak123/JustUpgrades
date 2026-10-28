@@ -67,14 +67,11 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
             // Automated
             BigDouble previousAmount = upgradeContext.CurrencyWallet.GetCurrencyAmount(targetCurrency);
 
-            BigDouble baseGainMultiplier = targetBaseMultiplier.GetFloatValue();
-
-            BigDouble baseGain = targetCurrency.BaseGain * (baseGainMultiplier > 0 ? baseGainMultiplier : 1);
 
             LastLinearGain = CalculateLinearGain();
             LastExponentialGain = CalculateExponentialGain();
 
-            LastGain = baseGain * LastLinearGain + previousAmount * LastExponentialGain;
+            LastGain = LastLinearGain + previousAmount * LastExponentialGain;
 
             BigDouble generated = LastGain * Time.deltaTime;
             upgradeContext.CurrencyWallet.AddCurrency(targetCurrency, generated);
@@ -82,6 +79,9 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
         private BigDouble CalculateLinearGain()
         {
+            BigDouble baseGainMultiplier = targetBaseMultiplier.GetFloatValue();
+            BigDouble baseGain = targetCurrency.BaseGain * (baseGainMultiplier > 0 ? baseGainMultiplier : 1);
+
             BigDouble linearGain = targetLinearGain.GetFloatValue();
 
             foreach (CurrencyBoost currencyBoost in linearCurrencyBoosts)
@@ -91,7 +91,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
                 linearGain += currencyValue * boost;
             }
 
-            return linearGain;
+            return baseGain * linearGain;
         }
 
         private BigDouble CalculateExponentialGain()
