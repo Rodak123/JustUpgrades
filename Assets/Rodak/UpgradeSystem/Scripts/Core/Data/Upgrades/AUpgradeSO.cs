@@ -25,8 +25,9 @@ namespace Rodak.UpgradeSystem.Core
         public UpgradeParameters Parameters => parameters;
 
 #if UNITY_EDITOR
-        private void OnValidate()
+        protected override void OnValidate()
         {
+            base.OnValidate();
             if (string.IsNullOrEmpty(saveId))
             {
                 Debug.LogWarning($"Missing saveId for '{name}'");

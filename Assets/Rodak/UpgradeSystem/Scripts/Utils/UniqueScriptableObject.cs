@@ -48,7 +48,7 @@ namespace Rodak.UpgradeSystem.Utils
         }
 
 #if UNITY_EDITOR
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
             string path = AssetDatabase.GetAssetPath(this);
             if (string.IsNullOrEmpty(path)) return;

@@ -9,11 +9,15 @@ namespace Rodak.UpgradeSystem.Demos.Shared
     public class CustomButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
         [Header("Config")]
-        [SerializeField] public bool Intractable = true;
-        [SerializeField] public float HoldStartDuration = 0.05f;
+        [SerializeField] public bool Interactable = true;
         [SerializeField] public List<PointerEventData.InputButton> IgnoredButtons;
 
+        [Header("Holding")]
+        [SerializeField] public float HoldStartDuration = 0.05f;
+        [SerializeField] public float HoldTriggerInterval = 0;
+
         private readonly Dictionary<PointerEventData.InputButton, float> pointerDownTime = new();
+        private readonly Dictionary<PointerEventData.InputButton, float> pointerHoldTimer = new();
 
         public event Action<CustomButton, PointerEventData.InputButton> OnClick;
         public event Action<CustomButton, PointerEventData.InputButton> OnHold;
@@ -26,6 +30,7 @@ namespace Rodak.UpgradeSystem.Demos.Shared
             foreach (PointerEventData.InputButton button in Enum.GetValues(typeof(PointerEventData.InputButton)))
             {
                 pointerDownTime.Add(button, -1);
+                pointerHoldTimer.Add(button, 0);
             }
         }
 
@@ -37,7 +42,15 @@ namespace Rodak.UpgradeSystem.Demos.Shared
                 float downDuration = Time.time - pointerDownTime[button];
                 if (downDuration > HoldStartDuration)
                 {
-                    OnHold?.Invoke(this, button);
+                    if (pointerHoldTimer[button] > 0)
+                    {
+                        pointerHoldTimer[button] -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        OnHold?.Invoke(this, button);
+                        pointerHoldTimer[button] = HoldTriggerInterval;
+                    }
                 }
             }
         }
@@ -67,15 +80,18 @@ namespace Rodak.UpgradeSystem.Demos.Shared
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            float downTime = pointerDownTime[eventData.button];
-            pointerDownTime[eventData.button] = -1;
+            PointerEventData.InputButton button = eventData.button;
 
-            if (IsIgnored(eventData.button) || downTime == -1) return;
+            float downTime = pointerDownTime[button];
+            pointerDownTime[button] = -1;
+            pointerHoldTimer[button] = 0;
 
-            float downDuration = Time.time - downTime;
+            if (IsIgnored(button) || downTime == -1) return;
 
-            if (downDuration > HoldStartDuration) return;
-            OnClick?.Invoke(this, eventData.button);
+            // float downDuration = Time.time - downTime;
+            // if (downDuration > HoldStartDuration) return;
+
+            OnClick?.Invoke(this, button);
         }
     }
 }

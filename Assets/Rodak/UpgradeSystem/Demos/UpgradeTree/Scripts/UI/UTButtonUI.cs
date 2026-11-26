@@ -64,7 +64,7 @@ namespace Rodak.UpgradeSystem.Demos.UpgradeTree
 
             lockedContainer.SetActive(!upgrade.CanFitRequirements());
 
-            button.Intractable = upgrade.CanBeUpgraded();
+            button.Interactable = upgrade.CanBeUpgraded();
             purchasableOutline.SetActive(!isAutomated && upgrade.CanBeUpgraded());
 
             numberText.text = $"#{TargetUpgrade.UpgradeNumber}";

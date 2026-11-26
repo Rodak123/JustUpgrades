@@ -30,6 +30,9 @@ namespace Rodak.UpgradeSystem.Utils
         private BigDouble? minValue;
         private BigDouble? maxValue;
 
+        public BigDouble? MinValue => minValue;
+        public BigDouble? MaxValue => maxValue;
+
         public ADynamicValue(BigDouble? minValue, BigDouble? maxValue)
         {
             this.minValue = minValue;

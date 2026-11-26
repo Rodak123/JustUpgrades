@@ -12,24 +12,30 @@ namespace Rodak.UpgradeSystem.Core
         private class Modifier : IDynamicValueModifier
         {
             private readonly DynamicValueModifierUpgradeParameter upgradeParameter;
-
-            private BigDouble value;
+            private BigDouble cachedValue;
 
             public Modifier(DynamicValueModifierUpgradeParameter upgradeParameter)
             {
                 this.upgradeParameter = upgradeParameter;
             }
 
+            private BigDouble GetValue() => upgradeParameter.DynamicValueModifier.GetValue(upgradeParameter.CurrentLevel, upgradeParameter.MaxLevel);
+
             public void Query(DynamicValueQuery query)
             {
-                query.Value += value;
+                cachedValue = upgradeParameter.IsCached ? cachedValue : GetValue();
+                query.Value += cachedValue;
             }
 
             public void Update()
             {
-                value = upgradeParameter.DynamicValueModifier.GetValue(upgradeParameter.CurrentLevel, upgradeParameter.MaxLevel);
+                if (upgradeParameter.IsCached)
+                {
+                    cachedValue = GetValue();
+                }
             }
         }
+
 
         [Tooltip("The target dynamic value that is modified")]
         [SerializeField] private ADynamicValueReferenceSO targetDynamicValue;
@@ -38,6 +44,8 @@ namespace Rodak.UpgradeSystem.Core
         [SerializeField] private ScaledValue dynamicValueModifier;
 
         [Header("Visual")]
+        [Tooltip("If modifier caches value per-frame")]
+        [SerializeField] private bool isCached = true;
         [SerializeField] private bool showInfoText;
 
         private Upgrade upgrade;
@@ -45,6 +53,8 @@ namespace Rodak.UpgradeSystem.Core
 
         private int CurrentLevel => upgrade.CurrentLevel;
         private int MaxLevel => upgrade.MaxLevel;
+
+        private bool IsCached => isCached;
 
         public ScaledValue DynamicValueModifier => dynamicValueModifier;
 

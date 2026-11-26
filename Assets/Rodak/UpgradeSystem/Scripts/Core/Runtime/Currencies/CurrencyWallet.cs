@@ -80,6 +80,7 @@ namespace Rodak.UpgradeSystem.Core
 
         public void AddCurrency(ACurrencySO currency, BigDouble amount)
         {
+            if (amount <= 0) return;
             BigDouble previousAmount = GetCurrencyAmount(currency);
             SetCurrency(currency, previousAmount + amount);
         }
